@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const storeSchema = new mongoose.Schema({
-  storeId: { type: String, required: true },
+  storeId: { type: String, required: true, unique: true},
   userId: { type:[{type:String, required: true}]},
   name: { type: String, required: true },
-  img: { type: String }, //store logo
+  img: { type: Buffer }, //store logo
   info: { type: String },
   address: { type: String, required: true }
 });

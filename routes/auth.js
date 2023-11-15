@@ -22,26 +22,30 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   const id = req.body.userId;
   const pw = req.body.password;
-  res.setHeader("Content-Type", "application/json");
+
 
   const user = await User.findOne({ userId: id });
   const message = {};
   if (!user) {
+    res.setHeader("Content-Type", "application/json");
     message.err = "User does not exist.";
     res.send(JSON.stringify(message));
     res.redirect("/login");
   }
   if (user.password != pw) {
+    res.setHeader("Content-Type", "application/json");
     message.err = "The password is incorrect.";
     res.send(JSON.stringify(message));
     res.redirect("/login");
   }
   if (user.password == pw) {
     message.msg = "Login successfully";
-    res.send(JSON.stringify(message));
     req.session.authenticated = true;
     req.session.user = user;
-    req.session.save()
+    req.session.save(()=>{
+      console.log('session save')
+    })
+    res.redirect('/')
   }
 });
 

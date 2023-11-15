@@ -1,8 +1,31 @@
+const bodyParser = require("body-parser")
+const passport = require("passport")
+const ejs = require("ejs")
+
 const express = require("express");
+const session = require("express-session");
 const app = express();
 
 const port = 3000;
+const secert = "key";
 const routes = require("./rotues");
+
+//setup view engine
+app.set("view engine", "ejs");
+app.use(bodyParser)
+//setup session
+app.use(
+  session({
+    secret: secert,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+//init passport
+app.use(passport.initialize())
+//use passport deal with session
+app.use(passport.session())
+
 
 app.get("/", (req, res) => {
   const data = {

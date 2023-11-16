@@ -50,6 +50,9 @@ router.post("/login", async (req, res) => {
 router.post("/signup", (req, res) => {});
 
 router.post("/logout",(req,res)=>{
+  if(!req.session.user){
+    throw new Error("Login Required")
+  }
   req.session.destroy(() => {
     console.log('session destroyed')
   })

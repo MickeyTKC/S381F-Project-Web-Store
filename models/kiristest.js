@@ -4,6 +4,7 @@ const Store = require("./Store");
 const Order = require("./Order");
 const Cart = require("./Cart");
 const Product = require("./Product");
+const StoreOrder = require("./StoreOrder");
 
 const dbName = "SSProject"
 const url = `mongodb+srv://serverSide_User:serrrrver_side1@cluster0.eknv0ni.mongodb.net/${dbName}`;
@@ -84,7 +85,7 @@ const createProduct = async () =>{
 const createOrder = async () =>{
     var createOrder = await Order.create({
         userId: 'user02',
-        orderId: 'order02',
+        orderId: 'order01',
         date: 'date',
         product: [{
           storeId: 'store02',
@@ -100,6 +101,7 @@ const createOrder = async () =>{
     var orders = await Order.find();
     console.log(orders);
 }
+
 //createOrder();
 //console.log("finished createOrder")
 
@@ -122,3 +124,113 @@ const createCart = async () =>{
 }
 //createCart();
 //console.log("finished createCart")
+
+const createStoreOrder = async () =>{
+    var createStoreOrder = await StoreOrder.create({
+        storeId: "store03",
+        orderId: "order02",
+        date: '2023-11-16T19:14:22.885Z',
+        product:{
+            productId: "p02",
+            name: "JP FOOD",
+            qty: 1
+        },
+        user: {
+            userId: "user03",
+            address: "HK",
+            phoneNo: "81028332"
+        }
+    });
+    console.log(createStoreOrder);
+    var carts = await Cart.find();
+    console.log(carts);
+}
+//createStoreOrder();
+//console.log("finished createStoreOrder")
+
+//----------------------------------------------------function 
+//User
+const findByName = async()=>{
+    try {
+        const user = await User.findByName("t");
+        console.log(user);
+      } catch (error) {
+        console.log(error.message);
+      }
+};
+//findByName();
+const findByIdE = async()=>{
+    try {
+        const user = await User.findByIdE("user00", );
+        console.log(user);
+      } catch (error) {
+        console.log(error.message);
+      }
+};
+//findByIdE();
+const testFilter = async()=>{
+    try {
+        const user = await User.testFilter("user00", "email");
+        console.log(user);
+      } catch (error) {
+        console.log(error.message);
+      }
+}
+//testFilter();
+
+//----------------------------------------------------function 
+//Product
+const findByTag = async()=>{
+    try {
+        const prod = await Product.findByTag(['JP','yummy']);
+        console.log(prod);
+      } catch (error) {
+        console.log(error.message);
+      }
+}
+//findByTag();
+const findByPriceLower = async()=>{
+    try {
+        const prod = await Product.findByPriceLower(11);
+        console.log(prod);
+      } catch (error) {
+        console.log(error.message);
+      }
+}
+//findByPriceLower();
+const findByStockLow = async()=>{
+    try {
+        const prod = await Product.findByStockLow(4);
+        console.log(prod);
+      } catch (error) {
+        console.log(error.message);
+      }
+}
+//findByStockLow();
+
+//----------------------------------------------------function 
+//Store
+
+//----------------------------------------------------function 
+//Order
+const findByUserId = async()=>{
+    try {
+        const or = await Order.findByUserId("user02");
+        console.log(or);
+      } catch (error) {
+        console.log(error.message);
+      }
+}
+//findByUserId();
+
+//----------------------------------------------------function 
+//StoreOrder
+const findByUserId1 = async()=>{
+    try {
+        const or = await StoreOrder.findByUserId("user02");
+        console.log(or);
+      } catch (error) {
+        console.log(error.message);
+      }
+}
+//findByUserId1();

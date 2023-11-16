@@ -35,13 +35,6 @@ app.use(
   })
 );
 
-const auth = (req, res, next) => {
-  if (!req.session.user){
-    throw new Error("login required")
-  }
-  next();
-};
-
 app.get("/", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   const user = req.session.user || {}
@@ -50,13 +43,12 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", routes.auth);
-app.use("/user", auth ,routes.user);
+app.use("/user", routes.user);
 app.use("/product", routes.product);
 app.use("/store", routes.store);
 app.use("/cart", routes.cart);
 
 app.use((err, req, res, next)=>{
-  console.log(err)
   return res.status(400).send(err.message)
 })
 

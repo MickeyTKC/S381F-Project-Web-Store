@@ -24,6 +24,20 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+router.get("/id/:id", async (req, res) => {
+  const contentType = req.header("content-type");
+  const id = req.params.id
+  const user = await User.findOne({userId:id})
+  const self = req.session.user
+  if (contentType == "application/json") {
+    res.send(JSON.stringify(user));
+  }else{
+    if(!user)
+      throw new Error("User does not exsit")
+    res.render("../views/user.ejs",{user:user,self:self})
+  }
+})
+
 router.use((err, req, res, next)=>{
   console.log(err)
   return res.status(400).send(err.message)

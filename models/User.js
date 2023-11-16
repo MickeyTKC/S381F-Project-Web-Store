@@ -18,7 +18,7 @@ userSchema.statics.findByUserId = function (userId){  //find by userId
 }
 
 userSchema.statics.findByName = function (name){  //find by name
-  return this.find({name: {$regex: name}});
+  return this.find({name: {$regex: name}}).sort({name:1});
 }
 
 userSchema.statics.findByEmail = function (email){  //find by email

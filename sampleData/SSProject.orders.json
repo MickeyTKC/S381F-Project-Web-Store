@@ -1,0 +1,62 @@
+[{
+  "_id": {
+    "$oid": "655679932aefaa8395c42f24"
+  },
+  "userId": "client1",
+  "orderId": "order1",
+  "date": "2023-11-16",
+  "address": "123 Main Street",
+  "phoneNo": "555-1234",
+  "payment": "Credit Card",
+  "product": [
+    {
+      "storeId": "store1",
+      "productId": "product1",
+      "name": "Product 1",
+      "img": [],
+      "price": 9.99,
+      "info": "Product 1 information",
+      "qty": 2
+    },
+    {
+      "storeId": "store2",
+      "productId": "product5",
+      "name": "Product 5",
+      "img": [],
+      "price": 12.99,
+      "info": "Product 5 information",
+      "qty": 1
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "655679992aefaa8395c42f26"
+  },
+  "userId": "client2",
+  "orderId": "order2",
+  "date": "2023-11-15",
+  "address": "456 Elm Street",
+  "phoneNo": "555-5678",
+  "payment": "PayPal",
+  "product": [
+    {
+      "storeId": "store3",
+      "productId": "product9",
+      "name": "Product 9",
+      "img": [],
+      "price": 11.99,
+      "info": "Product 9 information",
+      "qty": 3
+    },
+    {
+      "storeId": "store4",
+      "productId": "product4",
+      "name": "Product 4",
+      "img": [],
+      "price": 29.99,
+      "info": "Product 4 information",
+      "qty": 2
+    }
+  ]
+}]

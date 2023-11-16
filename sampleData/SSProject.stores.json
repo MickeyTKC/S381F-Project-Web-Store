@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "655677722aefaa8395c42efe"
+  },
+  "storeId": "store1",
+  "userId": [
+    "operator1",
+    "operator4"
+  ],
+  "name": "Store 1",
+  "img": null,
+  "info": "Store 1 information",
+  "address": "123 Store St"
+},
+{
+  "_id": {
+    "$oid": "655677782aefaa8395c42f00"
+  },
+  "storeId": "store2",
+  "userId": [
+    "operator2"
+  ],
+  "name": "Store 2",
+  "img": null,
+  "info": "Store 2 information",
+  "address": "456 Store St"
+},
+{
+  "_id": {
+    "$oid": "6556777e2aefaa8395c42f02"
+  },
+  "storeId": "store3",
+  "userId": [
+    "operator3"
+  ],
+  "name": "Store 3",
+  "img": null,
+  "info": "Store 3 information",
+  "address": "789 Store St"
+},
+{
+  "_id": {
+    "$oid": "65567ac72aefaa8395c42f39"
+  },
+  "storeId": "store4",
+  "userId": [
+    "operator5"
+  ],
+  "name": "Store 4",
+  "img": null,
+  "info": "Store 4 information",
+  "address": "321 Store St"
+}]

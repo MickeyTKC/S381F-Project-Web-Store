@@ -1,0 +1,130 @@
+[{
+  "_id": {
+    "$oid": "655675ff2aefaa8395c42eeb"
+  },
+  "userId": "client1",
+  "password": "password1",
+  "role": "client",
+  "name": "John Doe",
+  "info": "Regular client",
+  "address": "123 Main St",
+  "email": "john@example.com",
+  "phoneNo": "123-456-7890"
+},
+{
+  "_id": {
+    "$oid": "655676072aefaa8395c42eed"
+  },
+  "userId": "client2",
+  "password": "password2",
+  "role": "client",
+  "name": "Jane Smith",
+  "info": "Preferred client",
+  "address": "456 Elm St",
+  "email": "jane@example.com",
+  "phoneNo": "987-654-3210"
+},
+{
+  "_id": {
+    "$oid": "6556760f2aefaa8395c42eef"
+  },
+  "userId": "client3",
+  "password": "password3",
+  "role": "client",
+  "name": "Michael Johnson",
+  "info": "Frequent buyer",
+  "address": "789 Oak St",
+  "email": "michael@example.com",
+  "phoneNo": "555-123-4567"
+},
+{
+  "_id": {
+    "$oid": "6556761c2aefaa8395c42ef1"
+  },
+  "userId": "operator1",
+  "password": "password1",
+  "role": "operator",
+  "name": "Alex Johnson",
+  "info": "Senior operator",
+  "address": "123 Main St",
+  "email": "alex@example.com",
+  "phoneNo": "123-456-7890"
+},
+{
+  "_id": {
+    "$oid": "655676222aefaa8395c42ef3"
+  },
+  "userId": "operator2",
+  "password": "password2",
+  "role": "operator",
+  "name": "Emma Smith",
+  "info": "Junior operator",
+  "address": "456 Elm St",
+  "email": "emma@example.com",
+  "phoneNo": "987-654-3210"
+},
+{
+  "_id": {
+    "$oid": "655676272aefaa8395c42ef5"
+  },
+  "userId": "operator3",
+  "password": "password3",
+  "role": "operator",
+  "name": "Ryan Davis",
+  "info": "Experienced operator",
+  "address": "789 Oak St",
+  "email": "ryan@example.com",
+  "phoneNo": "555-123-4567"
+},
+{
+  "_id": {
+    "$oid": "6556762d2aefaa8395c42ef7"
+  },
+  "userId": "operator4",
+  "password": "password4",
+  "role": "operator",
+  "name": "Sophie Wilson",
+  "info": "Shift supervisor",
+  "address": "321 Maple Ave",
+  "email": "sophie@example.com",
+  "phoneNo": "111-222-3333"
+},
+{
+  "_id": {
+    "$oid": "655676492aefaa8395c42ef9"
+  },
+  "userId": "admin1",
+  "password": "password1",
+  "role": "admin",
+  "name": "Admin User 1",
+  "info": "System administrator",
+  "address": "123 Main St",
+  "email": "admin1@example.com",
+  "phoneNo": "123-456-7890"
+},
+{
+  "_id": {
+    "$oid": "655676502aefaa8395c42efb"
+  },
+  "userId": "admin2",
+  "password": "password2",
+  "role": "admin",
+  "name": "Admin User 2",
+  "info": "Database administrator",
+  "address": "456 Elm St",
+  "email": "admin2@example.com",
+  "phoneNo": "987-654-3210"
+},
+{
+  "_id": {
+    "$oid": "65567cd72aefaa8395c42f5f"
+  },
+  "userId": "operator5",
+  "password": "password5",
+  "role": "operator",
+  "name": "Daniel Thompson",
+  "info": "Trainee operator",
+  "address": "567 Pine Rd",
+  "email": "daniel@example.com",
+  "phoneNo": "444-555-6666"
+}]

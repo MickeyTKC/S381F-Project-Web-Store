@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "65567a042aefaa8395c42f29"
+  },
+  "storeId": "store1",
+  "orderId": "order1",
+  "date": "2023-11-16",
+  "product": {
+    "productId": "product1",
+    "name": "Product 1",
+    "qty": 2
+  },
+  "user": {
+    "userId": "client1",
+    "address": "123 Main Street",
+    "phoneNo": "555-1234"
+  }
+},
+{
+  "_id": {
+    "$oid": "65567a572aefaa8395c42f2d"
+  },
+  "storeId": "store2",
+  "orderId": "order1",
+  "date": "2023-11-16",
+  "product": {
+    "productId": "product5",
+    "name": "Product 5",
+    "qty": 1
+  },
+  "user": {
+    "userId": "client1",
+    "address": "123 Main Street",
+    "phoneNo": "555-1234"
+  }
+},
+{
+  "_id": {
+    "$oid": "65567a5f2aefaa8395c42f2f"
+  },
+  "storeId": "store3",
+  "orderId": "order2",
+  "date": "2023-11-15",
+  "product": {
+    "productId": "product9",
+    "name": "Product 9",
+    "qty": 3
+  },
+  "user": {
+    "userId": "client2",
+    "address": "456 Elm Street",
+    "phoneNo": "555-5678"
+  }
+},
+{
+  "_id": {
+    "$oid": "65567a642aefaa8395c42f31"
+  },
+  "storeId": "store4",
+  "orderId": "order2",
+  "date": "2023-11-15",
+  "product": {
+    "productId": "product4",
+    "name": "Product 4",
+    "qty": 2
+  },
+  "user": {
+    "userId": "client2",
+    "address": "456 Elm Street",
+    "phoneNo": "555-5678"
+  }
+}]

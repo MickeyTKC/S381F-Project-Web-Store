@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
 
 const orderSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   orderId: { type: String, required: true, unique: true },
   date: { type: String, required: true },
+  address: {type: String},
+  phoneNo: {type: String},
+  payment: {type: String},
   product: [{
     storeId: { type: String, required: true },
     productId: { type: String, required: true },
@@ -15,7 +17,5 @@ const orderSchema = new mongoose.Schema({
     qty: { type: Number, required: true, $gte: 0 }
   }]
 })
-
-orderSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("Order", orderSchema);

@@ -1,7 +1,4 @@
 [{
-  "_id": {
-    "$oid": "655679932aefaa8395c42f24"
-  },
   "userId": "client1",
   "orderId": "order1",
   "date": "2023-11-16",
@@ -30,9 +27,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655679992aefaa8395c42f26"
-  },
   "userId": "client2",
   "orderId": "order2",
   "date": "2023-11-15",

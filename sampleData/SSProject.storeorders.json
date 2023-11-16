@@ -1,7 +1,4 @@
 [{
-  "_id": {
-    "$oid": "65567a042aefaa8395c42f29"
-  },
   "storeId": "store1",
   "orderId": "order1",
   "date": "2023-11-16",
@@ -17,9 +14,6 @@
   }
 },
 {
-  "_id": {
-    "$oid": "65567a572aefaa8395c42f2d"
-  },
   "storeId": "store2",
   "orderId": "order1",
   "date": "2023-11-16",
@@ -35,9 +29,6 @@
   }
 },
 {
-  "_id": {
-    "$oid": "65567a5f2aefaa8395c42f2f"
-  },
   "storeId": "store3",
   "orderId": "order2",
   "date": "2023-11-15",
@@ -53,9 +44,6 @@
   }
 },
 {
-  "_id": {
-    "$oid": "65567a642aefaa8395c42f31"
-  },
   "storeId": "store4",
   "orderId": "order2",
   "date": "2023-11-15",

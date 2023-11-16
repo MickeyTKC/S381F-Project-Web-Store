@@ -1,7 +1,4 @@
 [{
-  "_id": {
-    "$oid": "6556792e2aefaa8395c42f1f"
-  },
   "userId": "client1",
   "product": [
     {
@@ -25,9 +22,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655679342aefaa8395c42f21"
-  },
   "userId": "client2",
   "product": [
     {

@@ -1,7 +1,4 @@
 [{
-  "_id": {
-    "$oid": "6556786b2aefaa8395c42f0a"
-  },
   "storeId": "store1",
   "productId": "product1",
   "name": "Product 1",
@@ -15,9 +12,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655678712aefaa8395c42f0c"
-  },
   "storeId": "store2",
   "productId": "product2",
   "name": "Product 2",
@@ -31,9 +25,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655678772aefaa8395c42f0e"
-  },
   "storeId": "store3",
   "productId": "product3",
   "name": "Product 3",
@@ -47,9 +38,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "6556787d2aefaa8395c42f10"
-  },
   "storeId": "store4",
   "productId": "product4",
   "name": "Product 4",
@@ -63,9 +51,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655678952aefaa8395c42f12"
-  },
   "storeId": "store1",
   "productId": "product5",
   "name": "Product 5",
@@ -79,9 +64,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "6556789a2aefaa8395c42f14"
-  },
   "storeId": "store2",
   "productId": "product6",
   "name": "Product 6",
@@ -95,9 +77,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655678a32aefaa8395c42f16"
-  },
   "storeId": "store3",
   "productId": "product7",
   "name": "Product 7",
@@ -111,9 +90,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655678aa2aefaa8395c42f18"
-  },
   "storeId": "store4",
   "productId": "product8",
   "name": "Product 8",
@@ -127,9 +103,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655678c92aefaa8395c42f1a"
-  },
   "storeId": "store1",
   "productId": "product9",
   "name": "Product 9",
@@ -143,9 +116,6 @@
   ]
 },
 {
-  "_id": {
-    "$oid": "655678cf2aefaa8395c42f1c"
-  },
   "storeId": "store3",
   "productId": "product10",
   "name": "Product 10",

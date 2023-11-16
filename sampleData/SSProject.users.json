@@ -1,7 +1,4 @@
 [{
-  "_id": {
-    "$oid": "655675ff2aefaa8395c42eeb"
-  },
   "userId": "client1",
   "password": "password1",
   "role": "client",
@@ -12,9 +9,6 @@
   "phoneNo": "123-456-7890"
 },
 {
-  "_id": {
-    "$oid": "655676072aefaa8395c42eed"
-  },
   "userId": "client2",
   "password": "password2",
   "role": "client",
@@ -25,9 +19,6 @@
   "phoneNo": "987-654-3210"
 },
 {
-  "_id": {
-    "$oid": "6556760f2aefaa8395c42eef"
-  },
   "userId": "client3",
   "password": "password3",
   "role": "client",
@@ -38,9 +29,6 @@
   "phoneNo": "555-123-4567"
 },
 {
-  "_id": {
-    "$oid": "6556761c2aefaa8395c42ef1"
-  },
   "userId": "operator1",
   "password": "password1",
   "role": "operator",
@@ -51,9 +39,6 @@
   "phoneNo": "123-456-7890"
 },
 {
-  "_id": {
-    "$oid": "655676222aefaa8395c42ef3"
-  },
   "userId": "operator2",
   "password": "password2",
   "role": "operator",
@@ -64,9 +49,6 @@
   "phoneNo": "987-654-3210"
 },
 {
-  "_id": {
-    "$oid": "655676272aefaa8395c42ef5"
-  },
   "userId": "operator3",
   "password": "password3",
   "role": "operator",
@@ -77,9 +59,6 @@
   "phoneNo": "555-123-4567"
 },
 {
-  "_id": {
-    "$oid": "6556762d2aefaa8395c42ef7"
-  },
   "userId": "operator4",
   "password": "password4",
   "role": "operator",
@@ -90,9 +69,6 @@
   "phoneNo": "111-222-3333"
 },
 {
-  "_id": {
-    "$oid": "655676492aefaa8395c42ef9"
-  },
   "userId": "admin1",
   "password": "password1",
   "role": "admin",
@@ -103,9 +79,6 @@
   "phoneNo": "123-456-7890"
 },
 {
-  "_id": {
-    "$oid": "655676502aefaa8395c42efb"
-  },
   "userId": "admin2",
   "password": "password2",
   "role": "admin",
@@ -116,9 +89,6 @@
   "phoneNo": "987-654-3210"
 },
 {
-  "_id": {
-    "$oid": "65567cd72aefaa8395c42f5f"
-  },
   "userId": "operator5",
   "password": "password5",
   "role": "operator",

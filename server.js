@@ -10,6 +10,7 @@ const app = express();
 const port = 3000;
 const secert = "key";
 const routes = require("./routes");
+const { throws } = require("assert");
 
 const dbName = "SSProject";
 const url = `mongodb+srv://serverSide_User:serrrrver_side1@cluster0.eknv0ni.mongodb.net/${dbName}`;
@@ -35,19 +36,11 @@ app.use(
 );
 
 const auth = (req, res, next) => {
-  if (req.session.user) {
-    console.log("authenticated");
-    console.log(`userId:${req.session.user.id},role:${req.session.user.role}`);
-    next();
-  } else {
-    console.log("not authenticated");
-    return res.redirect("/");
+  if (!req.session.user){
+    throw new Error("login required")
   }
-};
-
-app.use((req, res, next) => {
   next();
-});
+};
 
 app.get("/", (req, res) => {
   res.setHeader("Content-Type", "text/html");
@@ -57,10 +50,15 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", routes.auth);
-app.use("/user", routes.user);
+app.use("/user", auth ,routes.user);
 app.use("/product", routes.product);
 app.use("/store", routes.store);
 app.use("/cart", routes.cart);
+
+app.use((err, req, res, next)=>{
+  console.log(err)
+  return res.status(400).send(err.message)
+})
 
 app.listen(port, () => {
   console.log("Server is running on port 3000");

@@ -30,13 +30,11 @@ router.post("/login", async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     message.err = "User does not exist.";
     res.send(JSON.stringify(message));
-    res.redirect("/login");
   }
   if (user.password != pw) {
     res.setHeader("Content-Type", "application/json");
     message.err = "The password is incorrect.";
     res.send(JSON.stringify(message));
-    res.redirect("/login");
   }
   if (user.password == pw) {
     message.msg = "Login successfully";
@@ -55,6 +53,7 @@ router.post("/logout",(req,res)=>{
   req.session.destroy(() => {
     console.log('session destroyed')
   })
+  res.redirect('/')
 })
 
 // Start the server

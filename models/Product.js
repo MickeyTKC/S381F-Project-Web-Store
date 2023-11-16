@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
 
 const productSchema = new mongoose.Schema({
   storeId: { type: String, required: true },
@@ -11,7 +10,5 @@ const productSchema = new mongoose.Schema({
   stock: { type: Number, required: true, $gte: 0 },
   tags: { type:[{type:String}]}
 })
-
-productSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("Product", productSchema);

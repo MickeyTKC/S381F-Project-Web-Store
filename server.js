@@ -48,20 +48,16 @@ const auth = (req, res, next) => {
 app.use((req, res, next) => {
   if (req.session.user) {
     const user = req.session.user;
-    console.log(
-      `userId:${user.userId},passowrd:${user.password},role:${user.role}`
-    );
+    //console.log(`userId:${user.userId},passowrd:${user.password},role:${user.role}`);
   }
   next();
 });
 
 app.get("/", (req, res) => {
-  const data = {
-    message: "Home page",
-    timestamp: new Date(),
-  };
-  res.setHeader("Content-Type", "application/json");
-  res.send(JSON.stringify(data));
+  //res.setHeader("Content-Type", "text/html");
+  const user = req.session.user || {}
+  console.log(Object.keys(user).length>0?`ID:${user.id},Role:${user.role}`:"Empty")
+  res.status(200).render("../views/index.ejs",{user:user})
 });
 
 app.use("/auth", routes.auth);

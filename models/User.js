@@ -13,21 +13,43 @@ const userSchema = new mongoose.Schema({
 
 //------------------Function start------------------
 
-userSchema.statics.findByIdE = function (userId, email){  //find by userId, email
-  return this.find({userId: userId, email: email});
+userSchema.statics.findByUserId = function (userId){  //find by userId
+  return this.find({userId: userId});
 }
 
-userSchema.statics.findByIdP = function (userId, password){  //find by userId, password
-  return this.find({userId: userId, password: password});
+userSchema.statics.findByName = function (name){  //find by name
+  return this.find({name: {$regex: name}});
 }
 
-userSchema.statics.findByEP = function (email, password){  //find by email, password
-  return this.find({email: email, password: password});
+userSchema.statics.findByEmail = function (email){  //find by email
+  return this.find({email: {$regex: email}});
 }
 
-userSchema.statics.findByNAP = function (name, address, phoneNo){ //finc by name, address, phoneNo
-  return this.find({name: name, address: address, phoneNo: phoneNo});
+userSchema.statics.findByPhone = function (phoneNo){ //finc by phoneNo
+  return this.find({phoneNo: phoneNo});
 }
+
+userSchema.statics.findByAddress = function (address){ //finc by address
+  return this.find({address: {$regex: address}});
+}
+
+
+// userSchema.statics.findByIdE = function (userId, email){  //testing
+//   var test;
+//   if(email==null || email==""){
+//     test = {userId: userId};
+//     console.log("here");
+//   }else{
+//     test = {userId: userId, email: email}
+//   }
+//   return this.find(test);
+// }
+
+// userSchema.query.filter = function(userId,password,role,name,info,address,email,phoneNo){ //testing
+
+//   return this.find({userId:userId, password:password, role:role, name:name, 
+//     info: {$in:info}, address: {$in:address}, email: {$in:email}, phoneNo:phoneNo});
+// }
 
 
 module.exports = mongoose.model("User",userSchema)

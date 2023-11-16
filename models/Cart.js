@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
 
 const cartSchema = new mongoose.Schema({
   userId: { type: String, required: true, unique: true},
@@ -13,7 +12,5 @@ const cartSchema = new mongoose.Schema({
     qty: { type: Number, required: true, $gte: 0 }
   }]
 });
-
-cartSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("Cart", cartSchema);

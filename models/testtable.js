@@ -18,7 +18,7 @@ console.log(mongoose.connection.readyState);
 /**
  * user
  */
-const deleteAndCreateUsers = async () =>{
+const deleteAndCreateUsers = async () => {
     try {
         await User.deleteMany({});
         console.log("Del user");
@@ -135,7 +135,7 @@ const deleteAndCreateUsers = async () =>{
 /**
  * store
  */
-const deleteAndCreateStore = async () =>{
+const deleteAndCreateStore = async () => {
     try {
         await Store.deleteMany({});
         console.log("Del store");
@@ -182,6 +182,125 @@ const deleteAndCreateStore = async () =>{
         console.error('Error:', error);
     }
 }
+/**
+ * product
+ */
+const deleteAndCreateProduct = async () => {
+    try {
+        await Product.deleteMany({});
+        console.log("Del Product");
 
-deleteAndCreateUsers();
-deleteAndCreateStore();
+        const products = [
+            {
+              storeId: "store1",
+              productId: "product1",
+              name: "Product 1",
+              img: [],
+              price: 9.99,
+              info: "Product 1 information",
+              stock: 100,
+              tags: ["tag1", "tag2"]
+            },
+            {
+              storeId: "store2",
+              productId: "product2",
+              name: "Product 2",
+              img: [],
+              price: 19.99,
+              info: "Product 2 information",
+              stock: 50,
+              tags: ["tag3", "tag4"]
+            },
+            {
+              storeId: "store3",
+              productId: "product3",
+              name: "Product 3",
+              img: [],
+              price: 14.99,
+              info: "Product 3 information",
+              stock: 200,
+              tags: ["tag2", "tag5"]
+            },
+            {
+              storeId: "store4",
+              productId: "product4",
+              name: "Product 4",
+              img: [],
+              price: 29.99,
+              info: "Product 4 information",
+              stock: 75,
+              tags: ["tag1", "tag4"]
+            },
+            {
+              storeId: "store1",
+              productId: "product5",
+              name: "Product 5",
+              img: [],
+              price: 12.99,
+              info: "Product 5 information",
+              stock: 80,
+              tags: ["tag3", "tag6"]
+            },
+            {
+              storeId: "store2",
+              productId: "product6",
+              name: "Product 6",
+              img: [],
+              price: 24.99,
+              info: "Product 6 information",
+              stock: 150,
+              tags: ["tag1", "tag5"]
+            },
+            {
+              storeId: "store3",
+              productId: "product7",
+              name: "Product 7",
+              img: [],
+              price: 8.99,
+              info: "Product 7 information",
+              stock: 120,
+              tags: ["tag4", "tag6"]
+            },
+            {
+              storeId: "store4",
+              productId: "product8",
+              name: "Product 8",
+              img: [],
+              price: 16.99,
+              info: "Product 8 information",
+              stock: 90,
+              tags: ["tag2", "tag3"]
+            },
+            {
+              storeId: "store1",
+              productId: "product9",
+              name: "Product 9",
+              img: [],
+              price: 11.99,
+              info: "Product 9 information",
+              stock: 50,
+              tags: ["tag2", "tag4"]
+            },
+            {
+              storeId: "store3",
+              productId: "product10",
+              name: "Product 10",
+              img: [],
+              price: 19.99,
+              info: "Product 10 information",
+              stock: 75,
+              tags: ["tag1", "tag5"]
+            }
+          ];
+
+        const createdProducts = await Product.insertMany(products);
+
+        console.log('New products created:', createdProducts);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+//deleteAndCreateUsers();
+//deleteAndCreateStore();
+deleteAndCreateProduct();

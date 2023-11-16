@@ -18,4 +18,10 @@ const orderSchema = new mongoose.Schema({
   }]
 })
 
+//------------------Function start------------------
+
+orderSchema.statics.findByUserId = function (userId){  //find by userId
+  return this.find({userId: userId}).sort({date:1});
+}
+
 module.exports = mongoose.model("Order", orderSchema);

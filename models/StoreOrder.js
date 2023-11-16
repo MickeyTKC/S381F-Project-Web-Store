@@ -16,4 +16,18 @@ const storeOrderSchema = new mongoose.Schema({
   }
 })
 
+//------------------Function start------------------
+
+storeOrderSchema.statics.findByStoreId = function (storeId){  //find by storeId
+  return this.find({storeId: storeId});
+}
+
+storeOrderSchema.statics.findByOrderId = function (orderId){  //find by orderId
+  return this.find({orderId: orderId});
+}
+
+storeOrderSchema.statics.findByUserId = function (userId){  //find by userId
+  return this.find({'user.userId': userId});
+}
+  
 module.exports = mongoose.model("StoreOrder", storeOrderSchema); 

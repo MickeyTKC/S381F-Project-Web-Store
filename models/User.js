@@ -25,11 +25,11 @@ userSchema.statics.findByEmail = function (email){  //find by email
   return this.find({email: {$regex: email}});
 }
 
-userSchema.statics.findByPhone = function (phoneNo){ //finc by phoneNo
+userSchema.statics.findByPhone = function (phoneNo){ //find by phoneNo
   return this.find({phoneNo: phoneNo});
 }
 
-userSchema.statics.findByAddress = function (address){ //finc by address
+userSchema.statics.findByAddress = function (address){ //find by address
   return this.find({address: {$regex: address}});
 }
 
@@ -45,10 +45,8 @@ userSchema.statics.findByAddress = function (address){ //finc by address
 //   return this.find(test);
 // }
 
-// userSchema.query.filter = function(userId,password,role,name,info,address,email,phoneNo){ //testing
-
-//   return this.find({userId:userId, password:password, role:role, name:name, 
-//     info: {$in:info}, address: {$in:address}, email: {$in:email}, phoneNo:phoneNo});
+// userSchema.query.filter = function(User){ //testing
+//   return this.find();
 // }
 
 

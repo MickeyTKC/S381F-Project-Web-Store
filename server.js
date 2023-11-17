@@ -1,10 +1,8 @@
 const bodyParser = require("body-parser");
-const passport = require("passport");
-const ejs = require("ejs");
 const mongoose = require("mongoose");
 
 const express = require("express");
-const session = require("express-session");
+const session = require("cookie-session");
 const app = express();
 
 const port = 3000;
@@ -42,8 +40,8 @@ mongoose.connection.on('error', err => {
 
 app.get("/", (req, res) => {
   res.setHeader("Content-Type", "text/html");
-  const user = req.session.user || {}
-  console.log(Object.keys(user).length>0?`ID:${user.userId},Name:${user.name},Role:${user.role}`:"Empty")
+  const user = req.session.user
+  console.log(user?`ID:${user.userId},Name:${user.name},Role:${user.role}`:"Empty")
   res.status(200).render("../views/index.ejs",{user:user})
 });
 

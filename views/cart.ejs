@@ -1,5 +1,55 @@
-<% if(!cart){%>
-<h1>Empty</h1>
-<%}%> <% if(cart){%>
-<pre><%=cart%></pre>
-<%}%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../views/components/head'); %>
+    <title>Product Display</title>
+    <style>
+      .table img {
+        height: 100px;
+        object-fit: cover;
+      }
+      .empty-message {
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('../views/components/navbar'); %>
+    <div class="container">
+      <div class="py-3">
+        <h1>My Favorite Display</h1>
+        <hr />
+
+        <%if(cart){%> <%if(cart.product){%>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%for(product of cart.product){%>
+            <tr>
+              <td><img src="<%= product.img %>" /></td>
+              <td><%= product.name %></td>
+              <td>$<%= product.price %></td>
+              <th><from method="delete" action="/cart/producId/<%=product.productId%>"><input type="submit" class="btn btn-danger" value="Delete"/></from></th>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+
+        <%}%> <%}%>
+      </div>
+    </div>
+    <%- include('../views/components/foot',{user:user}); %>
+  </body>
+</html>

@@ -18,7 +18,7 @@ productSchema.statics.findByStoreId = function (storeId){  //find by storeId
 }
 
 productSchema.statics.findByProductId = function (productId){  //find by productId
-  return this.find({productId: productId});
+  return this.findOne({productId: productId});
 }
 
 productSchema.statics.findByName = function (name){  //find by name

@@ -34,15 +34,19 @@ app.use(
   })
 );
 
-mongoose.connection.on('error', err => {
-  throw new Error('Mongo database connexion error')
-})
+app.use(express.static("public"));
+
+mongoose.connection.on("error", err => {
+  throw new Error("Mongo database connexion error");
+});
 
 app.get("/", (req, res) => {
   res.setHeader("Content-Type", "text/html");
-  const user = req.session.user
-  console.log(user?`ID:${user.userId},Name:${user.name},Role:${user.role}`:"Empty")
-  res.status(200).render("../views/index.ejs",{user:user})
+  const user = req.session.user;
+  console.log(
+    user ? `ID:${user.userId},Name:${user.name},Role:${user.role}` : "Empty"
+  );
+  res.status(200).render("../views/index.ejs", { user: user });
 });
 
 app.use("/auth", routes.auth);
@@ -51,9 +55,9 @@ app.use("/product", routes.product);
 app.use("/store", routes.store);
 app.use("/cart", routes.cart);
 
-app.use((err, req, res, next)=>{
-  return res.status(400).send(err.message)
-})
+app.use((err, req, res, next) => {
+  return res.status(400).send(err.message);
+});
 
 app.listen(port, () => {
   console.log("Server is running on port 3000");

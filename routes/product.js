@@ -137,7 +137,7 @@ router.put("/", auth, async (req, res) => {
     encoding: "base64",
   });
   const product = {
-    productId: req.body.productId,
+    //productId: req.body.productId,
     name: req.body.name,
     img: imgData,
     price: req.body.price,

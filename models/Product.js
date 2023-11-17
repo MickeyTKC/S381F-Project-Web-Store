@@ -21,6 +21,10 @@ productSchema.statics.findByName = function (name){  //find by name
   return this.find({name: {$regex: name}});
 }
 
+productSchema.statics.findByDate = function (date){  //find by date
+  return this.find({date: date}).sort({date:1});
+}
+
 productSchema.statics.findByInfo = function (info){  //find by info
   return this.find({info: {$regex: info}});
 }

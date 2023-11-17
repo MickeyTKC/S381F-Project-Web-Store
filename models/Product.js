@@ -41,6 +41,10 @@ productSchema.statics.findByPriceGreater = function (price){ //find greater by p
   return this.find({price: {$gte : price}});
 }
 
+productSchema.statics.findNew = function (limit){ //find greater by price
+  return this.find().sort({date:-1}).limit(limit);
+}
+
 // productSchema.statics.findByStockLow = function (number){ //find stock which is low
 //   return this.find({stock: {$lte: number}});
 // }

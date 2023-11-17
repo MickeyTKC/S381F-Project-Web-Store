@@ -45,13 +45,19 @@ router.get("/id/:id", async (req, res) => {
   const contentType = req.header("content-type");
   const id = req.params.id;
   const product = await Product.findByProductId(id);
-  const productImg = Buffer.from(product.img, "base64");
-  product.img = productImg;
+  var productImg;
+  if (product.img) productImg = Buffer.from(product.img, "base64");
+  product.img = productImg
+    ? `data:image/jpg;base64,${productImg}`
+    : "/noImage.jpg";
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(product));
   } else {
-    res.render("../views/product.ejs", { product: product });
+    res.render("../views/product.ejs", {
+      user: req.session.user,
+      product: product,
+    });
   }
 });
 

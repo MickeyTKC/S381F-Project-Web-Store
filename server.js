@@ -35,6 +35,10 @@ app.use(
   })
 );
 
+mongoose.connection.on('error', err => {
+  throw new Error('Mongo database connexion error')
+})
+
 app.get("/", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   const user = req.session.user || {}

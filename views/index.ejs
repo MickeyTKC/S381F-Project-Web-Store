@@ -1,23 +1,70 @@
-<script>
-    document.addEventListener('DOMContentLoaded', ()=> {console.log("isloaded")})
-</script>
-<h1>Home Page</h1>
-<% if(Object.keys(user).length<=0) {%>
-<div class="div">
-  <a href="auth/login">Login</a>
-</div>
-<% } %> <% if(Object.keys(user).length>0) {%>
-<div class="div">
-  <form action="/auth/logout" method="post">
-    <button type="submit">Logout</button>
-  </form>
-</div>
-<div class="user">
-  <ul>
-    <li>User ID: <%= user.userId%></li>
-    <li>Name: <%=user.name%></li>
-    <li>Role: <%=user.role%></li>
-    <li>Information <%=user.info%></li>
-  </ul>
-</div>
-<% } %>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store</title>
+    <%- include('../views/components/head.ejs'); %>
+  </head>
+  <body>
+    <%- include('../views/components/navbar'); %>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <img
+            src="path/to/large-image.jpg"
+            class="img-fluid"
+            alt="Large Image"
+          />
+          <h2 class="mt-4">Welcome to our Store</h2>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="path/to/product-image1.jpg"
+              class="card-img-top"
+              alt="Product Image 1"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Product 1</h5>
+              <p class="card-text">Description of Product 1</p>
+              <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="path/to/product-image2.jpg"
+              class="card-img-top"
+              alt="Product Image 2"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Product 2</h5>
+              <p class="card-text">Description of Product 2</p>
+              <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="path/to/product-image3.jpg"
+              class="card-img-top"
+              alt="Product Image 3"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Product 3</h5>
+              <p class="card-text">Description of Product 3</p>
+              <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../views/components/foot',{user:user}); %>
+  </body>
+</html>

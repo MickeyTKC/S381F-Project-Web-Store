@@ -2,13 +2,19 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/Product");
 const Store = require("../models/Store");
+const User = require("../models/User");
 
 const auth = (req, res, next) => {
+  const err = {};
   if (!req.session.user) {
-    throw new Error("Permission Required");
+    err.statusCode = 403
+    err.message("Permission Required")
+    next(err)
   }
   if (req.session.user.role != "operator" || req.session.user.role != "admin") {
-    throw new Error("Admin/Operator Permission Required");
+    err.statusCode = 403
+    err.message("Admin/Operator Permission Required")
+    next(err)
   }
   next();
 };
@@ -64,6 +70,12 @@ router.get("/priceGreater/:price", async (req, res) => {
   console.log(price);
 });
 
+router.get("/discount/:discount", async (req, res) => {
+  const contentType = req.header("content-type");
+  const discount = req.params.discount;
+  console.log(discount);
+});
+
 // get product request for searching product by keywords
 router.get("/search/:words", async (req, res) => {
   const contentType = req.header("content-type");
@@ -74,67 +86,56 @@ router.get("/search/:words", async (req, res) => {
 
 // post product request for create new porduct
 router.post("/", auth, async (req, res) => {
+  console.log('wink');
   const contentType = req.header("content-type");
-  // check operator
-  const operatorId = req.session.user.userId;
-  const store = await Store.findByUserId(operatorId);
   const err = {};
-  if (!store) {
-    res.setHeader("Content-Type", "application/json");
-    err.message = "The user is not the operator of the store.";
-    res.send(JSON.stringify(err));
-    return;
-  }
   // get data
   const product = {
-    storeId: req.body.storeId,
-    productId: `${req.body.storeId}-${req.body.productId}`,
+    productId: req.body.productId,
     name: req.body.name,
     img: [],
     price: req.body.price,
+    discount: req.body.discount,
     info: req.body.info,
-    stock: 0,
     tags: [],
   };
   console.log(product);
+  try{
+    const newProduct = await Product.create(product);
+  }catch(e){
+    next(e);
+  }
+  
 });
 
-// put product request for edit porduct information
+// put product request for edit product information
 router.put("/", auth, async (req, res) => {
   const contentType = req.header("content-type");
-  // check operator
-  const operatorId = req.session.user.userId;
-  const store = await Store.findByUserId(operatorId);
   const err = {};
-  if (!store) {
-    res.setHeader("Content-Type", "application/json");
-    err.message = "The user is not the operator of the store.";
-    res.send(JSON.stringify(err));
-    return;
-  }
   // get data
   const product = {
-    storeId: req.body.storeId,
-    productId: `${req.body.storeId}-${req.body.productId}`,
+    productId: req.body.productId,
     name: req.body.name,
     img: req.body.img,
     price: req.body.price,
+    discount: req.body.discount,
     info: req.body.info,
-    stock: req.body.stock,
     tags: req.body.tags,
   };
   console.log(product);
+  await Product.findOneAndUpdate({productId:req.body.product},product);
 });
 
 
 router.use((err, req, res, next) => {
-  return res.status(400).send(`<h1>${err.message}</h1>`);
+  res.setHeader("Content-Type", "application/json");
+  // Default error status code
+  const statusCode = err.statusCode || 500;
+  // Default error message
+  const message = err.message || 'Internal Server Error';
+  // Send error response
+  res.status(statusCode).json({ error: message });
 });
-
-
-router.use("/*", (req, res) => {
-  res.status(404).send(`<h1>404 Not Found</h1>`)
-} )
 
 // Start the server
 module.exports = router;

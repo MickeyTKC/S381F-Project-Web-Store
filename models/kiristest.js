@@ -4,7 +4,6 @@ const Store = require("./Store");
 const Order = require("./Order");
 const Cart = require("./Cart");
 const Product = require("./Product");
-const StoreOrder = require("./StoreOrder");
 
 const dbName = "SSProject"
 const url = `mongodb+srv://serverSide_User:serrrrver_side1@cluster0.eknv0ni.mongodb.net/${dbName}`;
@@ -125,28 +124,6 @@ const createCart = async () =>{
 //createCart();
 //console.log("finished createCart")
 
-const createStoreOrder = async () =>{
-    var createStoreOrder = await StoreOrder.create({
-        storeId: "store03",
-        orderId: "order02",
-        date: '2023-11-16T19:14:22.885Z',
-        product:{
-            productId: "p02",
-            name: "JP FOOD",
-            qty: 1
-        },
-        user: {
-            userId: "user03",
-            address: "HK",
-            phoneNo: "81028332"
-        }
-    });
-    console.log(createStoreOrder);
-    var carts = await Cart.find();
-    console.log(carts);
-}
-//createStoreOrder();
-//console.log("finished createStoreOrder")
 
 //----------------------------------------------------function 
 //User
@@ -222,15 +199,3 @@ const findByUserId = async()=>{
       }
 }
 //findByUserId();
-
-//----------------------------------------------------function 
-//StoreOrder
-const findByUserId1 = async()=>{
-    try {
-        const or = await StoreOrder.findByUserId("user02");
-        console.log(or);
-      } catch (error) {
-        console.log(error.message);
-      }
-}
-//findByUserId1();

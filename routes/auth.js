@@ -5,50 +5,79 @@ const session = require("express-session");
 
 const User = require("../models/User");
 
-// Define a route for the root URL ("/")
-router.get("/", (req, res) => {
-  const data = {
-    message: "Auth",
-    timestamp: new Date(),
-  };
-  res.setHeader("Content-Type", "application/json");
-  res.send(JSON.stringify(data));
-});
-
+// get login request, render login page
 router.get("/login", (req, res) => {
   res.render("../views/login");
 });
 
+// post login request
 router.post("/login", async (req, res) => {
+  // get request data
   const id = req.body.userId;
   const pw = req.body.password;
-
-
-  const user = await User.findOne({ userId: id });
-  const message = {};
+  // get user data from db 
+  const user = await User.findByUserId(id)
+  console.log(user)
+  const err = {};
+  // wrong input handling
   if (!user) {
     res.setHeader("Content-Type", "application/json");
-    message.err = "User does not exist.";
-    res.send(JSON.stringify(message));
+    err.message = "User does not exist.";
+    res.send(JSON.stringify(err));
+    return;
   }
   if (user.password != pw) {
     res.setHeader("Content-Type", "application/json");
-    message.err = "The password is incorrect.";
-    res.send(JSON.stringify(message));
+    err.message = "The password is incorrect.";
+    res.send(JSON.stringify(err));
+    return;
   }
+  // correct input handling
   if (user.password == pw) {
-    message.msg = "Login successfully";
+    // setup express session
     req.session.authenticated = true;
     req.session.user = user;
     req.session.save(()=>{
-      console.log('session save')
+      console.log('Login Successfully. session save.')
     })
     res.redirect('/')
   }
 });
 
-router.post("/signup", (req, res) => {});
+// post sign up request, create client user
+router.post("/signup", async (req, res) => {
+  // get request data
+  const user = {
+    userId : req.body.userId,
+    password : req.body.password,
+    role : "client",
+    name : req.body.name,
+    info : req.body.info || "",
+    address : req.body.address || "",
+    email : req.body.email || "",
+    phoneNo : req.body.phoneNo || ""
+  }
+  // get user data from db for checking
+  const isExist = User.findById(user.userId);
+  // user id already exists handling
+  const err = {};
+  if(isExist){
+    res.setHeader("Content-Type", "application/json");
+    err.message = "UserId already exists!" 
+    res.send(JSON.stringify(err));
+    return;
+  }
+  // sign up a new client role user
+  if(!isExist){
+    const client = await User.create(user)
+    if(!client){
+      throw new Erorr ("DB Error")
+    }
+    res.redirect('/')
+  }
+});
 
+// post logout request
 router.post("/logout",(req,res)=>{
   if(!req.session.user){
     throw new Error("Login Required")
@@ -59,5 +88,4 @@ router.post("/logout",(req,res)=>{
   res.redirect('/')
 })
 
-// Start the server
 module.exports = router;

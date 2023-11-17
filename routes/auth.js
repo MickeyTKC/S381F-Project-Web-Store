@@ -57,10 +57,18 @@ router.post("/signup", async (req, res) => {
     email : req.body.email || "",
     phoneNo : req.body.phoneNo || ""
   }
+  // err handling
+  const err = {};
+  // wrong input handlng
+  if(!user.userId || !user.password || !user.role || !user.name){
+    res.setHeader("Content-Type", "application/json");
+    err.message = "Wrong User Input" 
+    res.send(JSON.stringify(err));
+    return;
+  }
   // get user data from db for checking
   const isExist = User.findById(user.userId);
   // user id already exists handling
-  const err = {};
   if(isExist){
     res.setHeader("Content-Type", "application/json");
     err.message = "UserId already exists!" 

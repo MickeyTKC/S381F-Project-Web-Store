@@ -6,7 +6,7 @@ const fs = require('fs');
 const Product = require("../models/Product")
 const Store = require("../models/Store")
 
-app.use(fileupload());
+router.use(fileupload());
 
 const authAdmin = (req, res, next) => {
   const err = {};

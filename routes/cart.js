@@ -17,6 +17,8 @@ router.get("/", auth, async (req, res) => {
   const userId = req.session.user.userId;
   const contentType = req.header("content-type");
   const myCart = await Cart.findByUserId(userId);
+  const myCartImg = Buffer.from(myCart.product.img, 'base64');
+  myCart.product.img = myCartImg;
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(data));
@@ -37,12 +39,13 @@ router.put("/", auth, async (req, res) => {
 })
 
 router.use((err, req, res, next) => {
-  console.log(err);
-  return res.status(400).send(`<h1>${err.message}</h1>`);
-});
-
-router.use("/*", (req, res) => {
-  res.status(404).send(`<h1>404 Not Found</h1>`);
+  res.setHeader("Content-Type", "application/json");
+  // Default error status code
+  const statusCode = err.statusCode || 500;
+  // Default error message
+  const message = err.message || 'Internal Server Error';
+  // Send error response
+  res.status(statusCode).json({ error: message });
 });
 
 // Start the server

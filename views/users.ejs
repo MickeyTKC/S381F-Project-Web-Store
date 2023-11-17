@@ -1,0 +1,21 @@
+<h1>Users</h1>
+<% if(users) {%>
+<table>
+  <tr>
+    <th>User ID</th>
+    <th>Name</th>
+    <th>Role</th>
+    <th>Phone Number</th>
+    <th>Details</th>
+  </tr>
+  <% for(user of users) {%>
+  <tr>
+    <td><%=user.userId%></td>
+    <td><%=user.name%></td>
+    <td><%=user.role%></td>
+    <td><%=user.phoneNo%></td>
+    <td><a href="user/<%=user.userId%>">Detail</a></td>
+  </tr>
+  <% }%>
+</table>
+<% }%>

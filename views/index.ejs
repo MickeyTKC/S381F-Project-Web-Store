@@ -1,0 +1,23 @@
+<script>
+    document.addEventListener('DOMContentLoaded', ()=> {console.log("isloaded")})
+</script>
+<h1>Home Page</h1>
+<% if(Object.keys(user).length<=0) {%>
+<div class="div">
+  <a href="auth/login">Login</a>
+</div>
+<% } %> <% if(Object.keys(user).length>0) {%>
+<div class="div">
+  <form action="/auth/logout" method="post">
+    <button type="submit">Logout</button>
+  </form>
+</div>
+<div class="user">
+  <ul>
+    <li>User ID: <%= user.userId%></li>
+    <li>Name: <%=user.name%></li>
+    <li>Role: <%=user.role%></li>
+    <li>Information <%=user.info%></li>
+  </ul>
+</div>
+<% } %>

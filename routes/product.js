@@ -128,7 +128,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // put product request for edit product information
-router.put("/", auth, async (req, res) => {
+router.put("/id/:id", auth, async (req, res) => {
   const contentType = req.header("content-type");
   const err = {};
   // get data
@@ -148,7 +148,7 @@ router.put("/", auth, async (req, res) => {
   console.log(product);
   try {
     const editProduct = await Product.findOneAndUpdate(
-      { productId: req.body.product },
+      { productId: req.params.id },
       product
     );
     if (contentType == "application/json") {

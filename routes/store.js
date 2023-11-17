@@ -61,23 +61,6 @@ router.put("/",authAdmin, async (req, res) =>{
     await Store.updateOne(storeData.storeId, store);
 });
 
-// create a new store product
-router.post("/product",authOperator,(req, res) =>{
-  //check operator
-  //store update 
-  //product create
-})
-// edit store product
-router.put("/product/id/:id",authOperator,(req, res) =>{
-  //check operator
-  //product update
-})
-
-router.delete("/productt/id/:id",authOperator,(req, res)=>{
-  //check operator
-  //store update 
-  //product delete
-})
 
 router.use((err, req, res, next) => {
   res.setHeader("Content-Type", "application/json");

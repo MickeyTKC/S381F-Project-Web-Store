@@ -1,5 +1,67 @@
-<% if(!product){%>
-<h1>Empty</h1>
-<%}%> <% if(product){%>
-<pre><%=product%></pre>
-<%}%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../views/components/head'); %>
+    <style>
+      .success-animation {
+        animation: success 1s;
+      }
+
+      @keyframes success {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+    <title>Product Detail</title>
+  </head>
+
+  <body>
+    <%- include('../views/components/navbar'); %>
+    <div class="container">
+      <div class="py-3"><h1>Product Detail</h1></div>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <img src="<%= product.img %>" class="img-fluid" alt="Product Image" />
+        </div>
+        <div class="col-md-6">
+          <h2><%= product.name %></h2>
+          <p>Price: $<%= product.price %></p>
+          <p>Information: <%= product.info %></p>
+          <p>Tags: <%= product.tags.join(', ') %></p>
+          <button class="btn btn-primary">
+            Add to My Favorite
+          </button>
+        </div>
+      </div>
+    </div>
+    <%- include('../views/components/foot',{user:user}); %> <%if(user &&
+    product){%>
+    <script defer>
+      document.addEventListener("DOMContentLoaded", function () {
+        const id = "<%=product.productId%>";
+        const buttons = [...document.querySelectorAll(".btn-primary")];
+        buttons.forEach(button => {
+          button.addEventListener("click", function () {
+            console.log(`Add ${id} to "My Favorite"`);
+            putData(`/cart/productId/${id}`)
+            button.classList.add("success-animation");
+            setTimeout(() => {
+              button.classList.remove("success-animation");
+            }, 1000);
+          });
+        });
+      });
+    </script>
+    <%}%>
+  </body>
+</html>

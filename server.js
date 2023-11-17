@@ -26,6 +26,7 @@ app.use(
     extended: true,
   })
 );
+
 //setup session
 app.use(
   session({
@@ -42,7 +43,7 @@ mongoose.connection.on('error', err => {
 app.get("/", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   const user = req.session.user || {}
-  console.log(Object.keys(user).length>0?`ID:${user.id},Role:${user.role}`:"Empty")
+  console.log(Object.keys(user).length>0?`ID:${user.userId},Name:${user.name},Role:${user.role}`:"Empty")
   res.status(200).render("../views/index.ejs",{user:user})
 });
 

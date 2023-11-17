@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require("../models/User")
 
-// Define a route for the root URL ("/")
+// the auth for permission request
 const auth = (req, res, next) => {
   if (!req.session.user){
     throw new Error("Permission Required")
@@ -12,6 +12,7 @@ const auth = (req, res, next) => {
   }
   next();
 };
+
 
 router.get('/', auth, async (req, res) => {
   const contentType = req.header("content-type");
@@ -27,20 +28,26 @@ router.get('/', auth, async (req, res) => {
 router.get("/id/:id", async (req, res) => {
   const contentType = req.header("content-type");
   const id = req.params.id
-  const user = await User.findOne({userId:id})
+  const user = await User.findByUserId(id)
+  console.log(user)
   const self = req.session.user
+  // Error handling
+  const err = {}
   if (contentType == "application/json") {
+    if(!user) {
+      err.message = "User does not exist."
+      res.send(err)
+      return;
+    }
     res.send(JSON.stringify(user));
   }else{
-    if(!user)
-      throw new Error("User does not exsit")
     res.render("../views/user.ejs",{user:user,self:self})
   }
 })
 
 router.use((err, req, res, next)=>{
   console.log(err)
-  return res.status(400).send(err.message)
+  return res.status(400).send(`<h1>${err.message}</h1>`)
 })
 
 // Start the server

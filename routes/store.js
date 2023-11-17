@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const fileupload = require("express-fileupload");
+const fs = require('fs');
 
 const Product = require("../models/Product")
 const Store = require("../models/Store")
 
 app.use(fileupload());
+
 const authAdmin = (req, res, next) => {
   const err = {};
   if (!req.session.user) {
@@ -41,21 +43,21 @@ const authOperator = (req, res, next) => {
 router.get("/", (req, res) => {});
 
 // edit store information 
-router.put("/",authAdmin, async (req, res) =>{
-    
+router.put("/",authAdmin, async (req, res) =>{ 
     //store update
     const contentType = req.header("content-type");
     const err = {};
     // get data
     const storeData = await Store.findOne({});
+    const uploadImg = req.files.img;
+    const imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
     const store = {
       name: req.body.name,
-      img: req.body.img, //store logo
+      img: imgData, //store logo
       info: req.body.info,
       address: req.body.address
     };
     console.log(store);
-    ///await Store.findOneAndUpdate({productId:req.body.product},product);
     await Store.updateOne(storeData.storeId, store);
 });
 

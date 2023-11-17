@@ -53,6 +53,9 @@ app.use("/store", routes.store);
 app.use("/cart", routes.cart);
 
 app.use((err, req, res, next)=>{
+  if(err.message=="404 Not Found"){
+    return res.status(404).send(err.message)
+  }
   return res.status(400).send(err.message)
 })
 

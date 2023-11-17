@@ -53,8 +53,8 @@ router.put("/",authAdmin, async (req, res) =>{
     const imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
     const store = {
       name: req.body.name,
-      img: imgData, //store logo
-      info: req.body.info,
+      img: imgData || "", //store logo
+      info: req.body.info || "",
       address: req.body.address
     };
     console.log(store);

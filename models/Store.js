@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const storeSchema = new mongoose.Schema({
   storeId: { type: String, required: true, unique: true},
   name: { type: String, required: true },
-  img: { type: Buffer }, //store logo
+  img: { type: String }, //store logo
   info: { type: String },
   address: { type: String, required: true }
 });

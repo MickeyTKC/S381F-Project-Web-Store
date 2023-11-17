@@ -107,11 +107,11 @@ router.post("/", async (req, res, next) => {
   const product = {
     productId: req.body.productId,
     name: req.body.name,
-    img: imgData,
+    img: imgData || "",
     price: req.body.price,
-    discount: req.body.discount,
-    info: req.body.info,
-    tags: [],
+    discount: req.body.discount || "",
+    info: req.body.info || "",
+    tags: [] || "",
     date: new Date().toISOString(),
   };
   try {
@@ -139,11 +139,11 @@ router.put("/id/:id", auth, async (req, res) => {
   const product = {
     //productId: req.body.productId,
     name: req.body.name,
-    img: imgData,
+    img: imgData || "",
     price: req.body.price,
-    discount: req.body.discount,
-    info: req.body.info,
-    tags: req.body.tags,
+    discount: req.body.discount || "",
+    info: req.body.info || "",
+    tags: req.body.tags || "",
   };
   console.log(product);
   try {

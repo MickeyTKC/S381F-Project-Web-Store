@@ -4,6 +4,7 @@ const productSchema = new mongoose.Schema({
   productId: { type: String, required: true, unique: true},
   name: { type: String, required: true },
   img: { type:[{type:Buffer}]},
+  date: {type:String, required: true},
   price: { type: Number, required: true, $gte: 0 },
   discount: { type: Number},
   info: { type: String },

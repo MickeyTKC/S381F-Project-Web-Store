@@ -50,7 +50,7 @@ router.put("/",authAdmin, async (req, res) =>{
     // get data
     const storeData = await Store.findOne({});
     const uploadImg = req.files.img;
-    const imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
+    if(uploadImg) imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
     const store = {
       name: req.body.name,
       img: imgData || "", //store logo

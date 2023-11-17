@@ -6,7 +6,8 @@ const Cart = require("../models/Cart");
 // the auth for Login required
 const auth = (req, res, next) => {
   if (!req.session.user) {
-    throw new Error("Login Required");
+    err.message ="Login Required";
+    next(err);
   }
   next();
 };

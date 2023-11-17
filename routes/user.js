@@ -7,12 +7,12 @@ const auth = (req, res, next) => {
   const err = {};
   if (!req.session.user) {
     err.statusCode = 403
-    err.message("Permission Required")
+    err.message="Permission Required";
     next(err)
   }
   if (req.session.user.role != "admin") {
     err.statusCode = 403
-    err.message("Admin Permission Required")
+    err.message="Admin Permission Required";
     next(err)
   }
   next();

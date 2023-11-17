@@ -16,7 +16,7 @@ storeSchema.statics.findByStoreId = function (storeId){  //find by storeId
 }
 
 storeSchema.statics.findByUserId = function (userId){  //find by userId
-  return this.find({userId: userId});
+  return this.find({userId: {$elemMatch:userId}});
 }
 
 storeSchema.statics.findByName = function (name){  //find by name

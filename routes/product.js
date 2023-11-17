@@ -29,6 +29,8 @@ router.get("/", async (req, res) => {
   const contentType = req.header("content-type");
   const user = req.session.user;
   const products = await Product.find();
+  const productImg = Buffer.from(products.body.img, 'base64');
+  products.body.img = productImg;
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(products));
@@ -42,6 +44,8 @@ router.get("/id/:id", async (req, res) => {
   const contentType = req.header("content-type");
   const id = req.params.id;
   const product = await Product.findByProductId(id);
+  const productImg = Buffer.from(product.body.img, 'base64');
+  product.body.img = productImg;
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(product));

@@ -5,14 +5,20 @@ const Product = require("../models/Product")
 const Store = require("../models/Store")
 
 const authAdmin = (req, res, next) => {
+  const err = {};
   if (!req.session.user) {
-    throw new Error("Permission Required");
+    err.statusCode = 403
+    err.message("Permission Required")
+    next(err)
   }
   if (req.session.user.role != "admin") {
-    throw new Error("Admin Permission Required");
+    err.statusCode = 403
+    err.message("Admin Permission Required")
+    next(err)
   }
   next();
 };
+
 const authOperator = (req, res, next) => {
   if (!req.session.user) {
     throw new Error("Permission Required");
@@ -66,11 +72,13 @@ router.delete("/productt/id/:id",authOperator,(req, res)=>{
 })
 
 router.use((err, req, res, next) => {
-  return res.status(400).send(`<h1>${err.message}</h1>`);
-});
-
-router.use("/*", (req, res) => {
-  res.status(404).send(`<h1>404 Not Found</h1>`);
+  res.setHeader("Content-Type", "application/json");
+  // Default error status code
+  const statusCode = err.statusCode || 500;
+  // Default error message
+  const message = err.message || 'Internal Server Error';
+  // Send error response
+  res.status(statusCode).json({ error: message });
 });
 
 // Start the server

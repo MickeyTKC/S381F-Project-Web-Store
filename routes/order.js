@@ -7,7 +7,8 @@ const Cart = require("../models/Cart");
 // the auth for Login required
 const auth = (req, res, next) => {
   if (!req.session.user) {
-    throw new Error("Login Required");
+    err.message("Login Required");
+    next(err);
   }
   next();
 };
@@ -44,12 +45,13 @@ router.put("/", auth, async (req, res) => {
 })
 
 router.use((err, req, res, next) => {
-  console.log(err);
-  return res.status(400).send(`<h1>${err.message}</h1>`);
-});
-
-router.use("/*", (req, res) => {
-  res.status(404).send(`<h1>404 Not Found</h1>`);
+  res.setHeader("Content-Type", "application/json");
+  // Default error status code
+  const statusCode = err.statusCode || 500;
+  // Default error message
+  const message = err.message || 'Internal Server Error';
+  // Send error response
+  res.status(statusCode).json({ error: message });
 });
 
 // Start the server

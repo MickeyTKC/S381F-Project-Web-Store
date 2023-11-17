@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
 //------------------Function start------------------
 
 userSchema.statics.findByUserId = function (userId){  //find by userId
-  return this.find({userId: userId});
+  return this.findOne({userId: userId});
 }
 
 userSchema.statics.findByName = function (name){  //find by name

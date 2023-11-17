@@ -81,6 +81,7 @@ router.post("/", auth, async (req, res) => {
   // sign up a new client role user
   if (!isExist) {
     const client = await User.create(user);
+    // add Cart 
     if (!client) {
       res.setHeader("Content-Type", "application/json");
       err.message = "Database Error";

@@ -25,12 +25,12 @@ const authOperator = (req, res, next) => {
   const err = {};
   if (!req.session.user) {
     err.statusCode = 403
-    err.message("Permission Required");
+    err.message="Permission Required";
     next(err)
   }
   if (req.session.user.role != "operator") {
     err.statusCode = 403
-    err.message("Admin/Operator Permission Required");
+    err.message="Admin/Operator Permission Required";
     next(err)
   }
   next();

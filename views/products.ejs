@@ -45,26 +45,9 @@
               <p class="card-text">Price: $<%= product.price %></p>
               <p class="card-text">Tags: <%= product.tags.join(", ") %></p>
 
-              <%if(!user){%>
-              <button
-                class="btn btn-primary"
-                class="btn btn-primary"
-                data-toggle="tooltip"
-                data-placement="top"
-                title="Pleas Login"
-              >
-                My Favorite
-              </button>
-              <%}%>
-              <%if(user){%>
-              <button
-                id="<%=product.productId%>"
-                class="btn btn-primary"
-                class="btn btn-primary"
-              >
-                My Favorite
-              </button>
-              <%}%>
+              <a href="/product/id/<%=product.productId%>" class="btn btn-primary" class="btn btn-primary">
+                View Details
+              </a>
             </div>
           </div>
         </div>
@@ -75,20 +58,6 @@
         <%}%>
       </div>
     </div>
-    <%- include('../views/components/foot',{user:user}); %>
-    <%if(user && products){%>
-        <script defer>
-            const products = JSON.parse(jsonData)
-            document.addEventListener("DOMContentLoaded",function(){
-                const buttons = [...document.querySelectorAll(".btn-primary")]
-                buttons.forEach((button)=>{
-                    button.addEventListener("click",function(){
-                        const product = products.filter(p=>p.productId=this.id)
-                        console.log(`Add ${this.id} to "My Favorite"`)
-                    })
-                })
-            })
-        </script>
-    <%}%>
+    <%- include('../views/components/foot',{user:user}); %> 
   </body>
 </html>

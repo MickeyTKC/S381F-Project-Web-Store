@@ -1,0 +1,120 @@
+[{
+  "productId": "product1",
+  "name": "Product 1",
+  "img": [],
+  "price": 9.99,
+  "discount": null,
+  "info": "Product 1 information",
+  "tags": [
+    "tag1",
+    "tag2"
+  ]
+},
+{
+  "productId": "product2",
+  "name": "Product 2",
+  "img": [],
+  "price": 19.99,
+  "discount": null,
+  "info": "Product 2 information",
+  "tags": [
+    "tag3",
+    "tag4"
+  ]
+},
+{
+  "productId": "product3",
+  "name": "Product 3",
+  "img": [],
+  "price": 14.99,
+  "discount": null,
+  "info": "Product 3 information",
+  "tags": [
+    "tag2",
+    "tag5"
+  ]
+},
+{
+  "productId": "product4",
+  "name": "Product 4",
+  "img": [],
+  "price": 29.99,
+  "discount": null,
+  "info": "Product 4 information",
+  "tags": [
+    "tag1",
+    "tag4"
+  ]
+},
+{
+  "productId": "product5",
+  "name": "Product 5",
+  "img": [],
+  "price": 12.99,
+  "discount": null,
+  "info": "Product 5 information",
+  "tags": [
+    "tag3",
+    "tag6"
+  ]
+},
+{
+  "productId": "product6",
+  "name": "Product 6",
+  "img": [],
+  "price": 24.99,
+  "discount": null,
+  "info": "Product 6 information",
+  "tags": [
+    "tag1",
+    "tag5"
+  ]
+},
+{
+  "productId": "product7",
+  "name": "Product 7",
+  "img": [],
+  "price": 8.99,
+  "discount": null,
+  "info": "Product 7 information",
+  "tags": [
+    "tag4",
+    "tag6"
+  ]
+},
+{
+  "productId": "product8",
+  "name": "Product 8",
+  "img": [],
+  "price": 16.99,
+  "discount": null,
+  "info": "Product 8 information",
+  "tags": [
+    "tag2",
+    "tag3"
+  ]
+},
+{
+  "productId": "product9",
+  "name": "Product 9",
+  "img": [],
+  "price": 11.99,
+  "discount": null,
+  "info": "Product 9 information",
+  "tags": [
+    "tag2",
+    "tag4"
+  ]
+},
+{
+  "productId": "product10",
+  "name": "Product 10",
+  "img": [],
+  "price": 19.99,
+  "discount": null,
+  "info": "Product 10 information",
+  "tags": [
+    "tag1",
+    "tag5"
+  ]
+}]

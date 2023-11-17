@@ -4,11 +4,16 @@ const User = require("../models/User");
 
 // the auth for permission request
 const auth = (req, res, next) => {
+  const err = {};
   if (!req.session.user) {
-    throw new Error("Permission Required");
+    err.statusCode = 403
+    err.message("Permission Required")
+    next(err)
   }
   if (req.session.user.role != "admin") {
-    throw new Error("Admin Permission Required");
+    err.statusCode = 403
+    err.message("Admin Permission Required")
+    next(err)
   }
   next();
 };
@@ -101,13 +106,14 @@ router.delete("/id/:id", auth, async(req, res)=>{
 })
 
 router.use((err, req, res, next) => {
-  return res.status(400).send(`<h1>${err.message}</h1>`);
+  res.setHeader("Content-Type", "application/json");
+  // Default error status code
+  const statusCode = err.statusCode || 500;
+  // Default error message
+  const message = err.message || 'Internal Server Error';
+  // Send error response
+  res.status(statusCode).json({ error: message });
 });
-
-
-router.use("/*", (req, res) => {
-  res.status(404).send(`<h1>404 Not Found</h1>`)
-} )
 
 // Start the server
 module.exports = router;

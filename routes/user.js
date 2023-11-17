@@ -99,10 +99,49 @@ router.post("/", auth, async (req, res) => {
 // put user request for edit new user
 router.put("/id/:id", auth, async(req, res)=>{
   console.log("Edit User Infomation");
+  const contentType = req.header("content-type");
+  const err = {};
+  const user = {
+    password: req.body.password,
+    role: req.body.role,
+    name: req.body.name,
+    info: req.body.info,
+    address: req.body.address,
+    email: req.body.email,
+    phoneNo: req.body.phoneNo
+  };
+  console.log(user);
+  try {
+    const editUser = await User.findOneAndUpdate(
+      { userId : req.params.id },
+      user
+    );
+    if (contentType == "application/json") {
+      res.status(200).json(editUser);
+    }
+    if (!contentType) {
+      res.redirect("/user");
+    }
+  } catch (e) {
+    next(e);
+  }
 })
 
 router.delete("/id/:id", auth, async(req, res)=>{
-  console.log("Edit User Infomation");
+  console.log("Del User Infomation");
+  const contentType = req.header("content-type");
+  const err = {};
+  try {
+    const delUser = await User.findOneAndDelete({ userId : req.params.id });
+    if (contentType == "application/json") {
+      res.status(200).json(delUser);
+    }
+    if (!contentType) {
+      res.redirect("/user");
+    }
+  } catch (e) {
+    next(e);
+  }
 })
 
 router.use((err, req, res, next) => {

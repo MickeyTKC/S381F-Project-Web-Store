@@ -12,7 +12,7 @@ const storeSchema = new mongoose.Schema({
 //------------------Function start------------------
 
 storeSchema.statics.findByStoreId = function (storeId){  //find by storeId
-  return this.find({storeId: storeId});
+  return this.findOne({storeId: storeId});
 }
 
 storeSchema.statics.findByUserId = function (userId){  //find by userId

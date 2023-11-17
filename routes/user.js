@@ -91,7 +91,11 @@ router.post("/", auth, async (req, res) => {
 });
 
 // put user request for edit new user
-router.put("/", auth, async(req, res)=>{
+router.put("/id/:id", auth, async(req, res)=>{
+  console.log("Edit User Infomation");
+})
+
+router.delete("/id/:id", auth, async(req, res)=>{
   console.log("Edit User Infomation");
 })
 

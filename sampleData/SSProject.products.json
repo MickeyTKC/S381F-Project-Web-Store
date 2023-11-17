@@ -1,7 +1,7 @@
 [{
   "productId": "product1",
   "name": "Product 1",
-  "img": [],
+  "img": null,
   "date": "2021-09-15T10:30:00Z",
   "price": 9.99,
   "discount": null,
@@ -14,7 +14,7 @@
 {
   "productId": "product2",
   "name": "Product 2",
-  "img": [],
+  "img":null,
   "date": "2021-09-16T10:30:00Z",
   "price": 19.99,
   "discount": null,
@@ -27,7 +27,7 @@
 {
   "productId": "product3",
   "name": "Product 3",
-  "img": [],
+  "img": null,
   "date": "2021-09-17T10:30:00Z",
   "price": 14.99,
   "discount": null,
@@ -40,7 +40,7 @@
 {
   "productId": "product4",
   "name": "Product 4",
-  "img": [],
+  "img": null,
   "date": "2021-09-19T10:30:00Z",
   "price": 29.99,
   "discount": null,
@@ -53,7 +53,7 @@
 {
   "productId": "product5",
   "name": "Product 5",
-  "img": [],
+  "img": null,
   "date": "2021-09-20T10:30:00Z",
   "price": 12.99,
   "discount": null,
@@ -66,7 +66,7 @@
 {
   "productId": "product6",
   "name": "Product 6",
-  "img": [],
+  "img": null,
   "date": "2021-09-21T10:30:00Z",
   "price": 24.99,
   "discount": null,
@@ -79,7 +79,7 @@
 {
   "productId": "product7",
   "name": "Product 7",
-  "img": [],
+  "img": null,
   "date": "2021-09-23T10:30:00Z",
   "price": 8.99,
   "discount": null,
@@ -92,7 +92,7 @@
 {
   "productId": "product8",
   "name": "Product 8",
-  "img": [],
+  "img": null,
   "date": "2021-09-24T10:30:00Z",
   "price": 16.99,
   "discount": null,
@@ -105,7 +105,7 @@
 {
   "productId": "product9",
   "name": "Product 9",
-  "img": [],
+  "img": null,
   "date": "2021-09-25T10:30:00Z",
   "price": 11.99,
   "discount": null,
@@ -118,7 +118,7 @@
 {
   "productId": "product10",
   "name": "Product 10",
-  "img": [],
+  "img": null,
   "date": "2021-09-27T10:30:00Z",
   "price": 19.99,
   "discount": null,

@@ -5,9 +5,9 @@ const Store = require("../models/Store");
 const User = require("../models/User");
 
 const fileupload = require("express-fileupload");
-const fs = require('fs');
+const fs = require("fs");
 
-app.use(fileupload());
+router.use(fileupload());
 
 const auth = (req, res, next) => {
   const err = {};
@@ -27,12 +27,13 @@ const auth = (req, res, next) => {
 // get product request for view all products
 router.get("/", async (req, res) => {
   const contentType = req.header("content-type");
+  const user = req.session.user;
   const products = await Product.find();
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(products));
   } else {
-    res.render("../views/products.ejs", { products: products });
+    res.render("../views/products.ejs", { products: products, user: user });
   }
 });
 
@@ -95,7 +96,9 @@ router.post("/", async (req, res, next) => {
   const err = {};
   // get data
   const uploadImg = req.files.img;
-  const imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
+  const imgData = fs.readFileSync(uploadImg.tempFilePath, {
+    encoding: "base64",
+  });
   const product = {
     productId: req.body.productId,
     name: req.body.name,
@@ -104,7 +107,7 @@ router.post("/", async (req, res, next) => {
     discount: req.body.discount,
     info: req.body.info,
     tags: [],
-    date: new Date().toISOString()
+    date: new Date().toISOString(),
   };
   try {
     const newProduct = await Product.create(product);
@@ -125,7 +128,9 @@ router.put("/", auth, async (req, res) => {
   const err = {};
   // get data
   const uploadImg = req.files.img;
-  const imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
+  const imgData = fs.readFileSync(uploadImg.tempFilePath, {
+    encoding: "base64",
+  });
   const product = {
     productId: req.body.productId,
     name: req.body.name,
@@ -136,15 +141,18 @@ router.put("/", auth, async (req, res) => {
     tags: req.body.tags,
   };
   console.log(product);
-  try{
-    const editProduct = await Product.findOneAndUpdate({ productId: req.body.product }, product);
+  try {
+    const editProduct = await Product.findOneAndUpdate(
+      { productId: req.body.product },
+      product
+    );
     if (contentType == "application/json") {
       res.status(200).json(editProduct);
     }
     if (!contentType) {
       res.redirect("/product");
     }
-  }catch (e) {
+  } catch (e) {
     next(e);
   }
 });

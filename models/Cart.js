@@ -16,7 +16,7 @@ const cartSchema = new mongoose.Schema({
 //------------------Function start------------------
 
 cartSchema.statics.findByUserId = function (userId){  //find by userId
-  return this.find({userId: userId}).sort({date:1});
+  return this.findOne({userId: userId});
 }
 
 module.exports = mongoose.model("Cart", cartSchema);

@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema({
   product: [{
     productId: { type: String, required: true },
     name: { type: String, required: true },
-    img: { type:[{type:Buffer}]},
+    img: { type:String},
     price: { type: Number, required: true, $gte: 0 },
     qty: { type: Number, required: true, $gte: 0 }
   }]

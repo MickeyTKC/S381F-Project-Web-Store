@@ -126,5 +126,15 @@ router.put("/", auth, async (req, res) => {
   console.log(product);
 });
 
+
+router.use((err, req, res, next) => {
+  return res.status(400).send(`<h1>${err.message}</h1>`);
+});
+
+
+router.use("/*", (req, res) => {
+  res.status(404).send(`<h1>404 Not Found</h1>`)
+} )
+
 // Start the server
 module.exports = router;

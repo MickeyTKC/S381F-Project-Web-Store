@@ -12,7 +12,6 @@
       "img": null,
       "price": 9.99,
       "discount": null,
-      "info": "Product 1 information",
       "qty": 2
     },
     {
@@ -21,7 +20,6 @@
       "img": null,
       "price": 12.99,
       "discount": null,
-      "info": "Product 5 information",
       "qty": 1
     }
   ]
@@ -40,7 +38,6 @@
       "img": null,
       "price": 11.99,
       "discount": null,
-      "info": "Product 9 information",
       "qty": 3
     },
     {
@@ -49,7 +46,6 @@
       "img": null,
       "price": 29.99,
       "discount": null,
-      "info": "Product 4 information",
       "qty": 2
     }
   ]

@@ -4,6 +4,11 @@ const Product = require("../models/Product");
 const Store = require("../models/Store");
 const User = require("../models/User");
 
+const fileupload = require("express-fileupload");
+const fs = require('fs');
+
+app.use(fileupload());
+
 const auth = (req, res, next) => {
   const err = {};
   if (!req.session.user) {
@@ -89,10 +94,12 @@ router.post("/", async (req, res, next) => {
   const contentType = req.header("content-type");
   const err = {};
   // get data
+  const uploadImg = req.files.img;
+  const imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
   const product = {
     productId: req.body.productId,
     name: req.body.name,
-    img: [],
+    img: imgData,
     price: req.body.price,
     discount: req.body.discount,
     info: req.body.info,
@@ -117,17 +124,29 @@ router.put("/", auth, async (req, res) => {
   const contentType = req.header("content-type");
   const err = {};
   // get data
+  const uploadImg = req.files.img;
+  const imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: 'base64' });
   const product = {
     productId: req.body.productId,
     name: req.body.name,
-    img: req.body.img,
+    img: imgData,
     price: req.body.price,
     discount: req.body.discount,
     info: req.body.info,
     tags: req.body.tags,
   };
   console.log(product);
-  await Product.findOneAndUpdate({ productId: req.body.product }, product);
+  try{
+    const editProduct = await Product.findOneAndUpdate({ productId: req.body.product }, product);
+    if (contentType == "application/json") {
+      res.status(200).json(editProduct);
+    }
+    if (!contentType) {
+      res.redirect("/product");
+    }
+  }catch (e) {
+    next(e);
+  }
 });
 
 router.use((err, req, res, next) => {

@@ -17,7 +17,6 @@ router.post("/login", async (req, res) => {
   const pw = req.body.password;
   // get user data from db 
   const user = await User.findByUserId(id)
-  console.log(user)
   const err = {};
   // wrong input handling
   if (!user) {

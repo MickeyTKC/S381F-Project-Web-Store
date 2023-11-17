@@ -1,7 +1,5 @@
 const express = require("express");
-const app = express();
 const router = express.Router();
-const session = require("express-session");
 
 const User = require("../models/User");
 
@@ -11,7 +9,7 @@ router.get("/login", (req, res) => {
 });
 
 // post login request
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   // get request data
   const id = req.body.userId;
   const pw = req.body.password;
@@ -20,25 +18,21 @@ router.post("/login", async (req, res) => {
   const err = {};
   // wrong input handling
   if (!user) {
-    res.setHeader("Content-Type", "application/json");
+    err.statusCode = 400
     err.message = "User does not exist.";
-    res.send(JSON.stringify(err));
-    return;
+    next(err)
   }
   if (user.password != pw) {
-    res.setHeader("Content-Type", "application/json");
+    err.statusCode = 400
     err.message = "The password is incorrect.";
-    res.send(JSON.stringify(err));
-    return;
+    next(err)
   }
   // correct input handling
   if (user.password == pw) {
     // setup express session
     req.session.authenticated = true;
     req.session.user = user;
-    req.session.save(()=>{
-      console.log('Login Successfully. session save.')
-    })
+    console.log('Login Successfully. session save.')
     res.redirect('/')
   }
 });
@@ -60,10 +54,9 @@ router.post("/signup", async (req, res) => {
   const err = {};
   // wrong input handlng
   if(!user.userId || !user.password || !user.role || !user.name){
-    res.setHeader("Content-Type", "application/json");
+    err.statusCode = 400
     err.message = "Wrong User Input" 
-    res.send(JSON.stringify(err));
-    return;
+    next(err)
   }
   // get user data from db for checking
   const isExist = User.findById(user.userId);
@@ -79,9 +72,9 @@ router.post("/signup", async (req, res) => {
     const client = await User.create(user)
     // add Cart 
     if (!client) {
-      res.setHeader("Content-Type", "application/json");
+      err.statusCode = 400
       err.message = "Database Error";
-      res.send(JSON.stringify(err));
+      next(err)
     }
     res.redirect('/')
   }
@@ -89,13 +82,21 @@ router.post("/signup", async (req, res) => {
 
 // post logout request
 router.post("/logout",(req,res)=>{
-  if(!req.session.user){
-    throw new Error("Login Required")
-  }
-  req.session.destroy(() => {
-    console.log('session destroyed')
-  })
+  req.session = null;
+  console.log('cookie-session destroyed')
   res.redirect('/')
 })
+
+// Error handling middleware
+router.use((err, req, res, next) => {
+  res.setHeader("Content-Type", "application/json");
+  // Default error status code
+  const statusCode = err.statusCode || 500;
+  // Default error message
+  const message = err.message || 'Internal Server Error';
+  // Send error response
+  res.status(statusCode).json({ error: message });
+});
+//
 
 module.exports = router;

@@ -12,7 +12,6 @@ const orderSchema = new mongoose.Schema({
     name: { type: String, required: true },
     img: { type:[{type:Buffer}]},
     price: { type: Number, required: true, $gte: 0 },
-    info: { type: String },
     qty: { type: Number, required: true, $gte: 0 }
   }]
 })

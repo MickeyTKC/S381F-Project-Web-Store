@@ -105,10 +105,10 @@ router.put("/id/:id", auth, async(req, res)=>{
     password: req.body.password,
     role: req.body.role,
     name: req.body.name,
-    info: req.body.info,
-    address: req.body.address,
-    email: req.body.email,
-    phoneNo: req.body.phoneNo
+    info: req.body.info || "",
+    address: req.body.address || "",
+    email: req.body.email || "",
+    phoneNo: req.body.phoneNo || "",
   };
   console.log(user);
   try {

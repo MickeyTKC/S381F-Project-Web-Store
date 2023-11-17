@@ -78,8 +78,10 @@ router.post("/signup", async (req, res) => {
   // sign up a new client role user
   if(!isExist){
     const client = await User.create(user)
-    if(!client){
-      throw new Erorr ("DB Error")
+    if (!client) {
+      res.setHeader("Content-Type", "application/json");
+      err.message = "Database Error";
+      res.send(JSON.stringify(err));
     }
     res.redirect('/')
   }

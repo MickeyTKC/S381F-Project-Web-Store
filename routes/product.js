@@ -7,14 +7,14 @@ const User = require("../models/User");
 const auth = (req, res, next) => {
   const err = {};
   if (!req.session.user) {
-    err.statusCode = 403
-    err.message("Permission Required")
-    next(err)
+    err.statusCode = 403;
+    err.message = "Permission Required";
+    next(err);
   }
-  if (req.session.user.role != "operator" || req.session.user.role != "admin") {
-    err.statusCode = 403
-    err.message("Admin/Operator Permission Required")
-    next(err)
+  if (req.session.user.role != "operator" && req.session.user.role != "admin") {
+    err.statusCode = 403;
+    err.message = "Admin/Operator Permission Required";
+    next(err);
   }
   next();
 };
@@ -85,8 +85,7 @@ router.get("/search/:words", async (req, res) => {
 });
 
 // post product request for create new porduct
-router.post("/", auth, async (req, res) => {
-  console.log('wink');
+router.post("/", async (req, res, next) => {
   const contentType = req.header("content-type");
   const err = {};
   // get data
@@ -98,14 +97,19 @@ router.post("/", auth, async (req, res) => {
     discount: req.body.discount,
     info: req.body.info,
     tags: [],
+    date: new Date().toISOString()
   };
-  console.log(product);
-  try{
+  try {
     const newProduct = await Product.create(product);
-  }catch(e){
+    if (contentType == "application/json") {
+      res.status(200).json(newProduct);
+    }
+    if (!contentType) {
+      res.redirect("/product");
+    }
+  } catch (e) {
     next(e);
   }
-  
 });
 
 // put product request for edit product information
@@ -123,16 +127,15 @@ router.put("/", auth, async (req, res) => {
     tags: req.body.tags,
   };
   console.log(product);
-  await Product.findOneAndUpdate({productId:req.body.product},product);
+  await Product.findOneAndUpdate({ productId: req.body.product }, product);
 });
-
 
 router.use((err, req, res, next) => {
   res.setHeader("Content-Type", "application/json");
   // Default error status code
   const statusCode = err.statusCode || 500;
   // Default error message
-  const message = err.message || 'Internal Server Error';
+  const message = err.message || "Internal Server Error";
   // Send error response
   res.status(statusCode).json({ error: message });
 });

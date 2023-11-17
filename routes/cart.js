@@ -40,11 +40,22 @@ router.post("/", auth, async (req, res) => {
   console.log("adding porduct to cart");
 });
 
-router.put("/producId/:id", auth, async (req, res, next) => {
+router.put("/productId/:id", auth, async (req, res, next) => {
   const userId = req.session.user.userId;
   const productOfCart = req.params.id;
   const product = await Product.findByProductId(productOfCart);
   try {
+    const checkCart = await Cart.findOne({
+      userId: userId,
+      product: {
+        $elemMatch: {
+          productId: productOfCart,
+        },
+      },
+    });
+    if (checkCart) {
+      next(e);
+    }
     console.log(
       `put product ${product.productId}-${product.name} from User:${userId} Name:${req.session.user.name}`
     );
@@ -53,9 +64,8 @@ router.put("/producId/:id", auth, async (req, res, next) => {
       name: product.name,
       img: "",
       price: product.price,
-      qty: 1
+      qty: 1,
     };
-    console.log(newProduct)
     const pushProduct = await Cart.updateOne(
       { userId: userId },
       { $push: { product: newProduct } }
@@ -65,7 +75,7 @@ router.put("/producId/:id", auth, async (req, res, next) => {
   }
 });
 
-router.delete("/producId/:id", auth, async (req, res, next) => {
+router.delete("/productId/:id", auth, async (req, res, next) => {
   const userId = req.session.user.userId;
   const productOfCart = req.params.id;
   console.log(
@@ -79,7 +89,6 @@ router.delete("/producId/:id", auth, async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-  res.redirect("/cart");
 });
 
 router.use((err, req, res, next) => {

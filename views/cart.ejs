@@ -41,7 +41,9 @@
               <td><img src="<%= product.img %>" /></td>
               <td><%= product.name %></td>
               <td>$<%= product.price %></td>
-              <th><from method="delete" action="/cart/producId/<%=product.productId%>"><input type="submit" class="btn btn-danger" value="Delete"/></from></th>
+              <th>
+                <button id="<%=product.productId%>" class="btn btn-danger">Delete</button></th>
+              </th>
             </tr>
             <%}%>
           </tbody>
@@ -50,6 +52,16 @@
         <%}%> <%}%>
       </div>
     </div>
-    <%- include('../views/components/foot',{user:user}); %>
+    <%- include('../views/components/foot',{user:user}); %> <% if(user) {%>
+    <script>
+      const deleteButtons = [...document.querySelectorAll(".btn-danger")]
+      deleteButtons.forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+            deleteData(`/cart/productId/${btn.id}`)
+            location.reload()
+        })
+      })
+    </script>
+    <%}%>
   </body>
 </html>

@@ -3,6 +3,8 @@ const user = require("./user")
 const product = require("./product")
 const store = require("./store")
 const cart = require("./cart")
+const api = require("./api")
+
 
 
 module.exports = {
@@ -11,4 +13,5 @@ module.exports = {
     product,
     store,
     cart,
+    api,
 };

@@ -4,16 +4,25 @@ const User = require("../models/User");
 
 // the auth for permission request
 const auth = (req, res, next) => {
+  const user = req.session.user || {role:"client"} ;
+  const contentType = req.header("content-type");
   const err = {};
-  if (!req.session.user) {
-    err.statusCode = 403
-    err.message="Permission Required";
-    next(err)
+  if (!user) {
+    err.statusCode = 403;
+    err.message = "Permission Required";
   }
-  if (req.session.user.role != "admin") {
-    err.statusCode = 403
-    err.message="Admin Permission Required";
-    next(err)
+  if (user.role != "admin") {
+    err.statusCode = 403;
+    err.message = "Admin Permission Required";
+  }
+  console.log(err);
+  if (!contentType && err.statusCode) {
+    res
+      .status(err.statusCode)
+      .render("../views/error", { user: user, err: err });
+  }
+  if (contentType && err.statusCode) {
+    next(err);
   }
   next();
 };
@@ -21,12 +30,13 @@ const auth = (req, res, next) => {
 // get user request for user view all user
 router.get("/", auth, async (req, res) => {
   const contentType = req.header("content-type");
+  const self = req.session.user
   const users = await User.find();
   // contentType handling
   if (contentType == "application/json") {
     res.send(JSON.stringify(users));
   } else {
-    res.render("../views/users.ejs", { users: users });
+    res.render("../views/users.ejs", { users: users ,user:self});
   }
 });
 
@@ -42,8 +52,8 @@ router.get("/id/:id", async (req, res) => {
   if (contentType == "application/json") {
     if (!user) {
       err.message = "User does not exist.";
-      err.statusCode = 502
-      next(err)
+      err.statusCode = 502;
+      next(err);
     }
     res.send(JSON.stringify(user));
   } else {
@@ -57,7 +67,7 @@ router.get("/id/:id/edit", async (req, res) => {
   const self = req.session.user;
   // Error handling
   const err = {};
-})
+});
 
 // post user request for add new user
 router.post("/", auth, async (req, res) => {
@@ -93,7 +103,7 @@ router.post("/", auth, async (req, res) => {
   // sign up a new client role user
   if (!isExist) {
     const client = await User.create(user);
-    // add Cart 
+    // add Cart
     if (!client) {
       res.setHeader("Content-Type", "application/json");
       err.message = "Database Error";
@@ -104,7 +114,7 @@ router.post("/", auth, async (req, res) => {
 });
 
 // put user request for edit new user
-router.put("/id/:id", auth, async(req, res)=>{
+router.put("/id/:id", auth, async (req, res) => {
   console.log("Edit User Infomation (AdminPermission)");
   const contentType = req.header("content-type");
   const err = {};
@@ -120,7 +130,7 @@ router.put("/id/:id", auth, async(req, res)=>{
   console.log(user);
   try {
     const editUser = await User.findOneAndUpdate(
-      { userId : req.params.id },
+      { userId: req.params.id },
       user
     );
     if (contentType == "application/json") {
@@ -132,10 +142,10 @@ router.put("/id/:id", auth, async(req, res)=>{
   } catch (e) {
     next(e);
   }
-})
+});
 
-//user(client/operator) edit information 
-router.put("/id/:id", async (req, res)=>{
+//user(client/operator) edit information
+router.put("/id/:id", async (req, res) => {
   console.log("Edit User Infomation");
   const contentType = req.header("content-type");
   const err = {};
@@ -150,7 +160,7 @@ router.put("/id/:id", async (req, res)=>{
   console.log(user);
   try {
     const editUser = await User.findOneAndUpdate(
-      { userId : req.params.id },
+      { userId: req.params.id },
       user
     );
     if (contentType == "application/json") {
@@ -162,14 +172,14 @@ router.put("/id/:id", async (req, res)=>{
   } catch (e) {
     next(e);
   }
-})
+});
 
-router.delete("/id/:id", auth, async(req, res)=>{
+router.delete("/id/:id", auth, async (req, res) => {
   console.log("Del User Infomation");
   const contentType = req.header("content-type");
   const err = {};
   try {
-    const delUser = await User.findOneAndDelete({ userId : req.params.id });
+    const delUser = await User.findOneAndDelete({ userId: req.params.id });
     if (contentType == "application/json") {
       res.status(200).json(delUser);
     }
@@ -179,14 +189,14 @@ router.delete("/id/:id", auth, async(req, res)=>{
   } catch (e) {
     next(e);
   }
-})
+});
 
 router.use((err, req, res, next) => {
   res.setHeader("Content-Type", "application/json");
   // Default error status code
   const statusCode = err.statusCode || 500;
   // Default error message
-  const message = err.message || 'Internal Server Error';
+  const message = err.message || "Internal Server Error";
   // Send error response
   res.status(statusCode).json({ error: message });
 });

@@ -46,9 +46,8 @@ router.get("/id/:id", async (req, res) => {
   const id = req.params.id;
   const product = await Product.findByProductId(id);
   var productImg;
-  if (product.img) productImg = Buffer.from(product.img, "base64");
-  product.img = productImg
-    ? `data:image/jpg;base64,${productImg}`
+  if (product.img) productImg = product.img
+    ? productImg
     : "/noImage.jpg";
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
@@ -106,14 +105,10 @@ router.post("/", async (req, res, next) => {
   const contentType = req.header("content-type");
   const err = {};
   // get data
-  const uploadImg = req.files.img;
-  const imgData = fs.readFileSync(uploadImg.tempFilePath, {
-    encoding: "base64",
-  });
   const product = {
     productId: req.body.productId,
     name: req.body.name,
-    img: imgData || "",
+    img: req.body.img || "",
     price: req.body.price,
     discount: req.body.discount || "",
     info: req.body.info || "",
@@ -134,18 +129,14 @@ router.post("/", async (req, res, next) => {
 });
 
 // put product request for edit product information
-router.put("/id/:id", auth, async (req, res) => {
+router.post("/id/:id", auth, async (req, res) => {
   const contentType = req.header("content-type");
   const err = {};
   // get data
-  const uploadImg = req.files.img;
-  const imgData = fs.readFileSync(uploadImg.tempFilePath, {
-    encoding: "base64",
-  });
   const product = {
     //productId: req.body.productId,
     name: req.body.name,
-    img: imgData || "",
+    img: req.body.img || "",
     price: req.body.price,
     discount: req.body.discount || "",
     info: req.body.info || "",

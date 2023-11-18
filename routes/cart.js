@@ -14,7 +14,7 @@ const auth = (req, res, next) => {
     err.message = "Login Required";
   }
   if(err.statusCode){
-    return !contentType ? next(err) : res.status(err.statusCode).render("../views/error",{user:user,err:err})
+    return contentType ? next(err) : res.status(err.statusCode).render("../views/error",{user:user,err:err})
   }
   next();
 };

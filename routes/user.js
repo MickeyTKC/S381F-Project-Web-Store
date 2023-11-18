@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Cart = require("../models/Cart");
 
 // the auth for permission request
 const auth = (req, res, next) => {
@@ -107,6 +108,8 @@ router.post("/", auth, async (req, res) => {
   if (!isExist) {
     const client = await User.create(user);
     // add Cart
+    const cart = await Cart.create({userId: user.userId, product:[]});
+    console.log(cart);
     if (!client) {
       res.setHeader("Content-Type", "application/json");
       err.message = "Database Error";

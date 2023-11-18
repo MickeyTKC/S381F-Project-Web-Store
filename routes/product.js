@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
   for(p of products){
     p.img = p.img || "/noImage.jpg";
   }
-  console.log(products)
+  //console.log(products)
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(products));

@@ -26,9 +26,7 @@ router.get("/", auth, async (req, res) => {
   const myCart = await Cart.findByUserId(userId);
   if (myCart) {
     for (p of myCart.product) {
-      var myCartImg;
-      if (p.img) myCartImg = new Buffer(p.img, "base64").toString();
-      p.img = myCartImg ? `data:image/jpg;base64,${myCartImg}` : "/noImage.jpg";
+      p.img = p.img || "/noImage.jpg";
     }
   }
   if (contentType == "application/json") {
@@ -68,14 +66,16 @@ router.put("/productId/:id", auth, async (req, res, next) => {
     const newProduct = {
       productId: product.productId,
       name: product.name,
-      img: "",
+      img: product.img,
       price: product.price,
       qty: 1,
     };
+    console.log(newProduct)
     const pushProduct = await Cart.updateOne(
       { userId: userId },
       { $push: { product: newProduct } }
     );
+    console.log(pushProduct)
   } catch (e) {
     next(e);
   }

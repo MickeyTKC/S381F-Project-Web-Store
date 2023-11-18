@@ -15,17 +15,15 @@ const authAdmin = (req, res, next) => {
   if (!user) {
     err.statusCode = 403;
     err.message = "Permission Required";
-
+    next(err)
   }
   if (user.role != "admin") {
     err.statusCode = 403;
     err.message = "Admin Permission Required";
-  }
-  if (!contentType){
-    res.status(err.statusCode).render("../views/error",{user:user,err:err})
-  }
-  if(err.statusCode){
     next(err)
+  }
+  if (!contentType && err.statusCode){
+    res.status(err.statusCode).render("../views/error",{user:user,err:err})
   }
   next();
 };

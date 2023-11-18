@@ -61,23 +61,21 @@ router.get("/edit", authAdmin, async (req, res) => {
 
 
 // edit store information
-router.put("/", async (req, res) => {
+router.post("/edit", async (req, res) => {
   //store update
   const contentType = req.header("content-type");
   const err = {};
   // get data
   const storeData = await Store.findOne({});
-  const uploadImg = req.files.img;
-  if (uploadImg)
-    imgData = fs.readFileSync(uploadImg.tempFilePath, { encoding: "base64" });
+  console.log(storeData.storeId);
   const store = {
     name: req.body.name,
-    img: imgData || "", //store logo
+    img: req.body.img || "", //store logo
     info: req.body.info || "",
     address: req.body.address,
   };
   console.log(store);
-  await Store.updateOne(storeData.storeId, store);
+  await Store.updateOne({storeId: storeData.storeId}, {$set: store});
 });
 
 router.use((err, req, res, next) => {

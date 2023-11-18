@@ -41,6 +41,12 @@
           <button class="btn btn-primary">
             Add to My Favorite
           </button>
+          <% const displayEdit = user.role || "client" %>
+          <%if(displayEdit == "admin") {%>
+          <div class="fixed-bottom p-5 text-right">
+          <a class="btn btn-light border-dark" href="/prodcut/<%= product.productId %>">Edit</a>
+          </div>
+          <%}%>
         </div>
       </div>
     </div>

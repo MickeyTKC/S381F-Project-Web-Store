@@ -27,14 +27,21 @@
       <li class="nav-item">
           <a class="nav-link ripple-effect" href="/login.html">Login</a>
       </li>
-      <%}%> <%if (user) {%> <%if (user.role=="admin") {%><li class="nav-item px-2"><a href="/user" class="btn btn-light ripple-effect">Users</a></li><%}%>
-      
+      <%}%>
+       <%if (user) {%>
+        <%if (!user.role) {%>
+          <li class="nav-item">
+              <a class="nav-link ripple-effect" href="/login.html">Login</a>
+          </li>
+          <%}%>
+         <%if (user.role=="admin") {%><li class="nav-item px-2"><a href="/user" class="btn btn-light ripple-effect">Users</a></li><%}%>
+      <%if (user.role) {%>
       <li class="nav-item">
         <form action="/auth/logout" method="post">
             <button type="submit" class="btn btn-light">Logout</button>
         </form> 
       </li>
-      <%}%>
+      <%}%><%}%>
     </ul>
   </div>
 </nav>

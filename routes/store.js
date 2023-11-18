@@ -9,16 +9,23 @@ const Store = require("../models/Store");
 router.use(fileupload());
 
 const authAdmin = (req, res, next) => {
+  const user = req.session.user || {role:"client"}
   const err = {};
-  if (!req.session.user) {
+  const contentType = req.header("content-type");
+  if (!user) {
     err.statusCode = 403;
     err.message = "Permission Required";
-    next(err);
+
   }
-  if (req.session.user.role != "admin") {
+  if (user.role != "admin") {
     err.statusCode = 403;
     err.message = "Admin Permission Required";
-    next(err);
+  }
+  if (!contentType){
+    res.status(err.statusCode).render("../views/error",{user:user,err:err})
+  }
+  if(err.statusCode){
+    next(err)
   }
   next();
 };
@@ -45,6 +52,15 @@ router.get("/", async (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.status(200).render("../views/store", { user: user, store: storeData });
 });
+
+router.get("/edit", authAdmin, async (req, res) => {
+  const user = req.session.user || {};
+  const storeData = await Store.findOne({});
+  res.setHeader("Content-Type", "text/html");
+  res.status(200).render("../views/storeEdit", { user: user, store: storeData });
+});
+
+
 
 // edit store information
 router.put("/", async (req, res) => {

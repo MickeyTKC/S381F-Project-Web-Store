@@ -1,16 +1,56 @@
-<% if(!user){%>
-  <h1>User does not exsit</h1>
-<%}%> 
-<% if(user){%>
-<h1>User Information</h1>
-<ul>
-  <li>User ID: <%=user.userId%></li>
-  <li>Name: <%=user.name%></li>
-  <li>Information <%=user.info%></li>
-</ul>
-<% if(self){ if(self.role=="admin" || user.userId == self.userId) {%>
-<from action="" method="post">
-  <button type="submit">Edit</button>
-</from>
-<%} }%>
-<%}%> 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../views/components/head'); %>
+    <title>All User</title>
+    <style>
+      .table img {
+        height: 100px;
+        object-fit: cover;
+      }
+      .empty-message {
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('../views/components/navbar'); %>
+    <div class="container">
+      <div class="py-3">
+        <h1>User: <%= user.name %></h1>
+        <hr />
+        </div>
+        <% if(!user){%>
+          <h1>User does not exsit</h1>
+        <%}%> 
+        <%if(user){%>
+          <div>
+            <h4>Role: <%= user.role %></h4>
+            <h4>Information:</h4>
+            <p><%= user.info %></p>
+            <h4>Address:</h4>
+            <%if(user.role="admin" || user.userId == self.userId){%>
+
+            <p><%= user.address %></p>
+            <h4>Email:</h4>
+            <p><%= user.email %></p>
+            <h4>Phone Number:</h4>
+            <p><%= user.phoneNo %></p>
+            <%}%>
+          </div>
+        <%}%>
+      </div>
+      <% const displayEdit = user.role || "client" %>
+      <%if(displayEdit == "admin") {%>
+      <div class="fixed-bottom p-5 text-right">
+        <a class="btn btn-light border-dark" href="/store/edit">Edit</a>
+      </div>
+      <%}%>
+    </div>
+    <%- include('../views/components/foot',{user:user}); %>
+  </body>
+</html>

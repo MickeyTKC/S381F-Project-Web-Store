@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Edit Store Information</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Edit Store Information</h1>
+    <hr>
+    <form action="/update-store" method="POST">
+      <div class="form-group">
+        <label for="storeId">Store ID:</label>
+        <input type="text" class="form-control" id="storeId" name="storeId" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="img">Store Logo:</label>
+        <input type="text" class="form-control" id="img" name="img">
+      </div>
+      <div class="form-group">
+        <label for="info">Information:</label>
+        <textarea class="form-control" id="info" name="info" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" class="form-control" id="address" name="address" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

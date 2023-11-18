@@ -35,7 +35,6 @@ router.get("/id/:id", async (req, res) => {
   const contentType = req.header("content-type");
   const id = req.params.id;
   const user = await User.findByUserId(id);
-  console.log(user);
   const self = req.session.user;
   // Error handling
   const err = {};
@@ -43,14 +42,22 @@ router.get("/id/:id", async (req, res) => {
   if (contentType == "application/json") {
     if (!user) {
       err.message = "User does not exist.";
-      res.send(err);
-      return;
+      err.statusCode = 502
+      next(err)
     }
     res.send(JSON.stringify(user));
   } else {
     res.render("../views/user.ejs", { user: user, self: self });
   }
 });
+
+router.get("/id/:id/edit", async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findByUserId(id);
+  const self = req.session.user;
+  // Error handling
+  const err = {};
+})
 
 // post user request for add new user
 router.post("/", auth, async (req, res) => {

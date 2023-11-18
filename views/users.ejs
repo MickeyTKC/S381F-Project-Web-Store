@@ -1,21 +1,68 @@
-<h1>Users</h1>
-<% if(users) {%>
-<table>
-  <tr>
-    <th>User ID</th>
-    <th>Name</th>
-    <th>Role</th>
-    <th>Phone Number</th>
-    <th>Details</th>
-  </tr>
-  <% for(user of users) {%>
-  <tr>
-    <td><%=user.userId%></td>
-    <td><%=user.name%></td>
-    <td><%=user.role%></td>
-    <td><%=user.phoneNo%></td>
-    <td><a href="user/<%=user.userId%>">Detail</a></td>
-  </tr>
-  <% }%>
-</table>
-<% }%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../views/components/head'); %>
+    <title>All User</title>
+    <style>
+      .table img {
+        height: 100px;
+        object-fit: cover;
+      }
+      .empty-message {
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('../views/components/navbar'); %>
+    <div class="container">
+      <div class="py-3">
+        <h1>User List</h1>
+        <hr />
+        </div>
+
+        <%if(users){%>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Phone Number</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%for(user of users){%>
+            <tr>
+              <td><%=user.userId%></td>
+              <td><%=user.name%></td>
+              <td><%=user.role%></td>
+              <td><%=user.phoneNo%></td>
+              <td><a href="user/id/<%=user.userId%>">Detail</a></td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+
+        <%}%>
+      </div>
+    </div>
+    <%- include('../views/components/foot',{user:user}); %> <% if(user) {%>
+    <script>
+      const deleteButtons = [...document.querySelectorAll(".btn-danger")];
+      deleteButtons.forEach(btn => {
+        btn.addEventListener("click", async () => {
+          deleteData(`/cart/productId/${btn.id}`);
+          location.reload();
+        });
+      });
+    </script>
+    <%}%>
+  </body>
+</html>

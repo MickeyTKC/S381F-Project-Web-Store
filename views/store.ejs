@@ -31,7 +31,7 @@
       <hr />
       <p><%= store.address %></p>
       <% const displayEdit = user.role || "client" %>
-      <%if(displayEdit != "client") {%>
+      <%if(displayEdit == "admin") {%>
       <div class="fixed-bottom p-5 text-right">
         <a class="btn btn-light border-dark" href="/store/edit">Edit</a>
       </div>

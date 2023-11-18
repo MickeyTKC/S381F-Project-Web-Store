@@ -6,11 +6,18 @@ const Product = require("../models/Product");
 
 // the auth for Login required
 const auth = (req, res, next) => {
-  if (!req.session.user) {
-    const err = {}
+  const user = req.session.user
+  const contentType = req.header("content-type")
+  const err = {}
+  if (!user) {
     err.statusCode = 403
     err.message = "Login Required";
-    next(err);
+  }
+  if (!contentType){
+    res.status(err.statusCode).render("../views/error",{user:user,err:err})
+  }
+  if(err.statusCode){
+    next(err)
   }
   next();
 };

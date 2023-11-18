@@ -1,7 +1,7 @@
 const auth = require("./auth")
 const user = require("./user")
 const product = require("./product")
-const store = require("./user")
+const store = require("./store")
 const cart = require("./cart")
 
 

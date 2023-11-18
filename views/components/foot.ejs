@@ -36,6 +36,10 @@
     });
     return response.json();
   };
+  const getData = async (url = "") => {
+    const response = await fetch(url);
+    return response.json();
+  };
   document.addEventListener("DOMContentLoaded", () => {
     console.log("<%=!user?`No session`:JSON.stringify(user)%>");
     $('[data-toggle="tooltip"]').tooltip();

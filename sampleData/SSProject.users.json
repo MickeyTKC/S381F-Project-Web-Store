@@ -1,0 +1,60 @@
+[{
+  "userId": "client1",
+  "password": "password1",
+  "role": "client",
+  "name": "John Doe",
+  "info": "Regular client",
+  "address": "123 Main St",
+  "email": "john@example.com",
+  "phoneNo": "123-456-7890"
+},
+{
+  "userId": "client2",
+  "password": "password2",
+  "role": "client",
+  "name": "Jane Smith",
+  "info": "Preferred client",
+  "address": "456 Elm St",
+  "email": "jane@example.com",
+  "phoneNo": "987-654-3210"
+},
+{
+  "userId": "client3",
+  "password": "password3",
+  "role": "client",
+  "name": "Michael Johnson",
+  "info": "Frequent buyer",
+  "address": "789 Oak St",
+  "email": "michael@example.com",
+  "phoneNo": "555-123-4567"
+},
+{
+  "userId": "operator1",
+  "password": "password1",
+  "role": "operator",
+  "name": "Alex Johnson",
+  "info": "Senior operator",
+  "address": "123 Main St",
+  "email": "alex@example.com",
+  "phoneNo": "123-456-7890"
+},
+{
+  "userId": "operator2",
+  "password": "password2",
+  "role": "operator",
+  "name": "Emma Smith",
+  "info": "Junior operator",
+  "address": "456 Elm St",
+  "email": "emma@example.com",
+  "phoneNo": "987-654-3210"
+},
+{
+  "userId": "admin1",
+  "password": "password1",
+  "role": "admin",
+  "name": "Admin User 1",
+  "info": "System administrator",
+  "address": "123 Main St",
+  "email": "admin1@example.com",
+  "phoneNo": "123-456-7890"
+}]

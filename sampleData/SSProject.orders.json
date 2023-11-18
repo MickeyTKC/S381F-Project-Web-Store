@@ -1,0 +1,52 @@
+[{
+  "userId": "client1",
+  "orderId": "order1",
+  "date": "2023-11-16",
+  "address": "123 Main Street",
+  "phoneNo": "555-1234",
+  "payment": "Credit Card",
+  "product": [
+    {
+      "productId": "product1",
+      "name": "Product 1",
+      "img": null,
+      "price": 9.99,
+      "discount": null,
+      "qty": 2
+    },
+    {
+      "productId": "product5",
+      "name": "Product 5",
+      "img": null,
+      "price": 12.99,
+      "discount": null,
+      "qty": 1
+    }
+  ]
+},
+{
+  "userId": "client2",
+  "orderId": "order2",
+  "date": "2023-11-15",
+  "address": "456 Elm Street",
+  "phoneNo": "555-5678",
+  "payment": "PayPal",
+  "product": [
+    {
+      "productId": "product9",
+      "name": "Product 9",
+      "img": null,
+      "price": 11.99,
+      "discount": null,
+      "qty": 3
+    },
+    {
+      "productId": "product4",
+      "name": "Product 4",
+      "img": null,
+      "price": 29.99,
+      "discount": null,
+      "qty": 2
+    }
+  ]
+}]

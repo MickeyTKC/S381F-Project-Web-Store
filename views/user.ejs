@@ -1,0 +1,16 @@
+<% if(!user){%>
+  <h1>User does not exsit</h1>
+<%}%> 
+<% if(user){%>
+<h1>User Information</h1>
+<ul>
+  <li>User ID: <%=user.userId%></li>
+  <li>Name: <%=user.name%></li>
+  <li>Information <%=user.info%></li>
+</ul>
+<% if(self){ if(self.role=="admin" || user.userId == self.userId) {%>
+<from action="" method="post">
+  <button type="submit">Edit</button>
+</from>
+<%} }%>
+<%}%> 

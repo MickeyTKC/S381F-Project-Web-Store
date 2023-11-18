@@ -55,6 +55,7 @@ app.use("/user", routes.user);
 app.use("/product", routes.product);
 app.use("/store", routes.store);
 app.use("/cart", routes.cart);
+app.use("/api", routes.api);
 
 app.use((err, req, res, next) => {
   return res.status(400).send(err.message);

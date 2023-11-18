@@ -29,9 +29,10 @@ router.get("/", async (req, res) => {
   const contentType = req.header("content-type");
   const user = req.session.user || {};
   const products = await Product.find();
-  var productImg;
-  if (products.img) productImg = Buffer.from(products.img, "base64");
-  products.img = productImg;
+  for(p of products){
+    p.img = p.img || "/noImage.jpg";
+  }
+  console.log(products)
   if (contentType == "application/json") {
     res.setHeader("Content-Type", "application/json");
     res.send(JSON.stringify(products));

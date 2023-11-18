@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../views/components/head'); %>
+    <title>Product Display</title>
+    <style>
+      .product-card {
+        margin-bottom: 20px;
+      }
+      .product-card .card-img-top {
+        object-fit: cover;
+        height: 200px;
+      }
+      .empty-message {
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('../views/components/navbar'); %>
+    <div class="container">
+      <div class="py-3">
+        <h1>Product Display</h1>
+        <hr />
+      </div>
+
+      <div class="row">
+        <!-- Assuming your JSON data is stored in a variable named 'products' -->
+        <% if(!products){%>
+        <h1>Empty</h1>
+        <%}%> <% if(products){%> <% for (product of products) {%>
+        <div class="col-md-4">
+          <div class="card product-card">
+            <img
+              src="path/to/product-image.jpg"
+              class="card-img-top"
+              alt="Product Image"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= product.name %></h5>
+              <p class="card-text">Price: $<%= product.price %></p>
+              <p class="card-text">Tags: <%= product.tags.join(", ") %></p>
+
+              <a href="/product/id/<%=product.productId%>" class="btn btn-primary" class="btn btn-primary">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+        <% } %> <%}else{%>
+        <div class="col-md-12">
+          <p class="empty-message">No products available.</p>
+        </div>
+        <%}%>
+      </div>
+    </div>
+    <%- include('../views/components/foot',{user:user}); %> 
+  </body>
+</html>

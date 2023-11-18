@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../views/components/head'); %>
+    <title>Product Display</title>
+    <style>
+      .table img {
+        height: 100px;
+        object-fit: cover;
+      }
+      .empty-message {
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('../views/components/navbar'); %>
+    <div class="container">
+      <div class="py-3">
+        <h1>My Favorite Display</h1>
+        <hr />
+
+        <%if(cart){%> <%if(cart.product){%>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%for(product of cart.product){%>
+            <tr>
+              <td><img src="<%= product.img %>" /></td>
+              <td><%= product.name %></td>
+              <td>$<%= product.price %></td>
+              <th>
+                <button id="<%=product.productId%>" class="btn btn-danger">Delete</button></th>
+              </th>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+
+        <%}%> <%}%>
+      </div>
+    </div>
+    <%- include('../views/components/foot',{user:user}); %> <% if(user) {%>
+    <script>
+      const deleteButtons = [...document.querySelectorAll(".btn-danger")]
+      deleteButtons.forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+            deleteData(`/cart/productId/${btn.id}`)
+            location.reload()
+        })
+      })
+    </script>
+    <%}%>
+  </body>
+</html>

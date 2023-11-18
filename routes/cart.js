@@ -7,6 +7,8 @@ const Product = require("../models/Product");
 // the auth for Login required
 const auth = (req, res, next) => {
   if (!req.session.user) {
+    const err = {}
+    err.statusCode = 403
     err.message = "Login Required";
     next(err);
   }
@@ -54,7 +56,7 @@ router.put("/productId/:id", auth, async (req, res, next) => {
       },
     });
     if (checkCart) {
-      next(e);
+      next({});
     }
     console.log(
       `put product ${product.productId}-${product.name} from User:${userId} Name:${req.session.user.name}`

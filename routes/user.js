@@ -15,7 +15,7 @@ const auth = (req, res, next) => {
     err.statusCode = 403;
     err.message = "Admin Permission Required";
   }
-  console.log(err);
+  //console.log(err);
   if (!contentType && err.statusCode) {
     res
       .status(err.statusCode)
@@ -94,7 +94,8 @@ router.post("/", auth, async (req, res) => {
     return;
   }
   // get user data from db for checking
-  const isExist = User.findById(user.userId);
+  const isExist = await User.findByUserId(user.userId);
+  console.log(isExist);
   // user id already exists handling
   if (isExist) {
     res.setHeader("Content-Type", "application/json");

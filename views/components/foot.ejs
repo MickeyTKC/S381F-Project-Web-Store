@@ -28,11 +28,13 @@
     const response = await fetch(url, {
       method: "put",
     });
+    return response.json();
   };
   const deleteData = async (url = "") => {
     const response = await fetch(url, {
       method: "delete",
     });
+    return response.json();
   };
   document.addEventListener("DOMContentLoaded", () => {
     console.log("<%=!user?`No session`:JSON.stringify(user)%>");

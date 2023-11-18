@@ -27,7 +27,7 @@ const auth = (req, res, next) => {
 // get product request for view all products
 router.get("/", async (req, res) => {
   const contentType = req.header("content-type");
-  const user = req.session.user;
+  const user = req.session.user || {};
   const products = await Product.find();
   var productImg;
   if (products.img) productImg = Buffer.from(products.img, "base64");

@@ -60,6 +60,26 @@ router.get("/id/:id", async (req, res) => {
   }
 });
 
+// get product request for view product details
+router.get("/id/:id/edit", async (req, res) => {
+  const contentType = req.header("content-type");
+  const id = req.params.id;
+  const product = await Product.findByProductId(id);
+  var productImg;
+  if (product.img) productImg = product.img
+    ? productImg
+    : "/noImage.jpg";
+  if (contentType == "application/json") {
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify(product));
+  } else {
+    res.render("../views/productEdit.ejs", {
+      user: req.session.user,
+      product: product,
+    });
+  }
+});
+
 // get product request for searching product by name
 router.get("/name/:name", async (req, res) => {
   const contentType = req.header("content-type");
@@ -157,6 +177,7 @@ router.post("/id/:id", auth, async (req, res) => {
   } catch (e) {
     next(e);
   }
+  res.redirect(`/product/id/${req.params.id}`);
 });
 
 router.use((err, req, res, next) => {

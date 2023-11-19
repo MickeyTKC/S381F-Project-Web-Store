@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    <title>Store</title>
+    <%- include('../views/components/head.ejs'); %>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+    <% auth = auth || {user:{}} %>
+  </head>
+  <body>
+    <%- include('../views/components/navbar',{auth:auth}); %>
+    <div class="container">
+      <% if(!user){%>
+      <h1>User does not exsit</h1>
+      <%}%> <%if(user){%>
+      <div class="py-3">
+        <h1>User: <%= user.name %></h1>
+        <hr />
+      </div>
+      <div>
+        <h4>Role: <%= user.role %></h4>
+        <hr />
+        <h4>Information:</h4>
+        <p><%= user.info %></p>
+        <hr />
+        <h4>Email:</h4>
+        <p><%= user.email %></p>
+        <hr />
+        <%=auth.user.role%>
+      </div>
+      <%if(auth.user.role=="admin" || auth.user.userId == user.userId){ %>
+      <h4>Address:</h4>
+      <p><%= user.address %></p>
+      <hr />
+      <h4>Phone Number:</h4>
+      <p><%= user.phoneNo %></p>
+      <hr />
+      <%}%>
+    </div>
+    <%}%> <%- include('../views/components/foot',{auth:auth}); %>
+  </body>
+</html>

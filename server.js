@@ -99,23 +99,44 @@ app.get("/product/id/:id", async (req, res) => {
     .render("../views/product", { auth: req.session || {}, product: product });
 });
 app.get("/product/add", (req, res) => {
-  res.status(200).render("../views/productForm", { auth: req.session || {}, product:{} });
+  res
+    .status(200)
+    .render("../views/productForm", { auth: req.session || {}, product: {} });
 });
 app.get("/product/id/:id/edit", async (req, res, next) => {
-    var product;
-    try {
-        product = await Product.findByProductId(req.params.id);
-      } catch (e) {
-        next(e);
-      }
-  res.status(200).render("../views/productForm", { auth: req.session || {}, product: product || {} });
+  var product;
+  try {
+    product = await Product.findByProductId(req.params.id);
+  } catch (e) {
+    next(e);
+  }
+  res.status(200).render("../views/productForm", {
+    auth: req.session || {},
+    product: product || {},
+  });
 });
 //user
-app.get("/user", (req, res, next) => {
-  res.status(200).send("User");
+app.get("/user", async (req, res, next) => {
+  var users;
+  try {
+    users = await User.find();
+  } catch (e) {
+    next(e);
+  }
+  res
+    .status(200)
+    .render("../views/users", { auth: req.session || {}, users: users });
 });
-app.get("/user/id/:id", (req, res, next) => {
-  res.status(200).send("User/ID");
+app.get("/user/id/:id", async (req, res, next) => {
+  var user;
+  try {
+    user = await User.findByUserId(req.params.id);
+  } catch (e) {
+    next(e);
+  }
+  res
+    .status(200)
+    .render("../views/user", { auth: req.session || {}, user: user });
 });
 app.get("/user/add", (req, res, next) => {
   res.status(200).send("User");
@@ -124,8 +145,22 @@ app.get("/user/id/edit", (req, res, next) => {
   res.status(200).send("User/ID/Edit");
 });
 //cart
-app.get("/cart", auth.isLogin, (req, res, next) => {
-  res.status(200).send("Cart");
+app.get("/cart", auth.isLogin, async (req, res, next) => {
+  const { userId } = req.session.user;
+  var myCart;
+  try {
+    myCart = await Cart.findByUserId(userId);
+  } catch (e) {
+    next(e);
+  }
+  if (myCart) {
+    for (p of myCart.product) {
+      p.img = p.img || "/noImage.jpg";
+    }
+  }
+  res
+    .status(200)
+    .render("../views/cart.ejs", { auth: req.session, cart: myCart });
 });
 
 //error handler

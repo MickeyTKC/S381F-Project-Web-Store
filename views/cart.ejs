@@ -2,7 +2,16 @@
   <head>
     <title>Product Detail</title>
     <%- include('../views/components/head.ejs'); %>
-    <style></style>
+    <style>
+      .table img {
+        height: 100px;
+        object-fit: cover;
+      }
+      .empty-message {
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
     <% const { user={} ,authenticated } = auth %>
   </head>
   <body>

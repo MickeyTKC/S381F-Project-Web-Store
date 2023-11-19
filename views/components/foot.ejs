@@ -1,0 +1,45 @@
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="/js/jquery.js"></script>
+<script src="/js/popper.js"></script>
+<script src="/js/boostrap.js"></script>
+<!-- Fetch Data Script-->
+<script>
+  const postData = async (url = "", data = {}) => {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "cors", 
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  };
+  const putData = async (url = "") => {
+    const response = await fetch(url, {
+      method: "put",
+    });
+    return response.json();
+  };
+  const deleteData = async (url = "") => {
+    const response = await fetch(url, {
+      method: "delete",
+    });
+    return response.json();
+  };
+  const getData = async (url = "") => {
+    const response = await fetch(url);
+    return response.json();
+  };
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM Content Loaded")
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>

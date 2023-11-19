@@ -8,7 +8,7 @@ const Store = require("../models/Store");
 
 //router.use(fileupload());
 
-const isLogin_Admin = (req, res, next) => {
+const isLogin = (req, res, next) => {
     const user = req.session.user || { role: "client" }
     if (!user) {
         return next({ statusCode: 403, message: "Permission Required" });
@@ -16,7 +16,7 @@ const isLogin_Admin = (req, res, next) => {
     if (user.role != "admin") {
         return next({ statusCode: 403, message: "Admin Permission Required" });
     }
-    next();
+    return next();
 };
 /*
   const isLogin_Operator = (req, res, next) => {
@@ -38,12 +38,6 @@ router.get("/", async (req, res) => {
     res.send(JSON.stringify(storeData));
 });
 
-router.get("/edit", isLogin_Admin, async (req, res) => {
-    const user = req.session.user || {};
-    const storeData = await Store.findOne({});
-
-    res.send(JSON.stringify(storeData));
-});
 
 // edit store information
 router.post("/edit", async (req, res) => {

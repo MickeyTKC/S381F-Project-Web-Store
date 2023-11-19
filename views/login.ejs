@@ -106,12 +106,12 @@
         <input
           name="userId"
           type="text"
-          id="inputEmail"
+          id="inputId"
           class="form-control"
           placeholder="User ID"
           required
         />
-        <label for="inputEmail">User ID</label>
+        <label for="inputId">User ID</label>
       </div>
 
       <div class="form-label-group">
@@ -130,11 +130,58 @@
         <span>Have not account ? </span><a href="/signup">Sign Up </a
         ><span>Now !</span>
       </div>
-      <a class="btn btn-lg btn-secondary btn-block" href="/product">Back to View Products</a>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <a class="btn btn-lg btn-secondary btn-block" href="/product"
+        >Back to View Products</a
+      >
+      <button id="submit" class="btn btn-lg btn-primary btn-block">
         Login
       </button>
     </form>
     <%- include('../views/components/foot',{auth:auth}); %>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".form-signin");
+        const url = "/api/auth/login";
+
+        form.addEventListener("submit", async e => {
+          e.preventDefault();
+
+          const userId = document.querySelector("#inputId").value;
+          const password = document.querySelector("#inputPassword").value;
+
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ userId, password }),
+            });
+
+            if (response.ok) {
+              // Sign in success
+              window.location.href = "/"; // Redirect to dashboard or desired page
+            } else {
+              // Sign in failed
+              const errorData = await response.json();
+              console.log(errorData)
+              const errorMessage =
+                errorData.error || "Sign in failed. Please try again.";
+              displayError(errorMessage);
+            }
+          } catch (error) {
+            // Error occurred during sign in
+            displayError("An error occurred. Please try again later.");
+          }
+        });
+
+        function displayError(message) {
+          const errorContainer = document.querySelector(".alert") || document.createElement("div");
+          errorContainer.className = "alert alert-danger mt-3";
+          errorContainer.textContent = message;
+          form.appendChild(errorContainer);
+        }
+      });
+    </script>
   </body>
 </html>

@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.header("Content-Type", "application/json");
-  res.status(200).json({ message: "Calling API" });
-});
+const auth = require("./auth");
+const user = require("./user");
+const product = require("./product");
+const store = require("./store");
+const cart = require("./cart");
 
-router.use("/*", (req, res) => {
-  res.header("Content-Type", "application/json");
-  res.status(404).json({ statusCode: 404, message: "Not Found" });
-});
+router.use("/auth", auth);
+router.use("/user", user);
+router.use("/product", product);
+router.use("/store", store);
+router.use("/cart", cart);
 
 module.exports = router;

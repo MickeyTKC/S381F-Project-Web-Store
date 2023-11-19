@@ -7,12 +7,10 @@ router.post("/login", async (req, res, next) => {
   const id = req.body.userId;
   const pw = req.body.password;
   const user = (await User.findByUserId(id)) || {};
-  if (!user)
-    if (req.header("content-type") == "application/json")
-      return next({ statusCode: 400, message: "User does not exist." });
+  if (!user) 
+  return next({ statusCode: 400, message: "User does not exist." });
   if (user.password != pw)
-    if (req.header("content-type") == "application/json")
-      return next({ statusCode: 400, message: "The password is incorrect." });
+    return next({ statusCode: 400, message: "The password is incorrect." });
   if (user.password == pw) {
     // setup express session
     req.session.authenticated = true;
@@ -56,11 +54,14 @@ router.post("/signup", async (req, res, next) => {
   // Check input
   if (!user.userId || !user.password || !user.role || !user.name)
     return next({ statusCode: 400, message: "Wrong User Input" });
+  if (user.password.length <= 8)
+  return next({ statusCode: 400, message: "The password aleaset 8 characters" });
   // Result Set
   var isExist, client, cart;
   // Execute Query
   try {
     isExist = await User.findByUserId(user.userId);
+    if (isExist) return next({ statusCode: 409, message: "The user ID is already taken" });
     client = await User.create(user);
     cart = await Cart.create({ userId: user.userId, product: [] });
   } catch (e) {

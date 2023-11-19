@@ -6,15 +6,13 @@ const Cart = require("../models/Cart");
 // the auth for permission request
 const isLogin = (req, res, next) => {
     const user = req.session.user || { role: "client" };
-    const contentType = req.header("content-type");
-    const err = {};
     if (!user) {
         return next({ statusCode: 403, message: "Permission Required" });
     }
     if (user.role != "admin") {
         return next({ statusCode: 403, message: "Admin Permission Required" });
     }
-    next();
+    return next();
 };
   
 // get user request for user view all user
@@ -37,15 +35,6 @@ router.get("/id/:id", async (req, res) => {
     res.send(JSON.stringify(user));
 });
 
-router.get("/id/:id/edit", async (req, res) => {
-    const id = req.params.id;
-    const user = await User.findByUserId(id);
-    const self = req.session.user;
-    if (!user) {
-        next({ statusCode: 502, message: "User does not exist." });
-    }
-    res.send(JSON.stringify(user));
-});
 
 // post user request for add new user
 router.post("/", isLogin, async (req, res) => {

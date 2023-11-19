@@ -39,21 +39,21 @@ mongoose.connection.on("error", err => {
 const auth = {
   isLogin: (req, res, next) => {
     if (!req.session) next({ statusCode: 401, message: "Login is required" });
-    next();
+    return next();
   },
   isOperator: (req, res, next) => {
     if (!req.session) next({ statusCode: 401, message: "Login is required" });
     const { user } = req.session;
     if (user.role != "operator")
-      next({ statusCode: 403, message: "Operator Permission is required" });
-    next();
+    return next({ statusCode: 403, message: "Operator Permission is required" });
+    return next();
   },
   isAdmin: (req, res, next) => {
     if (!req.session) next({ statusCode: 401, message: "Login is required" });
     const { user } = req.session;
     if (user.role != "admin")
-      next({ statusCode: 403, message: "Operator Permission is required" });
-    next();
+    return next({ statusCode: 403, message: "Operator Permission is required" });
+    return next();
   },
 };
 //api
@@ -65,7 +65,7 @@ app.get("/", async (req, res, next) => {
   try {
     store = await Store.findOne({});
   } catch (e) {
-    next({ statusCode: 400, message: "Bad request" });
+    return next({ statusCode: 400, message: "Bad request" });
   }
   res.status(200).render("../views/store", {
     auth: req.session || {},
@@ -89,7 +89,7 @@ app.get("/product", async (req, res, next) => {
   try {
     products = await Product.find();
   } catch (e) {
-    next(e);
+    return next(e);
   }
   res.status(200).render("../views/products", {
     auth: req.session || {},
@@ -101,7 +101,7 @@ app.get("/product/id/:id", async (req, res) => {
   try {
     product = await Product.findByProductId(req.params.id);
   } catch (e) {
-    next(e);
+    return next(e);
   }
   res
     .status(200)
@@ -117,7 +117,7 @@ app.get("/product/id/:id/edit", async (req, res, next) => {
   try {
     product = await Product.findByProductId(req.params.id);
   } catch (e) {
-    next(e);
+    return next(e);
   }
   res.status(200).render("../views/productForm", {
     auth: req.session || {},
@@ -130,7 +130,7 @@ app.get("/user", async (req, res, next) => {
   try {
     users = await User.find();
   } catch (e) {
-    next(e);
+    return next(e);
   }
   res
     .status(200)
@@ -141,7 +141,7 @@ app.get("/user/id/:id", async (req, res, next) => {
   try {
     user = await User.findByUserId(req.params.id);
   } catch (e) {
-    next(e);
+    return next(e);
   }
   res
     .status(200)
@@ -160,7 +160,7 @@ app.get("/cart", auth.isLogin, async (req, res, next) => {
   try {
     myCart = await Cart.findByUserId(userId);
   } catch (e) {
-    next(e);
+    return next(e);
   }
   if (myCart) {
     for (p of myCart.product) {
@@ -174,7 +174,7 @@ app.get("/cart", auth.isLogin, async (req, res, next) => {
 
 //error handler
 app.get("/*", (req, res, next) => {
-  next({ statusCode: 404, message: "Not Found" });
+  return next({ statusCode: 404, message: "Not Found" });
 });
 app.use((err, req, res, next) => {
   res

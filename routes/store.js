@@ -52,6 +52,7 @@ router.post("/edit", async (req, res) => {
         img: req.body.img || "", //store logo
         info: req.body.info || "",
         address: req.body.address,
+        phoneNo: req.body.phoneNo
     };
     console.log(store);
     await Store.updateOne({ storeId: storeData.storeId }, { $set: store });

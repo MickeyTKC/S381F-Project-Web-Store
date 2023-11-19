@@ -218,7 +218,30 @@ app.get("/cart", auth.isLogin, async (req, res, next) => {
   }
   res
     .status(200)
-    .render("../views/cart.ejs", { auth: req.session, cart: myCart });
+    .render("../views/cart.ejs", { auth: req.session, cart: myCart,action: "edit" });
+});
+//store
+app.get("/store", async (req, res, next) => {
+  var storeData;
+  try {
+    storeData = await Store.findOne({});
+  } catch (e) {
+    return next(e);
+  }
+  res
+    .status(200)
+    .render("../views/store", { auth: req.session || {}, store: storeData });
+});
+app.get("/store/edit", auth.isAdmin, async (req, res, next) => {
+  var storeData;
+  try {
+    storeData = await Store.findOne({});
+  } catch (e) {
+    return next(e);
+  }
+  res
+    .status(200)
+    .render("../views/store", { auth: req.session || {}, store: storeData });
 });
 
 //error handler

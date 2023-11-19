@@ -4,14 +4,20 @@
   <title>User Information</title>
   <%- include('../views/components/head.ejs'); %>
     <style></style>
+    <% if(action="add") user={}%>
 </head>
 
 <body>
   <%- include('../views/components/navbar',{auth:auth}); %>
     <h1>User Form</h1>
     <div class="container">
-      <form id="editForm" action="/api/user/id/<%= user.userId %>/edit" method="POST">
-
+      <form id="editForm" action="" method="POST">
+        <%if(action=="add"){%>
+          <div class="form-group">
+            <label for="userId">User Id:</label>
+            <input type="text" class="form-control" id="userId" name="name" value="<%="User"+Math.floor(Math.random() * 1000000000)%>" required />
+          </div>
+          <%}%>
         <div class="form-group">
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" class="form-control" value="<%= user.password %>" required>
@@ -59,21 +65,23 @@
       document.getElementById('editForm').addEventListener('submit', async function (event) {
         event.preventDefault();
 
-          const form = document.querySelector("form");
-          const url = `/api/user/id/<%= user.userId %>/edit`;
+          let form = document.querySelector("#editForm");
 
-          var method = form.method.toUpperCase();
-          var data = new FormData(form);
+          const action = "<%= action %>";
+          const url = "<%= url %>";
 
-          const userId = "<%= user.userId %>";
+          var userId = "<%= user.userId %>";
           const password = document.querySelector("#password").value;
           const name = document.querySelector("#name").value;
-          const role = "<%= user.role %>";
+          var role = "<%= user.role %>";
           const info = document.querySelector("#info").value;
           const address = document.querySelector("#address").value;
           const email = document.querySelector("#email").value;
           const phoneNo = document.querySelector("#phoneNo").value;
-
+          if(action=='add'){
+            userId = document.querySelector("#userId").value;
+            role = document.querySelector("#role").value;
+            }
           try {
             const response = await fetch(url, {
               method: "POST",
@@ -85,7 +93,7 @@
 
             if (response.ok) {
               // Sign up success
-              window.location.href = `/user/id/<%= user.userId %>`;
+              window.location.href = `/user/id/<%=user.userId%>`;
             } else {
               // Sign up failed
               const errorData = await response.json();
@@ -94,7 +102,6 @@
             }
           } catch (error) {
             // Error occurred during user edit
-            console.log(error);
             console.error(error);
             alert('An error occurred while editing the user');
           }

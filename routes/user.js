@@ -23,7 +23,6 @@ router.get("/", isLogin, async (req, res) => {
     const users = await User.find();
 
     res.send(JSON.stringify(users));
-    res.render("../views/users.ejs", { users: users, user: self });
 });
 
 // get user request by id
@@ -36,7 +35,6 @@ router.get("/id/:id", async (req, res) => {
         next({ statusCode: 502, message: "User does not exist." });
     }
     res.send(JSON.stringify(user));
-    res.render("../views/user.ejs", { user: user, self: self });
 });
 
 router.get("/id/:id/edit", async (req, res) => {
@@ -46,7 +44,7 @@ router.get("/id/:id/edit", async (req, res) => {
     if (!user) {
         next({ statusCode: 502, message: "User does not exist." });
     }
-    res.status(200).render("../views/userEdit", { user: user });
+    res.send(JSON.stringify(user));
 });
 
 // post user request for add new user
@@ -126,7 +124,7 @@ router.post("/id/:id/edit", isLogin, async (req, res) => {
             res.redirect("/user");
         }
     } catch (e) {
-        next(e);
+        return next(e);
     }
     res.redirect(`/user/id/${req.params.id}`);
 });
@@ -144,7 +142,7 @@ router.delete("/id/:id", isLogin, async (req, res) => {
             res.redirect("/user");
         }
     } catch (e) {
-        next(e);
+        return next(e);
     }
 });
 

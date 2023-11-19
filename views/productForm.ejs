@@ -13,7 +13,13 @@
       <div class="container">
         <h1>Product Form</h1>
         <hr />
-        <form id="editForm" action="/api/product/id/<%= product.productId %>/edit" method="POST">
+        <form id="editForm" action="" method="POST">
+          <%if(action=="add"){%>
+          <div class="form-group">
+            <label for="ProductId">Product Id:</label>
+            <input type="text" class="form-control" id="productId" name="name" value="<%="Product"+Math.floor(Math.random() * 1000000000)%>" required />
+          </div>
+          <%}%>
           <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" value="<%= product.name %>" required />
@@ -49,9 +55,9 @@
             event.preventDefault();
 
             var form = document.querySelector("form");
-
-            const url = `/api/product/id/<%= product.productId %>`;
-            const productId = "<%= product.productId %>";
+            const action = "<%= action %>";
+            const url = "<%= url %>";
+            var productId = "<%= product.productId %>";
             const name = document.querySelector("#name").value;
             const img = document.querySelector("#img").value;
             const date = "";
@@ -59,7 +65,9 @@
             const discount = "";
             const info = document.querySelector("#info").value;
             const tags = document.querySelector("#tags").value;
-            console.log(url)
+            if(action=='add'){
+              productId = document.querySelector("#productId").value;
+            }
             try {
               const response = await fetch(url, {
                 method: 'POST',

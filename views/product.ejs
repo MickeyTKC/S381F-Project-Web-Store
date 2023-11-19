@@ -45,8 +45,13 @@
           <p>Release on: <%= product.date ? new Date(product.date).toDateString() : "" %></p>
           <button class="btn btn-primary">Add to My Favorite</button>
           <% const displayEdit = user.role || "client" %> <%if(displayEdit ==
-          "admin") {%>
+          "admin" || "operator") {%>
           <div class="fixed-bottom p-5 text-right">
+            <a
+              class="btn btn-light border-dark"
+              href="/product/add"
+              >Add</a
+            >
             <a
               class="btn btn-light border-dark"
               href="/product/id/<%= product.productId %>/edit"

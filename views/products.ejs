@@ -61,6 +61,14 @@
         <div class="col-md-12">
           <p class="empty-message">No products available.</p>
         </div>
+        <%}%> <% const displayEdit = user.role || "client" %> <%if(displayEdit
+        == "admin" || "operator") {%>
+        <a
+          style="position: fixed; right: 3rem; bottom: 3rem"
+          class="btn btn-light border-dark"
+          href="/product/add"
+          >Add</a
+        >
         <%}%>
       </div>
     </div>

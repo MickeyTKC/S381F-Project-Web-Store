@@ -1,3 +1,4 @@
+<% const user = auth.user || {}; const userId = auth.userId || "";%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary ripple-effect">
   <a class="navbar-brand" href="/">Store</a>
   <button
@@ -14,23 +15,29 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
+        <a class="nav-link ripple-effect" href="/user/id">My Info</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link ripple-effect" href="/cart">My Favorite</a>
       </li>
       <li class="nav-item">
         <a class="nav-link ripple-effect" href="/product">Product</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link ripple-effect" href="/user/id">Self Info</a>
-      </li>
+      <% if(user.role=="admin"){%>
       <li class="nav-item">
         <a class="nav-link ripple-effect" href="/user">Users</a>
       </li>
+      <% } %>
+      <% if(!userId){%>
       <li class="nav-item">
         <a class="nav-link ripple-effect" href="/login">Login</a>
       </li>
+      <% } %>
     </ul>
-    <form action="api/auth/logout" method="post" class="form-inline my-2 my-lg-0">
+    <% if(userId){%>
+    <form action="/api/auth/logout" method="post" class="form-inline my-2 my-lg-0">
       <button type="submit" class="btn btn-primary">Logout</button>
     </form>
+    <% } %>
   </div>
 </nav>

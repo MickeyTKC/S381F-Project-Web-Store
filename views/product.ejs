@@ -22,7 +22,7 @@
     <% const { user={} ,authenticated } = auth %>
   </head>
   <body>
-    <%- include('../views/components/navbar'); %>
+    <%- include('../views/components/navbar',{auth:auth}); %>
 
     <div class="container">
       <%if(!product){%> <h1>Product Not Found</h1> <%}%> <%if(product){%>

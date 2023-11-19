@@ -10,7 +10,7 @@
     <% const { user={} ,authenticated } = auth; store = store || {} %>
   </head>
   <body>
-    <%- include('../views/components/navbar'); %>
+    <%- include('../views/components/navbar',{auth:auth}); %>
     <div class="container mt-5">
       <div class="jumbotron">
         <h1 class="display-4">Welcome to <%= store.name %>!</h1>

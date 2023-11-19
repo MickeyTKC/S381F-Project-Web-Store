@@ -6,7 +6,7 @@
     <% const { user={} ,authenticated } = auth %>
   </head>
   <body>
-    <%- include('../views/components/navbar'); %> <% var fromAction = !product.productId ?
+    <%- include('../views/components/navbar',{auth:auth}); %> <% var fromAction = !product.productId ?
     `/product/add` : `/product/id/${product.productId}/edit` %>
     <div class="container">
       <h1>Product Form</h1>

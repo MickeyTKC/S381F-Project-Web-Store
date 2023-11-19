@@ -18,7 +18,7 @@
     <% const { user={} ,authenticated } = auth %>
   </head>
   <body>
-    <%- include('../views/components/navbar'); %>
+    <%- include('../views/components/navbar',{auth:auth}); %>
     <div class="container">
       <div class="py-3">
         <h1>Product Display</h1>

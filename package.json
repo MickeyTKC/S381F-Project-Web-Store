@@ -1,0 +1,23 @@
+{
+    "name": "web-store",
+    "version": "1.0.0",
+    "keywords": ["example", "learning", "store","display","product"],
+    "description": "An example Node.js project for Web Store.",
+    "dependencies": {
+        "assert": "^2.1.0",
+        "body-parser": "^1.20.2",
+        "cookie-parser": "^1.4.6",
+        "cookie-session": "^2.0.0",
+        "debug": "^4.3.4",
+        "dotenv": "^16.3.1",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2",
+        "mongodb": "^6.2.0",
+        "mongoose": "^8.0.0",
+        "nodemon": "^3.0.1"
+    },
+    "scripts": {
+        "start": "nodemon server",
+        "init": "node models/init.js"
+    }
+}

@@ -60,9 +60,6 @@ router.post("/", async (req, res, next) => {
         if (contentType == "application/json") {
             res.status(200).json(newProduct);
         }
-        if (!contentType) {
-            res.redirect("/product");
-        }
     } catch (e) {
         return next(e);
     }

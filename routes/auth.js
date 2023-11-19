@@ -15,6 +15,7 @@ router.post("/login", async (req, res, next) => {
     // setup express session
     req.session.authenticated = true;
     req.session.user = user;
+    req.session.userId = user.userId;
     if (req.header("content-type") == "application/json") {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json(req.session);

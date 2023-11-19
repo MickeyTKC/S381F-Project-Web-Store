@@ -38,28 +38,41 @@ mongoose.connection.on("error", err => {
 //auth
 const auth = {
   isLogin: (req, res, next) => {
-    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    if (!req.session.userId)
+      next({ statusCode: 401, message: "Login is required" });
     next();
   },
   isOperator: (req, res, next) => {
-    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    if (!req.session.userId)
+      next({ statusCode: 401, message: "Login is required" });
     const { user } = req.session;
     if (user.role != "operator")
-    return next({ statusCode: 403, message: "Operator Permission is required" });
+      return next({
+        statusCode: 403,
+        message: "Operator Permission is required",
+      });
     next();
   },
   isOperatorOrAdmin: (req, res, next) => {
-    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    if (!req.session.userId)
+      next({ statusCode: 401, message: "Login is required" });
     const { user } = req.session;
     if (user.role == "client")
-    return next({ statusCode: 403, message: "Operator/Admin Permission is required" });
+      return next({
+        statusCode: 403,
+        message: "Operator/Admin Permission is required",
+      });
     next();
   },
   isAdmin: (req, res, next) => {
-    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    if (!req.session.userId)
+      next({ statusCode: 401, message: "Login is required" });
     const { user } = req.session;
     if (user.role != "admin")
-    return next({ statusCode: 403, message: "Operator Permission is required" });
+      return next({
+        statusCode: 403,
+        message: "Operator Permission is required",
+      });
     next();
   },
 };
@@ -115,24 +128,37 @@ app.get("/product/id/:id", async (req, res) => {
     .render("../views/product", { auth: req.session || {}, product: product });
 });
 app.get("/product/add", (req, res) => {
+  const url = `/api/product/`;
   res
     .status(200)
-    .render("../views/productForm", { auth: req.session || {}, product: {} });
+    .render("../views/productForm", {
+      auth: req.session || {},
+      product: {},
+      action: "add",
+      url: url,
+    });
 });
-app.get("/product/id/:id/edit", auth.isOperatorOrAdmin, async (req, res, next) => {
-  var product;
-  try {
-    product = await Product.findByProductId(req.params.id);
-  } catch (e) {
-    return next(e);
+app.get(
+  "/product/id/:id/edit",
+  auth.isOperatorOrAdmin,
+  async (req, res, next) => {
+    var product;
+    try {
+      product = await Product.findByProductId(req.params.id);
+    } catch (e) {
+      return next(e);
+    }
+    const url = `/api/product/id/${product.productId}`;
+    res.status(200).render("../views/productForm", {
+      auth: req.session || {},
+      product: product || {},
+      action: "edit",
+      url: url,
+    });
   }
-  res.status(200).render("../views/productForm", {
-    auth: req.session || {},
-    product: product || {},
-  });
-});
+);
 //user
-app.get("/user", async (req, res, next) => {
+app.get("/user", auth.isAdmin, async (req, res, next) => {
   var users;
   try {
     users = await User.find();
@@ -157,7 +183,7 @@ app.get("/user/id/:id", async (req, res, next) => {
 app.get("/user/add", (req, res, next) => {
   res.status(200).send("User");
 });
-app.get("/user/id/:id/edit", auth.isAdmin, async(req, res, next) => {
+app.get("/user/id/:id/edit", auth.isAdmin, async (req, res, next) => {
   var user;
   try {
     user = await User.findByUserId(req.params.id);
@@ -170,7 +196,7 @@ app.get("/user/id/:id/edit", auth.isAdmin, async(req, res, next) => {
 });
 //cart
 app.get("/cart", auth.isLogin, async (req, res, next) => {
-  const userId = req.session.user.userId;
+  const userId = req.session.userId;
   var myCart;
   try {
     myCart = await Cart.findByUserId(userId);
@@ -192,9 +218,11 @@ app.get("/*", (req, res, next) => {
   return next({ statusCode: 404, message: "Not Found" });
 });
 app.use((err, req, res, next) => {
-  res
-    .status(err.statusCode)
-    .render("../views/error.ejs", { err: err, auth: req.session || {} });
+  if (err.statusCode) res.redirect("/login");
+  else
+    res
+      .status(err.statusCode)
+      .render("../views/error.ejs", { err: err, auth: req.session || {} });
 });
 
 //server start

@@ -42,6 +42,7 @@
             <button class="btn btn-sm btn-warning">#<%=tag%></button>
             <%}%>
           </p>
+          <p>Release on: <%= product.date ? new Date(product.date).toDateString() : "" %></p>
           <button class="btn btn-primary">Add to My Favorite</button>
           <% const displayEdit = user.role || "client" %> <%if(displayEdit ==
           "admin") {%>

@@ -23,7 +23,14 @@ app.use(express.json());
 //api routes
 const routes = require("./routes");
 
+//mongoose models
+const { User, Store, Order, Cart, Product } = require("./models");
+
 //connect to mongodb
+mongoose.set("strictQuery", true);
+mongoose.connect(url).then(() => {
+  console.log("mongoDB connected successfully");
+});
 mongoose.connection.on("error", err => {
   throw new Error("Mongo database connexion error");
 });
@@ -44,9 +51,20 @@ const auth = {
 app.use("/api", routes);
 
 //view routes
-app.get("/", (req, res) => {
-  //res.status(200).render("../views/index.ejs", { auth: req.session });
-  res.status(200).send("Stroe");
+app.get("/", async (req, res, next) => {
+  var store;
+  try {
+    storeData = (await Store.findOne({})) || {};
+  } catch (e) {
+    next(e);
+  }
+  res.status(200).render("../views/store", {
+    auth: req.session || {},
+    store: store,
+  });
+});
+app.get("/store/edit", async (req, res , next) => {
+  res.status(200).render("../views/store", { auth: req.session || {} });
 });
 // login
 app.get("/login", (req, res) => {
@@ -56,11 +74,23 @@ app.get("/signup", (req, res) => {
   res.status(200).send("Sign Up");
 });
 //product
-app.get("/product", (req, res) => {
-  res.status(200).send("Product");
+app.get("/product", async (req, res, next) => {
+  var products;
+  try {
+    products = await Product.find();
+  } catch (e) {
+    next(e);
+  }
+  res.status(200).render("../views/products", { auth: req.session || {} , products:products});
 });
-app.get("/product/id/:id", (req, res) => {
-  res.status(200).send("Product/ID");
+app.get("/product/id/:id", async (req, res) => {
+var product 
+try{
+    product = await Product.findByProductId(req.params.id)
+}catch(e){
+    next(e)
+}
+  res.status(200).render("../views/product",{ auth: req.session || {} , product:product});
 });
 app.get("/product/add", (req, res) => {
   res.status(200).send("Product");
@@ -91,7 +121,9 @@ app.get("/*", (req, res, next) => {
   next({ statusCode: 404, message: "Not Found" });
 });
 app.use((err, req, res, next) => {
-  return res.status(err.statusCode).send(err.message);
+  res
+    .status(err.statusCode)
+    .render("../views/error.ejs", { err: err, auth: req.session || {} });
 });
 
 //server start

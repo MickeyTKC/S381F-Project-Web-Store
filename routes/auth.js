@@ -10,7 +10,7 @@ router.post("/login", async (req, res, next) => {
   const err = {};
   if (!user) next({ statusCode: 400, message: "User does not exist." });
   if (user.password != pw)
-    next({ statusCode: 400, message: "The password is incorrect." });
+    return next({ statusCode: 400, message: "The password is incorrect." });
   if (user.password == pw) {
     // setup express session
     req.session.authenticated = true;
@@ -52,8 +52,8 @@ router.post("/signup", async (req, res, next) => {
     phoneNo: req.body.phoneNo || "",
   };
   // Check input
-  if (!user.userId || !user.password || !user.role || !user.name) 
-    next({ statusCode: 400, message: "Wrong User Input" });
+  if (!user.userId || !user.password || !user.role || !user.name)
+    return next({ statusCode: 400, message: "Wrong User Input" });
   // Result Set
   var isExist, client, cart;
   // Execute Query
@@ -62,11 +62,11 @@ router.post("/signup", async (req, res, next) => {
     client = await User.create(user);
     cart = await Cart.create({ userId: user.userId, product: [] });
   } catch (e) {
-    next(e);
+    return next(e);
   }
   // Response
   if (!req.header("content-type") == "application/json") {
-    if (!client) next({ statusCode: 400, message: "Database Error." });
+    if (!client) return next({ statusCode: 400, message: "Database Error." });
     else res.status(200).json({ message: "success" });
   } else {
     res.redirect("/login");

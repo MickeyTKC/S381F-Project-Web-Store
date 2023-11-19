@@ -52,7 +52,7 @@ router.post("/", async (req, res, next) => {
         price: req.body.price,
         discount: req.body.discount || "",
         info: req.body.info || "",
-        tags: [] || "",
+        tags: req.body.tags.split(",") || "",
         date: new Date().toISOString(),
     };
     try {

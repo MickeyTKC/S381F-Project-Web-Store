@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <title>Store</title>
+    <%- include('../views/components/head.ejs'); %>
+    <style>
+      html { scroll-behavior: smooth;}
+    </style>
+    <% const { user={} ,authenticated } = auth %>
+  </head>
+  <body>
+    <%- include('../views/components/navbar'); %>
+    <div class="container mt-5">
+      <div class="jumbotron">
+        <h1 class="display-4">Welcome to <%= store.name %>!</h1>
+        <p class="lead"><%= store.info %></p>
+        <a class="btn btn-primary btn-lg" href="/product" role="button">Shop Now</a>
+        <a class="btn btn-secondary btn-lg" href="#contact" role="button">Contact</a>
+      </div>
+    </div>
+    <div class="container text-center">
+      <hr />
+      <img
+        src="<%= store.img %>"
+        class="img-fluid"
+        alt="Store Logo"
+      />
+      <hr />
+      <h1 id="contact">Store Contact</h1>
+      <h4>Address</h4>
+      <p><%= store.address %></p>
+      <h4>Phone</h4>
+      <p><%= store.phoneNo %></p>
+      <hr />
+      <% if(user.role){%>
+        <div class="fixed-bottom p-5 text-right">
+          <a class="btn btn-light border-dark" href="/store/edit">Edit</a>
+        </div>
+      <%  } %>
+    <%- include('../views/components/foot',{auth:auth}); %>
+  </body>
+</html>

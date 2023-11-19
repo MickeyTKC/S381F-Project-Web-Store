@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
 const User = require("../models/User");
+const Cart = require("../models/Cart");
 
 router.post("/login", async (req, res, next) => {
   const id = req.body.userId;
@@ -19,7 +19,7 @@ router.post("/login", async (req, res, next) => {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json(req.session);
     } else {
-      res.redirect("/")
+      res.redirect("/");
     }
   }
 });
@@ -32,7 +32,52 @@ router.post("/logout", (req, res, next) => {
       message: "Unauthorized, session is empty.",
     });
   req.session = null;
-  res.status(200).json({ message: "success" });
+  if (!req.header("content-type") == "application/json") {
+    res.status(200).json({ message: "success" });
+  } else {
+    res.redirect("/");
+  }
+});
+
+router.post("/signup", async (req, res, next) => {
+  // User
+  const user = {
+    userId: req.body.userId,
+    password: req.body.password,
+    role: "client",
+    name: req.body.name,
+    info: req.body.info || "",
+    address: req.body.address || "",
+    email: req.body.email || "",
+    phoneNo: req.body.phoneNo || "",
+  };
+  // Check input
+  if (!user.userId || !user.password || !user.role || !user.name) 
+    next({ statusCode: 400, message: "Wrong User Input" });
+  // Result Set
+  var isExist, client, cart;
+  // Execute Query
+  try {
+    isExist = await User.findByUserId(user.userId);
+    client = await User.create(user);
+    cart = await Cart.create({ userId: user.userId, product: [] });
+  } catch (e) {
+    next(e);
+  }
+  // Response
+  if (!req.header("content-type") == "application/json") {
+    if (!client) next({ statusCode: 400, message: "Database Error." });
+    else res.status(200).json({ message: "success" });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+router.use((err, req, res, next) => {
+  res.setHeader("Content-Type", "application/json");
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(statusCode).json({ error: message });
 });
 
 module.exports = router;

@@ -129,14 +129,12 @@ app.get("/product/id/:id", async (req, res) => {
 });
 app.get("/product/add", (req, res) => {
   const url = `/api/product/`;
-  res
-    .status(200)
-    .render("../views/productForm", {
-      auth: req.session || {},
-      product: {},
-      action: "add",
-      url: url,
-    });
+  res.status(200).render("../views/productForm", {
+    auth: req.session || {},
+    product: {},
+    action: "add",
+    url: url,
+  });
 });
 app.get(
   "/product/id/:id/edit",
@@ -181,7 +179,13 @@ app.get("/user/id/:id", async (req, res, next) => {
     .render("../views/user", { auth: req.session || {}, user: user });
 });
 app.get("/user/add", (req, res, next) => {
-  res.status(200).send("User");
+  const url = "/api/user/add";
+  res.status(200).render("../views/userForm", {
+    user: {},
+    auth: req.session || {},
+    action: "add",
+    url: url,
+  });
 });
 app.get("/user/id/:id/edit", auth.isAdmin, async (req, res, next) => {
   var user;
@@ -190,9 +194,13 @@ app.get("/user/id/:id/edit", auth.isAdmin, async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
-  res
-    .status(200)
-    .render("../views/userForm", { auth: req.session || {}, user: user });
+  const url = `/api/user/id/${user.userId}/edit`;
+  res.status(200).render("../views/userForm", {
+    auth: req.session || {},
+    user: user,
+    action: "edit",
+    url: url,
+  });
 });
 //cart
 app.get("/cart", auth.isLogin, async (req, res, next) => {
@@ -218,7 +226,7 @@ app.get("/*", (req, res, next) => {
   return next({ statusCode: 404, message: "Not Found" });
 });
 app.use((err, req, res, next) => {
-  if (err.statusCode) res.redirect("/login");
+  if (err.statusCode == 401) res.redirect("/login");
   else
     res
       .status(err.statusCode)

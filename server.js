@@ -70,6 +70,7 @@ app.get("/store/edit", async (req, res, next) => {
 app.get("/login", (req, res, next) => {
   res.status(200).render("../views/login", { auth: req.session || {} });
 });
+// sign
 app.get("/signup", (req, res) => {
   res.status(200).render("../views/signup", { auth: req.session || {} });
 });
@@ -98,10 +99,16 @@ app.get("/product/id/:id", async (req, res) => {
     .render("../views/product", { auth: req.session || {}, product: product });
 });
 app.get("/product/add", (req, res) => {
-  res.status(200).send("Product");
+  res.status(200).render("../views/productForm", { auth: req.session || {}, product:{} });
 });
-app.get("/product/id/:id/edit", (req, res, next) => {
-  res.status(200).send("Product/Edit");
+app.get("/product/id/:id/edit", async (req, res, next) => {
+    var product;
+    try {
+        product = await Product.findByProductId(req.params.id);
+      } catch (e) {
+        next(e);
+      }
+  res.status(200).render("../views/productForm", { auth: req.session || {}, product: product || {} });
 });
 //user
 app.get("/user", (req, res, next) => {

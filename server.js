@@ -21,12 +21,27 @@ app.use(express.static("public"));
 app.use(express.json());
 
 //api routes
-// const routes = require("./routes")
+const routes = require("./routes");
 
 //connect to mongodb
 mongoose.connection.on("error", err => {
   throw new Error("Mongo database connexion error");
 });
+
+//auth
+const auth = {
+  isLogin: (req, res, next) => {
+    next({ statusCode: 401, message: "Login is required" });
+  },
+  isOperator: (req, res, next) => {
+    next({ statusCode: 403, message: "Operator Permission is required" });
+  },
+  isAdmin: (req, res, next) => {
+    next({ statusCode: 403, message: "Admin Permission is required" });
+  },
+};
+//api
+app.use("/api", routes);
 
 //view routes
 app.get("/", (req, res) => {
@@ -48,7 +63,7 @@ app.get("/product/id/:id", (req, res) => {
   res.status(200).send("Product/ID");
 });
 app.get("/product/add", (req, res) => {
-    res.status(200).send("Product");
+  res.status(200).send("Product");
 });
 app.get("/product/id/:id/edit", (req, res, next) => {
   res.status(200).send("Product/Edit");
@@ -61,13 +76,13 @@ app.get("/user/id/:id", (req, res, next) => {
   res.status(200).send("User/ID");
 });
 app.get("/user/add", (req, res, next) => {
-    res.status(200).send("User");
+  res.status(200).send("User");
 });
 app.get("/user/id/edit", (req, res, next) => {
-    res.status(200).send("User/ID/Edit");
+  res.status(200).send("User/ID/Edit");
 });
 //cart
-app.get("/cart", (req, res, next) => {
+app.get("/cart", auth.isLogin, (req, res, next) => {
   res.status(200).send("Cart");
 });
 
@@ -76,7 +91,7 @@ app.get("/*", (req, res, next) => {
   next({ statusCode: 404, message: "Not Found" });
 });
 app.use((err, req, res, next) => {
-  return res.status(400).send(err.message);
+  return res.status(err.statusCode).send(err.message);
 });
 
 //server start

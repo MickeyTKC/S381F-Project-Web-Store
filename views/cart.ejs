@@ -54,7 +54,7 @@
         const deleteButtons = [...document.querySelectorAll(".btn-danger")]
         deleteButtons.forEach(btn=>{
           btn.addEventListener('click', async ()=>{
-              deleteData(`/cart/productId/${btn.id}`)
+              deleteData(`/api/cart/productId/${btn.id}`)
               location.reload()
           })
         })

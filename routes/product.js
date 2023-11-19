@@ -60,6 +60,9 @@ router.post("/", async (req, res, next) => {
         if (contentType == "application/json") {
             res.status(200).json(newProduct);
         }
+        if (!contentType) {
+            res.redirect("/product");
+        }
     } catch (e) {
         return next(e);
     }
@@ -93,6 +96,24 @@ router.post("/id/:id", isLogin, async (req, res) => {
 } catch (e) {
     return next(e);
 }   
+});
+
+router.delete("/productId/:id", isLogin, async (req, res, next) => {
+    const contentType = req.header("content-type");
+    const err = {};
+    try {
+        //console.log(req.params)
+        const delProduct = await Product.findOneAndDelete({ productId: req.params.id });
+        //console.log(delProduct)
+        if (contentType == "application/json") {
+            res.status(200).json(delProduct);
+        }
+        if (!contentType) {
+            res.redirect("/product");
+        }
+    } catch (e) {
+        return next(e);
+    }
 });
 
 router.use((err, req, res, next) => {

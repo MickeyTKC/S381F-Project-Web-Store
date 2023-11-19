@@ -13,8 +13,7 @@ router.get("/", isLogin, async (req, res) => {
   const userId = req.session.user.userId;
   const myCart = await Cart.findByUserId(userId);
   if (myCart) for (p of myCart.product) p.img = p.img || "/img/noImage.jpg";
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).json(myCart);
+  res.send(JSON.stringify(myCart));
 });
 
 router.put("/productId/:id", isLogin, async (req, res, next) => {

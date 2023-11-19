@@ -64,5 +64,24 @@
       <%}%>
     </div>
     <%- include('../views/components/foot',{auth:auth}); %>
+    <%if(user &&
+    product){%>
+    <script defer>
+      document.addEventListener("DOMContentLoaded", function () {
+        const id = "<%=product.productId%>";
+        const buttons = [...document.querySelectorAll(".btn-primary")];
+        buttons.forEach(button => {
+          button.addEventListener("click", function () {
+            console.log(`Add ${id} to "My Favorite"`);
+            putData(`/api/cart/productId/${id}`)
+            button.classList.add("success-animation");
+            setTimeout(() => {
+              button.classList.remove("success-animation");
+            }, 1000);
+          });
+        });
+      });
+    </script>
+    <%}%>
   </body>
 </html>

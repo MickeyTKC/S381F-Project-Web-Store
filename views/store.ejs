@@ -33,7 +33,7 @@
       <h4>Phone</h4>
       <p><%= store.phoneNo %></p>
       <hr />
-      <% if(user.role=="admin"){%>
+      <% if(user.role){%>
       <div class="fixed-bottom p-5 text-right">
         <a class="btn btn-light border-dark" href="/store/edit">Edit</a>
       </div>

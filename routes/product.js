@@ -73,11 +73,13 @@ router.post("/id/:id", isLogin, async (req, res) => {
     const contentType = req.header("content-type");
     const err = {};
     // get data
+    console.log(req.body);
     const product = {
-        //productId: req.body.productId,
+        productId: req.body.productId,
         name: req.body.name,
         img: req.body.img || "",
         price: req.body.price,
+        date: new Date().toISOString(),
         discount: req.body.discount || "",
         info: req.body.info || "",
         tags: req.body.tags || "",
@@ -88,16 +90,12 @@ router.post("/id/:id", isLogin, async (req, res) => {
             { productId: req.params.id },
             product
         );
-        if (contentType == "application/json") {
-            res.status(200).json(editProduct);
-        }
-        if (!contentType) {
-            res.redirect("/product");
-        }
-    } catch (e) {
-        return next(e);
+    if (contentType == "application/json") {
+        res.status(200).json(editProduct);
     }
-    res.redirect(`/product/id/${req.params.id}`);
+} catch (e) {
+    return next(e);
+}   
 });
 
 router.use((err, req, res, next) => {

@@ -34,8 +34,7 @@ const isLogin_Admin = (req, res, next) => {
 router.get("/", async (req, res) => {
     const user = req.session.user || {};
     const storeData = await Store.findOne({});
-    //res.status(200).render("../views/store", { user: user, store: storeData });
-    //res.send(JSON.stringify(user));
+
     res.send(JSON.stringify(storeData));
 });
 
@@ -43,7 +42,6 @@ router.get("/edit", isLogin_Admin, async (req, res) => {
     const user = req.session.user || {};
     const storeData = await Store.findOne({});
 
-    //res.status(200).render("../views/storeEdit", { user: user, store: storeData });
     res.send(JSON.stringify(storeData));
 });
 

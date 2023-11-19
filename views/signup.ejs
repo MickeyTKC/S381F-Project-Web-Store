@@ -1,6 +1,6 @@
 <html lang="en">
   <head>
-    <title>Product Detail</title>
+    <title>Sign Up</title>
     <%- include('../views/components/head.ejs'); %>
     <style>
       :root {
@@ -96,7 +96,7 @@
     <% const { user={} ,authenticated } = auth %>
   </head>
   <body>
-    <form action="/signup" method="POST" class="w-50">
+    <form class="w-50" action="api/auth/signup" method="post">
         <div class="text-center mb-4">
             <img class="mb-4" src="img/icon.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
@@ -146,5 +146,53 @@
         <button type="submit" class="btn btn-primary">Sign Up</button>
       </form>
     <%- include('../views/components/foot',{auth:auth}); %>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        const url = "/api/auth/signup";
+    
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+    
+          const userId = document.querySelector("#userId").value;
+          const password = document.querySelector("#password").value;
+          const name = document.querySelector("#name").value;
+          const address = document.querySelector("#address").value;
+          const email = document.querySelector("#email").value;
+          const phoneNo = document.querySelector("#phoneNo").value;
+    
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ userId, password, name, address, email, phoneNo }),
+            });
+    
+            if (response.ok) {
+              // Sign up success
+                window.location.href = "/login";
+            } else {
+              // Sign up failed
+              const errorData = await response.json();
+              const errorMessage = errorData.error || "Sign up failed. Please try again.";
+              displayError(errorMessage);
+            }
+          } catch (error) {
+            // Error occurred during sign up
+            displayError("An error occurred. Please try again later.");
+          }
+        });
+    
+        function displayError(message) {
+          const errorContainer = document.querySelector(".alert") || document.createElement("div");
+          errorContainer.className = "alert alert-danger mt-3";
+          errorContainer.textContent = message;
+    
+          form.appendChild(errorContainer);
+        }
+      });
+    </script>
   </body>
 </html>

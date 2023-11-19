@@ -28,7 +28,7 @@
         <h4>Email:</h4>
         <p><%= user.email %></p>
         <hr />
-        <%=auth.user.role%>
+        <!--<%=auth.user.role%> -->
       </div>
       <%if(auth.user.role=="admin" || auth.user.userId == user.userId){ %>
       <h4>Address:</h4>
@@ -37,6 +37,13 @@
       <h4>Phone Number:</h4>
       <p><%= user.phoneNo %></p>
       <hr />
+      <div class="fixed-bottom p-5 text-right">
+        <a
+          class="btn btn-light border-dark"
+          href="/user/id/<%= user.userId %>/edit"
+          >Edit</a
+        >
+      </div>
       <%}%>
     </div>
     <%}%> <%- include('../views/components/foot',{auth:auth}); %>

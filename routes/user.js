@@ -108,14 +108,12 @@ router.post("/id/:id/edit", isLogin, async (req, res) => {
         );
         if (contentType == "application/json") {
             res.status(200).json(editUser);
-        }
-        if (!contentType) {
-            res.redirect("/user");
+        }else{
+            res.redirect(`/user/id/${req.params.id}`);
         }
     } catch (e) {
         return next(e);
-    }
-    res.redirect(`/user/id/${req.params.id}`);
+    }   
 });
 
 router.delete("/id/:id", isLogin, async (req, res) => {

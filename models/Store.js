@@ -5,7 +5,8 @@ const storeSchema = new mongoose.Schema({
   name: { type: String, required: true },
   img: { type: String }, //store logo
   info: { type: String },
-  address: { type: String, required: true }
+  address: { type: String, required: true },
+  phoneNo: { type: String }
 });
 
 //------------------Function start------------------

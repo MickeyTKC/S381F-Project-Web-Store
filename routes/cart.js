@@ -55,7 +55,7 @@ router.put("/productId/:id", isLogin, async (req, res, next) => {
     .json({ message: `Put product to cart successfully`, cart: cart });
 });
 
-router.delete("/productId/:id", auth, async (req, res, next) => {
+router.delete("/productId/:id", isLogin, async (req, res, next) => {
   const userId = req.session.user.userId;
   const producId = req.params.id;
   console.log(

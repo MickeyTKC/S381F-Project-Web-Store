@@ -9,10 +9,10 @@ const isLogin = (req, res, next) => {
     const contentType = req.header("content-type");
     const err = {};
     if (!user) {
-        next({ statusCode: 403, message: "Permission Required" });
+        return next({ statusCode: 403, message: "Permission Required" });
     }
     if (user.role != "admin") {
-        next({ statusCode: 403, message: "Admin Permission Required" });
+        return next({ statusCode: 403, message: "Admin Permission Required" });
     }
     next();
 };

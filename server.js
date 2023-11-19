@@ -38,13 +38,22 @@ mongoose.connection.on("error", err => {
 //auth
 const auth = {
   isLogin: (req, res, next) => {
-    next({ statusCode: 401, message: "Login is required" });
+    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    next();
   },
   isOperator: (req, res, next) => {
-    next({ statusCode: 403, message: "Operator Permission is required" });
+    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    const { user } = req.session;
+    if (user.role != "operator")
+      next({ statusCode: 403, message: "Operator Permission is required" });
+    next();
   },
   isAdmin: (req, res, next) => {
-    next({ statusCode: 403, message: "Admin Permission is required" });
+    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    const { user } = req.session;
+    if (user.role != "admin")
+      next({ statusCode: 403, message: "Operator Permission is required" });
+    next();
   },
 };
 //api
@@ -146,7 +155,7 @@ app.get("/user/id/edit", (req, res, next) => {
 });
 //cart
 app.get("/cart", auth.isLogin, async (req, res, next) => {
-  const { userId } = req.session.user;
+  const userId = req.session.user.userId;
   var myCart;
   try {
     myCart = await Cart.findByUserId(userId);
@@ -155,7 +164,7 @@ app.get("/cart", auth.isLogin, async (req, res, next) => {
   }
   if (myCart) {
     for (p of myCart.product) {
-      p.img = p.img || "/noImage.jpg";
+      p.img = p.img || "/img/noImage.jpg";
     }
   }
   res

@@ -54,24 +54,24 @@ app.use("/api", routes);
 app.get("/", async (req, res, next) => {
   var store;
   try {
-    storeData = (await Store.findOne({})) || {};
+    store = await Store.findOne({});
   } catch (e) {
-    next(e);
+    next({ statusCode: 400, message: "Bad request" });
   }
   res.status(200).render("../views/store", {
     auth: req.session || {},
-    store: store,
+    store: store || {},
   });
 });
-app.get("/store/edit", async (req, res , next) => {
+app.get("/store/edit", async (req, res, next) => {
   res.status(200).render("../views/store", { auth: req.session || {} });
 });
 // login
-app.get("/login", (req, res) => {
-  res.status(200).send("Login");
+app.get("/login", (req, res, next) => {
+  res.status(200).render("../views/login", { auth: req.session || {} });
 });
 app.get("/signup", (req, res) => {
-  res.status(200).send("Sign Up");
+  res.status(200).render("../views/signup", { auth: req.session || {} });
 });
 //product
 app.get("/product", async (req, res, next) => {
@@ -81,16 +81,21 @@ app.get("/product", async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-  res.status(200).render("../views/products", { auth: req.session || {} , products:products});
+  res.status(200).render("../views/products", {
+    auth: req.session || {},
+    products: products,
+  });
 });
 app.get("/product/id/:id", async (req, res) => {
-var product 
-try{
-    product = await Product.findByProductId(req.params.id)
-}catch(e){
-    next(e)
-}
-  res.status(200).render("../views/product",{ auth: req.session || {} , product:product});
+  var product;
+  try {
+    product = await Product.findByProductId(req.params.id);
+  } catch (e) {
+    next(e);
+  }
+  res
+    .status(200)
+    .render("../views/product", { auth: req.session || {}, product: product });
 });
 app.get("/product/add", (req, res) => {
   res.status(200).send("Product");

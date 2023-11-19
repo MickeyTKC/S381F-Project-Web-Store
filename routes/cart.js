@@ -5,8 +5,7 @@ const Product = require("../models/Product");
 
 const isLogin = (req, res, next) => {
   const user = req.session.user;
-  const contentType = req.header("content-type");
-  if (!user) next({ statusCode: 403, message: "Login Required" });
+  if (!user) return next({ statusCode: 403, message: "Login Required" });
   next();
 };
 
@@ -21,23 +20,26 @@ router.get("/", isLogin, async (req, res) => {
 router.put("/productId/:id", isLogin, async (req, res, next) => {
   const userId = req.session.user.userId;
   const productId = req.params.id;
-  console.log(
-    `put product ${product.productId}-${product.name} from User:${userId} Name:${req.session.user.name}`
-  );
   var product, cart;
   try {
     product = new Product(await Product.findByProductId(productId));
     cart = new Cart(await Cart.findByUserId(userId));
+    console.log(product);
   } catch (e) {
-    next(e);
+    return next(e);
   }
-  if (!product) next({ statusCode: 400, message: "Product does not exist" });
-  if (cart.product.filter(p => p.productId == productId) > 0)
-    next({
+  console.log(
+    `put product ${product.productId}-${product.name} from User:${userId} Name:${req.session.user.name}`
+  );
+  if (!product.productId)
+    return next({ statusCode: 400, message: "Product does not exist" });
+  if (cart.product.filter(p => p.productId == productId).length > 0) {
+    return next({
       statusCode: 400,
       message: `Cart had this product already`,
       product: product,
     });
+  }
   try {
     const newProduct = {
       productId: product.productId,
@@ -63,28 +65,31 @@ router.delete("/productId/:id", isLogin, async (req, res, next) => {
   );
   var cart;
   try {
-    cart = new Cart(await Cart.updateOne());
+    cart = new Cart(await Cart.findByUserId(userId));
     if (cart.product.length <= 0)
-      next({ statusCode: 400, message: "Cart is empty" });
-    if (cart.product.filter(p => p.productId == producId).length <= 0)
-      next({ statusCode: 400, message: "Product does not exist in Cart" });
-    cart.product.map(p => p.productId != producId);
-    cart.save;
+      return next({ statusCode: 400, message: "Cart is empty" });
+    if (cart.product.filter(p => p.productId == producId).length <= 0) {
+      return next({
+        statusCode: 400,
+        message: "Product does not exist in Cart",
+      });
+    } else {
+      cart.product = cart.product.filter(p => p.productId != producId);
+      cart.save();
+      res
+        .status(200)
+        .json({ message: `Delete product to cart successfully`, cart: cart });
+    }
   } catch (e) {
-    next(e);
+    return next(e);
   }
-  res
-    .status(200)
-    .json({ message: `Delete product to cart successfully`, cart: cart });
-
-  router.use((err, req, res, next) => {
-    res.setHeader("Content-Type", "application/json");
-    // Default error status code
-    const statusCode = err.statusCode || 500;
-    // Default error message
-    const message = err.message || "Internal Server Error";
-    // Send error response
-    res.status(statusCode).json({ error: message });
-  });
 });
+
+router.use((err, req, res, next) => {
+  res.setHeader("Content-Type", "application/json");
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(statusCode).json({ error: message });
+});
+
 module.exports = router;

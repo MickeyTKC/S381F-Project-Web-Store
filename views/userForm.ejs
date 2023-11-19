@@ -1,14 +1,14 @@
 <html lang="en">
 
 <head>
-  <title>Edit User Information</title>
+  <title>User Information</title>
   <%- include('../views/components/head.ejs'); %>
     <style></style>
 </head>
 
 <body>
   <%- include('../views/components/navbar',{auth:auth}); %>
-    <h1>Edit User Information</h1>
+    <h1>User Form</h1>
     <div class="container">
       <form id="editForm" action="/api/user/id/<%= user.userId %>/edit" method="POST">
 

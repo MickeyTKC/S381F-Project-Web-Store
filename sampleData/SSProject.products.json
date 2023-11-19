@@ -1,0 +1,130 @@
+[{
+  "productId": "product1",
+  "name": "Product 1",
+  "img": "https://i.dummyjson.com/data/products/23/2.jpg",
+  "date": "2021-09-15T10:30:00Z",
+  "price": 9.99,
+  "discount": "",
+  "info": "Product 1 information",
+  "tags": [
+    "tag1",
+    "tag2"
+  ]
+},
+{
+  "productId": "product2",
+  "name": "Product 2",
+  "img":"https://i.dummyjson.com/data/products/24/1.jpg",
+  "date": "2021-09-16T10:30:00Z",
+  "price": 19.99,
+  "discount": "",
+  "info": "Product 2 information",
+  "tags": [
+    "tag3",
+    "tag4"
+  ]
+},
+{
+  "productId": "product3",
+  "name": "Product 3",
+  "img": "https://i.dummyjson.com/data/products/10/1.jpg",
+  "date": "2021-09-17T10:30:00Z",
+  "price": 14.99,
+  "discount": null,
+  "info": "Product 3 information",
+  "tags": [
+    "tag2",
+    "tag5"
+  ]
+},
+{
+  "productId": "product4",
+  "name": "Product 4",
+  "img": "https://i.dummyjson.com/data/products/26/1.jpg",
+  "date": "2021-09-19T10:30:00Z",
+  "price": 29.99,
+  "discount": "",
+  "info": "Product 4 information",
+  "tags": [
+    "tag1",
+    "tag4"
+  ]
+},
+{
+  "productId": "product5",
+  "name": "Product 5",
+  "img": "https://i.dummyjson.com/data/products/27/1.jpg",
+  "date": "2021-09-20T10:30:00Z",
+  "price": 12.99,
+  "discount": "",
+  "info": "Product 5 information",
+  "tags": [
+    "tag3",
+    "tag6"
+  ]
+},
+{
+  "productId": "product6",
+  "name": "Product 6",
+  "img": "https://i.dummyjson.com/data/products/28/1.jpg",
+  "date": "2021-09-21T10:30:00Z",
+  "price": 24.99,
+  "discount": "",
+  "info": "Product 6 information",
+  "tags": [
+    "tag1",
+    "tag5"
+  ]
+},
+{
+  "productId": "product7",
+  "name": "Product 7",
+  "img": "https://i.dummyjson.com/data/products/29/1.jpg",
+  "date": "2021-09-23T10:30:00Z",
+  "price": 8.99,
+  "discount": "",
+  "info": "Product 7 information",
+  "tags": [
+    "tag4",
+    "tag6"
+  ]
+},
+{
+  "productId": "product8",
+  "name": "Product 8",
+  "img": "https://i.dummyjson.com/data/products/30/1.jpg",
+  "date": "2021-09-24T10:30:00Z",
+  "price": 16.99,
+  "discount": "",
+  "info": "Product 8 information",
+  "tags": [
+    "tag2",
+    "tag3"
+  ]
+},
+{
+  "productId": "product9",
+  "name": "Product 9",
+  "img": "https://i.dummyjson.com/data/products/31/1.jpg",
+  "date": "2021-09-25T10:30:00Z",
+  "price": 11.99,
+  "discount": "",
+  "info": "Product 9 information",
+  "tags": [
+    "tag2",
+    "tag4"
+  ]
+},
+{
+  "productId": "product10",
+  "name": "Product 10",
+  "img": "https://i.dummyjson.com/data/products/32/1.jpg",
+  "date": "2021-09-27T10:30:00Z",
+  "price": 19.99,
+  "discount": "",
+  "info": "Product 10 information",
+  "tags": [
+    "tag1",
+    "tag5"
+  ]
+}]

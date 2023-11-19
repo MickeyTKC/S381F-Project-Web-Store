@@ -241,7 +241,7 @@ app.get("/store/edit", auth.isAdmin, async (req, res, next) => {
   }
   res
     .status(200)
-    .render("../views/store", { auth: req.session || {}, store: storeData });
+    .render("../views/storeForm", { auth: req.session || {}, store: storeData, action: "edit"});
 });
 
 //error handler

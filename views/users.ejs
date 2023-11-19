@@ -40,6 +40,16 @@
 
         <%}%>
       </div>
+      <% const authUser = auth.user || {}
+      const display = authUser.role || "client" %> 
+      <%if(display== "admin") {%>
+        <a
+          style="position: fixed; right: 3rem; bottom: 3rem"
+          class="btn btn-light border-dark"
+          href="/user/add"
+          >Add</a
+        >
+        <%}%>
     </div>
     </div>
     <%- include('../views/components/foot',{auth:auth}); %>

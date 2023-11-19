@@ -39,21 +39,28 @@ mongoose.connection.on("error", err => {
 const auth = {
   isLogin: (req, res, next) => {
     if (!req.session) next({ statusCode: 401, message: "Login is required" });
-    return next();
+    next();
   },
   isOperator: (req, res, next) => {
     if (!req.session) next({ statusCode: 401, message: "Login is required" });
     const { user } = req.session;
     if (user.role != "operator")
     return next({ statusCode: 403, message: "Operator Permission is required" });
-    return next();
+    next();
+  },
+  isOperatorOrAdmin: (req, res, next) => {
+    if (!req.session) next({ statusCode: 401, message: "Login is required" });
+    const { user } = req.session;
+    if (user.role == "client")
+    return next({ statusCode: 403, message: "Operator/Admin Permission is required" });
+    next();
   },
   isAdmin: (req, res, next) => {
     if (!req.session) next({ statusCode: 401, message: "Login is required" });
     const { user } = req.session;
     if (user.role != "admin")
     return next({ statusCode: 403, message: "Operator Permission is required" });
-    return next();
+    next();
   },
 };
 //api
@@ -112,7 +119,7 @@ app.get("/product/add", (req, res) => {
     .status(200)
     .render("../views/productForm", { auth: req.session || {}, product: {} });
 });
-app.get("/product/id/:id/edit", async (req, res, next) => {
+app.get("/product/id/:id/edit", auth.isOperatorOrAdmin, async (req, res, next) => {
   var product;
   try {
     product = await Product.findByProductId(req.params.id);
@@ -150,8 +157,16 @@ app.get("/user/id/:id", async (req, res, next) => {
 app.get("/user/add", (req, res, next) => {
   res.status(200).send("User");
 });
-app.get("/user/id/edit", (req, res, next) => {
-  res.status(200).send("User/ID/Edit");
+app.get("/user/id/:id/edit", auth.isAdmin, async(req, res, next) => {
+  var user;
+  try {
+    user = await User.findByUserId(req.params.id);
+  } catch (e) {
+    return next(e);
+  }
+  res
+    .status(200)
+    .render("../views/userForm", { auth: req.session || {}, user: user });
 });
 //cart
 app.get("/cart", auth.isLogin, async (req, res, next) => {

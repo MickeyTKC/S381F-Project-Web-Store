@@ -160,7 +160,13 @@
 
             if (response.ok) {
               // Sign in success
-              window.location.href = "/"; // Redirect to dashboard or desired page
+              const data = await response.json();
+              const message = data.message;
+              displaySuccess(data.message)
+              setTimeout(function () {
+                window.location.href = "/";
+              }, 1000);
+               // Redirect to dashboard or desired page
             } else {
               // Sign in failed
               const errorData = await response.json();
@@ -181,6 +187,13 @@
           errorContainer.textContent = message;
           form.appendChild(errorContainer);
         }
+        function displaySuccess(message) {
+            const errorContainer =
+            document.querySelector(".alert") || document.createElement("div");
+            errorContainer.className = "alert alert-success mt-3";
+            errorContainer.textContent = message;
+            form.appendChild(errorContainer);
+          }
       });
     </script>
   </body>

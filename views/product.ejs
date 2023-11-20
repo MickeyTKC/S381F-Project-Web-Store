@@ -52,7 +52,7 @@
             Add to My Favorite
           </button>
           <% const displayEdit = user.role || "client" %> <%if(displayEdit ==
-          "admin" || "operator") {%>
+          "admin" || displayEdit == "operator") {%>
           <div class="fixed-bottom p-5 text-right">
             <a class="btn btn-light border-dark" href="/product/add">Add</a>
             <a

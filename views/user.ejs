@@ -38,11 +38,13 @@
       <p><%= user.phoneNo %></p>
       <hr />
       <div class="fixed-bottom p-5 text-right">
+        <%if(auth.user.role=="admin"){ %>
         <a
           class="btn btn-light border-dark"
           href="/user/id/<%= user.userId %>/edit"
           >Edit</a
         >
+        <%}%>
       </div>
       <%}%>
     </div>

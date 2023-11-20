@@ -1,6 +1,6 @@
 <html lang="en">
   <head>
-    <title>Ststem Users</title>
+    <title>System Users</title>
     <%- include('../views/components/head.ejs'); %>
     <style></style>
   </head>
@@ -32,7 +32,7 @@
               <td><%=user.name%></td>
               <td><%=user.role%></td>
               <td><%=user.phoneNo%></td>
-              <td><a href="user/id/<%=user.userId%>">Detail</a></td>
+              <td><a href="/user/id/<%=user.userId%>">Detail</a></td>
             </tr>
             <%}%>
           </tbody>

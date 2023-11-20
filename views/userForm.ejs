@@ -4,7 +4,7 @@
   <title>User Information</title>
   <%- include('../views/components/head.ejs'); %>
     <style></style>
-    <% if(action="add") user={}%>
+    <% if(action=="add") user={}%>
 </head>
 
 <body>
@@ -81,8 +81,8 @@
           const phoneNo = document.querySelector("#phoneNo").value;
           if(action=='add'){
             userId = document.querySelector("#userId").value;
-            role = document.querySelector("#role").value;
-            }
+          }
+          role = document.querySelector("#role").value;
           try {
             const response = await fetch(url, {
               method: "POST",
@@ -94,7 +94,7 @@
 
             if (response.ok) {
               // Sign up success
-              window.location.href = `/user/id/<%=user.userId%>`;
+              window.location.href = `/user`;
             } else {
               // Sign up failed
               const errorData = await response.json();

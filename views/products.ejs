@@ -62,7 +62,7 @@
           <p class="empty-message">No products available.</p>
         </div>
         <%}%> <% const displayEdit = user.role || "client" %> <%if(displayEdit
-        == "admin" || "operator") {%>
+        == "admin" || displayEdit == "operator") {%>
         <a
           style="position: fixed; right: 3rem; bottom: 3rem"
           class="btn btn-light border-dark"

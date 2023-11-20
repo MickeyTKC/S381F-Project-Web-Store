@@ -71,7 +71,7 @@ const auth = {
     if (user.role != "admin")
       return next({
         statusCode: 403,
-        message: "Operator Permission is required",
+        message: "Admin Permission is required",
       });
     next();
   },
@@ -177,12 +177,16 @@ app.get("/user/id/:id", auth.isLogin, async (req, res, next) => {
   var user;
   try {
     user = await User.findByUserId(req.params.id);
+    if(!user) return next({statusCode:400,message:"User does not exist"})
   } catch (e) {
     return next(e);
   }
   res
     .status(200)
     .render("../views/user", { auth: req.session || {}, user: user });
+});
+app.get("/user/id/", auth.isLogin, async (req, res, next) => {
+  return next({statusCode:400,message:"User does not exist"})
 });
 app.get("/user/add", (req, res, next) => {
   const url = "/api/user/add";
@@ -238,18 +242,6 @@ app.get("/store", async (req, res, next) => {
     .status(200)
     .render("../views/store", { auth: req.session || {}, store: storeData });
 });
-app.get("/store/edit", auth.isAdmin, async (req, res, next) => {
-  var storeData;
-  try {
-    storeData = await Store.findOne({});
-  } catch (e) {
-    return next(e);
-  }
-  res
-    .status(200)
-    .render("../views/storeForm", { auth: req.session || {}, store: storeData, action: "edit"});
-});
-
 //error handler
 app.get("/*", (req, res, next) => {
   return next({ statusCode: 404, message: "Not Found" });

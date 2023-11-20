@@ -73,7 +73,6 @@ router.post("/id/:id", isLogin, async (req, res) => {
     const contentType = req.header("content-type");
     const err = {};
     // get data
-    console.log(req.body);
     const product = {
         productId: req.body.productId,
         name: req.body.name,
@@ -84,7 +83,6 @@ router.post("/id/:id", isLogin, async (req, res) => {
         info: req.body.info || "",
         tags: req.body.tags || "",
     };
-    console.log(product);
     try {
         const editProduct = await Product.findOneAndUpdate(
             { productId: req.params.id },

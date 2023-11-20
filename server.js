@@ -173,7 +173,7 @@ app.get("/user", auth.isAdmin, async (req, res, next) => {
     .status(200)
     .render("../views/users", { auth: req.session || {}, users: users });
 });
-app.get("/user/id/:id", async (req, res, next) => {
+app.get("/user/id/:id", auth.isLogin, async (req, res, next) => {
   var user;
   try {
     user = await User.findByUserId(req.params.id);

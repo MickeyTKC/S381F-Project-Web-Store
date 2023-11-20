@@ -23,7 +23,6 @@ router.put("/productId/:id", isLogin, async (req, res, next) => {
   try {
     product = new Product(await Product.findByProductId(productId));
     cart = new Cart(await Cart.findByUserId(userId));
-    console.log(product);
   } catch (e) {
     return next(e);
   }

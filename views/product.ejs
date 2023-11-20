@@ -25,7 +25,9 @@
     <%- include('../views/components/navbar',{auth:auth}); %>
 
     <div class="container">
-      <%if(!product){%> <h1>Product Not Found</h1> <%}%> <%if(product){%>
+      <%if(!product){%>
+      <h1>Product Not Found</h1>
+      <%}%> <%if(product){%>
       <div class="py-3"><h1>Product Detail</h1></div>
       <hr />
       <div class="row">
@@ -42,16 +44,17 @@
             <button class="btn btn-sm btn-warning">#<%=tag%></button>
             <%}%>
           </p>
-          <p>Release on: <%= product.date ? new Date(product.date).toDateString() : "" %></p>
-          <button class="btn btn-primary">Add to My Favorite</button>
+          <p>
+            Release on: <%= product.date ? new Date(product.date).toDateString()
+            : "" %>
+          </p>
+          <button id="addToCart" class="btn btn-primary">
+            Add to My Favorite
+          </button>
           <% const displayEdit = user.role || "client" %> <%if(displayEdit ==
           "admin" || "operator") {%>
           <div class="fixed-bottom p-5 text-right">
-            <a
-              class="btn btn-light border-dark"
-              href="/product/add"
-              >Add</a
-            >
+            <a class="btn btn-light border-dark" href="/product/add">Add</a>
             <a
               class="btn btn-light border-dark"
               href="/product/id/<%= product.productId %>/edit"
@@ -63,22 +66,53 @@
       </div>
       <%}%>
     </div>
-    <%- include('../views/components/foot',{auth:auth}); %>
-    <%if(user &&
+    <%- include('../views/components/foot',{auth:auth}); %> <%if(user &&
     product){%>
     <script defer>
       document.addEventListener("DOMContentLoaded", function () {
         const id = "<%=product.productId%>";
-        const buttons = [...document.querySelectorAll(".btn-primary")];
-        buttons.forEach(button => {
-          button.addEventListener("click", function () {
-            console.log(`Add ${id} to "My Favorite"`);
-            putData(`/api/cart/productId/${id}`)
-            button.classList.add("success-animation");
-            setTimeout(() => {
-              button.classList.remove("success-animation");
-            }, 1000);
-          });
+        const button = document.querySelector("#addToCart");
+        button.addEventListener("click", async function () {
+          console.log(`Add ${id} to "My Favorite"`);
+          button.classList.add("success-animation");
+          setTimeout(() => {
+            button.classList.remove("success-animation");
+          }, 1000);
+          try {
+            const response = await fetch(`/api/cart/productId/${id}`, {
+              method: "PUT",
+            });
+            if (response.ok) {
+              // Sign up success
+              const data = await response.json();
+              const message = data.message;
+              setTimeout(function () {
+                displaySuccess(data.message)
+              }, 500);
+            } else {
+              // Sign up failed
+              const errorData = await response.json();
+              const errorMessage =
+                errorData.error || "Edit failed. Please try again.";
+              displayError(errorMessage);
+            }
+          } catch (e) {
+            console.error(error);
+          }
+          function displayError(message) {
+            const errorContainer =
+              document.querySelector(".alert") || document.createElement("div");
+            errorContainer.className = "alert alert-danger mt-3";
+            errorContainer.textContent = message;
+            document.querySelector(".container").appendChild(errorContainer);
+          }
+          function displaySuccess(message) {
+            const errorContainer =
+              document.querySelector(".alert") || document.createElement("div");
+            errorContainer.className = "alert alert-success mt-3";
+            errorContainer.textContent = message;
+            document.querySelector(".container").appendChild(errorContainer);
+          }
         });
       });
     </script>

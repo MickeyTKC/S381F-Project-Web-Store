@@ -48,7 +48,6 @@ router.post("/add", isLogin, async (req, res, next) => {
     email: req.body.email || "",
     phoneNo: req.body.phoneNo || "",
   };
-  console.log(user)
   // wrong input handlng
   if (!user.userId || !user.password || !user.role || !user.name) {
     return next({ statusCode: 400, message: "Wrong User Input" });

@@ -93,7 +93,13 @@ app.get("/", async (req, res, next) => {
   });
 });
 app.get("/store/edit", async (req, res, next) => {
-  res.status(200).render("../views/store", { auth: req.session || {} });
+  var store;
+  try {
+    store = await Store.findOne({});
+  } catch (e) {
+    return next({ statusCode: 400, message: "Bad request" });
+  }
+  res.status(200).render("../views/storeForm", { auth: req.session || {} ,store: store || {},});
 });
 // login
 app.get("/login", (req, res, next) => {

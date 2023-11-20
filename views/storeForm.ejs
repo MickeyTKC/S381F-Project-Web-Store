@@ -17,8 +17,8 @@
               <input type="text" class="form-control" id="name" name="name" value="<%= store.name %>" required>
             </div>
             <div class="form-group">
-              <label for="img">Store Logo</label>
-              <input type="file" class="form-control-file" id="img" name="img">
+              <label for="img">Store Logo Image URL</label>
+              <input type="text" class="form-control-file" id="img" name="img" value="<%= store.img %>">
               <% if (store.img) { %>
                 <img src="<%= store.img %>" alt="Store Logo" class="mt-2" style="max-width: 200px;">
               <% } %>
@@ -45,8 +45,7 @@
 
           let form = document.querySelector("#editForm");
 
-          const action = "<%= action %>";
-          const url = "<%= url %>";
+          const url = "/api/store/edit";
 
           var storeId = "<%= store.storeId %>";
           const name = document.querySelector("#name").value;

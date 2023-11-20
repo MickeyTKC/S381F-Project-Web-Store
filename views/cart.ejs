@@ -54,8 +54,28 @@
         const deleteButtons = [...document.querySelectorAll(".btn-danger")]
         deleteButtons.forEach(btn=>{
           btn.addEventListener('click', async ()=>{
-              deleteData(`/api/cart/productId/${btn.id}`)
-              location.reload()
+              try{
+                const response = await fetch(`/api/cart/productId/${btn.id}`, {
+                  method: "DELETE",
+                });
+                if (response.ok) {
+                  // Sign up success
+                  setTimeout(function(){window.location.href = `/cart`;},500)
+                } else {
+                  // Sign up failed
+                  const errorData = await response.json();
+                  const errorMessage = errorData.error || "Edit failed. Please try again.";
+                  displayError(errorMessage);
+                }
+              }catch(e){
+                console.error(error);
+              }
+              function displayError(message) {
+                const errorContainer = document.querySelector(".alert") || document.createElement("div");
+                errorContainer.className = "alert alert-danger mt-3";
+                errorContainer.textContent = message;
+                document.querySelector(".container").appendChild(errorContainer);
+              }
           })
         })
       </script>

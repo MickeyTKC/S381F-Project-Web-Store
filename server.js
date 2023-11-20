@@ -177,12 +177,16 @@ app.get("/user/id/:id", auth.isLogin, async (req, res, next) => {
   var user;
   try {
     user = await User.findByUserId(req.params.id);
+    if(!user) return next({statusCode:400,message:"User does not exist"})
   } catch (e) {
     return next(e);
   }
   res
     .status(200)
     .render("../views/user", { auth: req.session || {}, user: user });
+});
+app.get("/user/id/", auth.isLogin, async (req, res, next) => {
+  return next({statusCode:400,message:"User does not exist"})
 });
 app.get("/user/add", (req, res, next) => {
   const url = "/api/user/add";

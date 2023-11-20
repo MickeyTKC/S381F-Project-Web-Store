@@ -56,7 +56,7 @@ router.post("/signup", async (req, res, next) => {
   if (!user.userId || !user.password || !user.role || !user.name)
     return next({ statusCode: 400, message: "Wrong User Input" });
   if (user.password.length <= 8)
-  return next({ statusCode: 400, message: "The password aleaset 8 characters" });
+  return next({ statusCode: 400, message: "The password at least 8 characters" });
   // Result Set
   var isExist, client, cart;
   // Execute Query

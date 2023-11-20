@@ -41,7 +41,7 @@
         <%if(auth.user.role=="admin"){ %>
         <a
           class="btn btn-light border-dark"
-          href="/user"
+          href="/user/id/<%= user.userId %>/edit"
           >Edit</a
         >
         <%}%>

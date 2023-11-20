@@ -71,7 +71,7 @@ const auth = {
     if (user.role != "admin")
       return next({
         statusCode: 403,
-        message: "Operator Permission is required",
+        message: "Admin Permission is required",
       });
     next();
   },

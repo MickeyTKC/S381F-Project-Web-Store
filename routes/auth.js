@@ -18,7 +18,7 @@ router.post("/login", async (req, res, next) => {
     req.session.userId = user.userId;
     if (req.header("content-type") == "application/json") {
       res.setHeader("Content-Type", "application/json");
-      res.status(200).json(req.session);
+      res.status(200).json({user:req.session,message:"Login Success"});
     } else {
       res.redirect("/");
     }

@@ -9,8 +9,9 @@
 
 <body>
   <%- include('../views/components/navbar',{auth:auth}); %>
-    <h1>Store Form</h1>
+    
     <div class="container">
+      <h1>Store Form</h1>
         <form id="editForm" action="/stores/edit" method="POST" enctype="multipart/form-data">
             <div class="form-group">
               <label for="name">Store Name</label>

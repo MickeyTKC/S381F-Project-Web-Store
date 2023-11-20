@@ -92,7 +92,7 @@ app.get("/", async (req, res, next) => {
     store: store || {},
   });
 });
-app.get("/store/edit", async (req, res, next) => {
+app.get("/store/edit", auth.isAdmin, async (req, res, next) => {
   var store;
   try {
     store = await Store.findOne({});

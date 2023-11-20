@@ -56,7 +56,7 @@ router.post("/edit", async (req, res) => {
     };
     console.log(store);
     await Store.updateOne({ storeId: storeData.storeId }, { $set: store });
-    res.redirect("/store");
+    res.status(200).json({"message":"Edit store info successfully"});
 });
 
 

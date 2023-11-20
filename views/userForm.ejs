@@ -81,8 +81,8 @@
           const phoneNo = document.querySelector("#phoneNo").value;
           if(action=='add'){
             userId = document.querySelector("#userId").value;
-            role = document.querySelector("#role").value;
-            }
+          }
+          role = document.querySelector("#role").value;
           try {
             const response = await fetch(url, {
               method: "POST",

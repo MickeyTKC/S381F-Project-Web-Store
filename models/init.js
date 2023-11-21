@@ -6,6 +6,8 @@ const Cart = require("./Cart");
 const Product = require("./Product");
 const fs = require("fs");
 
+//env
+require("dotenv").config();
 const dbName = process.env.db_name;
 const url = process.env.db_url + dbName;
 

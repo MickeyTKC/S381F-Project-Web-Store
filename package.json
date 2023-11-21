@@ -19,5 +19,8 @@
     "scripts": {
         "start": "nodemon server",
         "init": "node models/init.js"
+    },
+    "engines": {
+        "node": ">=18.14.1 <19.0.0"
     }
 }

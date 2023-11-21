@@ -203,4 +203,306 @@ Admin :
 	- Alert "An error occurred while editing the store" if edit store is fail
 	- Move to home page if edit user is success
 ### Restful API Guides
-Comming Soon
+> /api/login
+Case 1: Valid login credentials
+Request:
+```json
+POST /api/login
+Body:
+{
+  "userId": "client1",
+  "password": "password1"
+}
+```
+Response:
+```json
+Status: 200 OK
+Content-Type: application/json
+{
+  "user": {
+    "userId": "client1",
+    "password": "password1",
+    "role": "client",
+    "name": "John Doe",
+    "info": "Regular client",
+    "address": "123 Main St",
+    "email": "john@example.com",
+    "phoneNo": "123-456-7890"
+  },
+  "message": "Login Success"
+}
+```
+Case 2: Invalid user ID
+Request:
+```json
+POST /api/login
+Body:
+{
+  "userId": "invaliduser",
+  "password": "password1"
+}
+```
+Response:
+```json
+Status: 400 Bad Request
+Content-Type: application/json
+{
+  "error": "User does not exist."
+}
+```
+Case 3: Incorrect password
+Request:
+```json
+POST /api/login
+Body:
+{
+  "userId": "client1",
+  "password": "incorrectpw"
+}
+```
+Response:
+```json
+Status: 400 Bad Request
+Content-Type: application/json
+
+{
+  "error": "The password is incorrect."
+}
+```
+> /api/logout
+Case 1: Successful logout
+Request:
+```json
+POST /api/logout
+```
+Response:
+```json
+Status: 200 OK
+Content-Type: application/json
+
+{
+  "message": "success"
+}
+```
+Case 2: Unauthorized logout
+Request:
+```json
+POST api/logout
+```
+Response:
+```json
+Status: 401 Unauthorized
+Content-Type: application/json
+
+{
+  "error": "Unauthorized, session is empty."
+}
+```
+> /api/signup
+Case 1: Successful signup
+Request:
+```json
+POST /api/signup
+Body:
+{
+  "userId": "newuser",
+  "password": "newpassword",
+  "role": "client",
+  "name": "New User",
+  "info": "New client",
+  "address": "789 Elm St",
+  "email": "newuser@example.com",
+  "phoneNo": "555-555-5555"
+}
+```
+Response:
+```json
+Status: 200 OK
+Content-Type: application/json
+
+{
+  "message": "success"
+}
+```
+Case 2: Existing user ID
+Request:
+```json
+POST /api/signup
+Body:
+{
+  "userId": "client1",
+  "password": "newpassword",
+  "role": "client",
+  "name": "New User",
+  "info": "New client",
+  "address": "789 Elm St",
+  "email": "newuser@example.com",
+  "phoneNo": "555-555-5555"
+}
+```
+Response:
+
+```json
+Status: 409 Conflict
+Content-Type: application/json
+
+{
+  "error": "The user ID is already taken"
+}
+```
+Case 3: Missing required fields
+Request:
+```json
+POST /api/signup
+Body:
+{
+  "userId": "newuser",
+  "password": "newpassword",
+  "name": "New User"
+}
+```
+Response:
+```json
+Status: 400 Bad Request
+Content-Type: application/json
+
+{
+  "error": "Wrong User Input"
+}
+```
+Case 4: Invalid password length
+Request:
+```json
+POST /api/signup
+Body:
+{
+  "userId": "newuser",
+  "password": "shortpw",
+  "role": "client",
+  "name": "New User"
+}
+```
+Response:
+```json
+Status: 400 Bad Request
+Content-Type: application/json
+
+{
+  "error": "The password at least 8 characters"
+}
+
+```
+GET api/product
+Case 1: User is logged in and has a cart
+
+Request: 
+```
+GET /product
+```
+Response:
+```json
+[
+  {
+    "productId": "product1",
+    "name": "Product 1",
+    "img": "/noImage.jpg",
+    "price": 9.99
+  },
+  {
+    "productId": "product2",
+    "name": "Product 2",
+    "img": "/img/product2.jpg",
+    "price": 14.99
+  }
+]
+```
+> GET api/product/id/:id
+Case 1: Product exists
+
+Request: 
+```
+GET /product/id/product1
+```
+Response:
+```json
+{
+  "productId": "product1",
+  "name": "Product 1",
+  "img": "/noImage.jpg",
+  "price": 9.99
+}
+```
+> POST api/product
+Case 1: Create a new product
+Request:
+```json
+POST /product
+Content-Type: application/json
+
+{
+  "productId": "product3",
+  "name": "Product 3",
+  "img": "/img/product3.jpg",
+  "price": 19.99,
+  "discount": "10%",
+  "info": "This is product 3",
+  "tags": "tag1,tag2,tag3"
+}
+```
+ - Response:
+```json
+{
+  "productId": "product3",
+  "name": "Product 3",
+  "img": "/img/product3.jpg",
+  "price": 19.99,
+  "discount": "10%",
+  "info": "This is product 3",
+  "tags": ["tag1", "tag2", "tag3"],
+  "date": "2022-01-01T00:00:00.000Z"
+}
+```
+POST /api/product/id/:id
+Case 1: Update product information
+Request:
+```json
+POST /product/id/product1
+Content-Type: application/json
+
+{
+  "name": "Updated Product 1",
+  "img": "/img/updated_product1.jpg",
+  "price": 12.99,
+  "discount": "15%",
+  "info": "This is the updated product 1",
+  "tags": "tag1,tag2"
+}
+```
+ - Response:
+```json
+{
+  "productId": "product1",
+  "name": "Updated Product 1",
+  "img": "/img/updated_product1.jpg",
+  "price": 12.99,
+  "discount": "15%",
+  "info": "This is the updated product 1",
+  "tags": ["tag1", "tag2"],
+  "date": "2022-01-01T00:00:00.000Z"
+}
+```
+DELETE /api/product/productId/:id
+Case 1: Delete a product
+Request:
+```
+DELETE /product/productId/product2
+```
+Response:
+```json
+{
+  "productId": "product2",
+  "name": "Product 2",
+  "img": "/img/product2.jpg",
+  "price": 14.99
+}
+```

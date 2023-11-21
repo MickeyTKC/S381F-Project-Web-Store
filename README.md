@@ -390,9 +390,9 @@ Content-Type: application/json
 {
   "error": "The password at least 8 characters"
 }
-
 ```
-GET api/product
+
+> GET /api/product
 Case 1: User is logged in and has a cart
 
 Request: 
@@ -416,7 +416,7 @@ Response:
   }
 ]
 ```
-> GET api/product/id/:id
+> GET /api/product/id/:id
 Case 1: Product exists
 
 Request: 
@@ -432,7 +432,7 @@ Response:
   "price": 9.99
 }
 ```
-> POST api/product
+> POST /api/product
 Case 1: Create a new product
 Request:
 ```json
@@ -462,7 +462,7 @@ Content-Type: application/json
   "date": "2022-01-01T00:00:00.000Z"
 }
 ```
-POST /api/product/id/:id
+> POST /api/product/id/:id
 Case 1: Update product information
 Request:
 ```json
@@ -478,7 +478,7 @@ Content-Type: application/json
   "tags": "tag1,tag2"
 }
 ```
- - Response:
+- Response:
 ```json
 {
   "productId": "product1",
@@ -491,7 +491,7 @@ Content-Type: application/json
   "date": "2022-01-01T00:00:00.000Z"
 }
 ```
-DELETE /api/product/productId/:id
+> DELETE /api/product/productId/:id
 Case 1: Delete a product
 Request:
 ```
@@ -504,5 +504,111 @@ Response:
   "name": "Product 2",
   "img": "/img/product2.jpg",
   "price": 14.99
+}
+```
+
+> GET /api/cart
+Case 1: User is logged in and has a cart
+Request: 
+```
+GET /api/cart
+```
+Response:
+```json
+{
+  "cart": {
+    "userId": "user1",
+    "product": [
+      {
+        "productId": "product1",
+        "name": "Product 1",
+        "img": "/noImage.jpg",
+        "price": 9.99
+      },
+      {
+        "productId": "product2",
+        "name": "Product 2",
+        "img": "/img/product2.jpg",
+        "price": 14.99
+      }
+    ]
+  }
+}
+```
+Case 2: User is not logged in
+```
+Request: GET /api/cart
+```
+Response:
+```json
+{
+  "error": "Login Required"
+}
+```
+> PUT /api/cart/productId/:id
+Case 1: Add a product to the cart
+Request:
+```json
+PUT /api/cart/productId/product3
+Content-Type: application/json
+
+{
+  "productId": "product3",
+  "name": "Product 3",
+  "img": "/img/product3.jpg",
+  "price": 19.99
+}
+```
+ - Response:
+```json
+{
+  "message": "Put product to cart successfully",
+  "cart": {
+    "userId": "user1",
+    "product": [
+      {
+        "productId": "product1",
+        "name": "Product 1",
+        "img": "/noImage.jpg",
+        "price": 9.99
+      },
+      {
+        "productId": "product2",
+        "name": "Product 2",
+        "img": "/img/product2.jpg",
+        "price": 14.99
+      },
+      {
+        "productId": "product3",
+        "name": "Product 3",
+        "img": "/img/product3.jpg",
+        "price": 19.99,
+        "qty": 1
+      }
+    ]
+  }
+}
+```
+> DELETE /api/cart/productId/:id
+Case 1: Remove a product from the cart
+Request: 
+```
+DELETE /api/cart/productId/product2
+```
+Response:
+```json
+{
+  "message": "Delete product from cart successfully",
+  "cart": {
+    "userId": "user1",
+    "product": [
+      {
+        "productId": "product1",
+        "name": "Product 1",
+        "img": "/noImage.jpg",
+        "price": 9.99
+      }
+    ]
+  }
 }
 ```

@@ -397,7 +397,7 @@ Case 1: User is logged in and has a cart
 
 Request: 
 ```
-GET /product
+GET /api/product
 ```
 Response:
 ```json
@@ -421,7 +421,7 @@ Case 1: Product exists
 
 Request: 
 ```
-GET /product/id/product1
+GET /api/product/id/product1
 ```
 Response:
 ```json
@@ -436,7 +436,7 @@ Response:
 Case 1: Create a new product
 Request:
 ```json
-POST /product
+POST /api/product
 Content-Type: application/json
 
 {
@@ -466,7 +466,7 @@ POST /api/product/id/:id
 Case 1: Update product information
 Request:
 ```json
-POST /product/id/product1
+POST /api/product/id/product1
 Content-Type: application/json
 
 {
@@ -495,7 +495,7 @@ DELETE /api/product/productId/:id
 Case 1: Delete a product
 Request:
 ```
-DELETE /product/productId/product2
+DELETE /api/product/productId/product2
 ```
 Response:
 ```json

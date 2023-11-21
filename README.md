@@ -18,50 +18,50 @@ The main purpose of web store prototype system is to provide a simplified demons
 **Core Functions**
 - Login
 - Logout
-- Sign Up
-- View Products
-- View Product Detail
-- Add Product to My Favorite
-- Remove Product  from My Favorite
+- Sign Up (C)
+- View Products (R)
+- View Product Detail (R)
+- Add Product to My Favorite (U)
+- Remove Product from My Favorite (D)
 
 **Function of Roles**
 - Visitor
 	 1. Login
-	 2. Sign Up
-	 3. View Products
-	 4. View Product Detail
+	 2. Sign Up (C)
+	 3. View Products (R)
+	 4. View Product Detail (R)
 - Client
 	1. Logout
-	2. View Products
-	3. View Product Details
-	4. Add Product to My Favorite
-	5. Remove Product  from My Favorite
-	6. View Self Information
-	7. Edit Self Information
+	2. View Products (R)
+	3. View Product Details (R)
+	4. Add Product to My Favorite (U)
+	5. Remove Product from My Favorite (D)
+	6. View Self Information (R)
+	7. Edit Self Information (U)
 - Operator
 	1. Logout
-	2. View Products
-	3. View Product Details
-	4. Add Product to My Favorite
-	5. Remove Product  from My Favorite
-	6. View Self Information
-	7. Edit Self Information
-	8. Add Product
-	9. Edit Product 
+	2. View Products (R)
+	3. View Product Details (R)
+	4. Add Product to My Favorite (U)
+	5. Remove Product from My Favorite (D)
+	6. View Self Information (R)
+	7. Edit Self Information (U)
+	8. Add Product (C)
+	9. Edit Product (U)
 - Admin
-	 1. Logout
-	2. View Products
-	3. View Product Details
-	4. Add Product to My Favorite
-	5. Remove Product  from My Favorite
-	6. View Self Information
-	7. Edit Self Information
-	8. Add Product
-	9. Edit Product 
-	10. View Users 
-	11. Add User 
-	12. Edit User
-	13. Edit Store Information
+	1. Logout
+	2. View Products (R)
+	3. View Product Details (R)
+	4. Add Product to My Favorite (U)
+	5. Remove Product from My Favorite (D)
+	6. View Self Information (R)
+	7. Edit Self Information (U)
+	8. Add Product (C)
+	9. Edit Product (U)
+	10. View Users (R)
+	11. Add User (C)
+	12. Edit User (U)
+	13. Edit Store Information (U)
 
 ## Navigation
 **Route of Views**
@@ -204,12 +204,41 @@ Admin :
 -  Complete the form
 	- Alert "An error occurred while editing the store" if edit store is fail
 	- Move to home page if edit user is success
-### Restful API Guides
+
+## Restful API Guides
 *only provide success case, the error case please view the files of `/routes`
 *for the permission Ref< Function.Function of Roles >
+**API**
+- Login System
+  1. /api/login
+  2. /api/logout
+  3. /api/signup (C)
+- Product
+  1. GET /api/product (R)
+  2. GET /api/product/id/:id (R)
+  3. POST /api/product (C)
+  4. POST /api/product/id/:id (U)
+  5. DELETE /api/product/productId/:id (D)
+- Cart
+  1. GET /api/cart (R)
+  2. PUT /api/cart/productId/:id (U)
+  3. DELETE /api/cart/productId/:id (D)
+- Store
+  1. GET /api/store (R)
+  2. POST /api/store/edit (U)
+- User
+  1. GET /api/user (R)
+  2. GET /api/user/id/:id (R)
+  3. POST /api/user/add (C)
+  4. POST /api/user/id/:id/edit (U)
+  5. DELETE /api/user/id/:id (D)
 
+
+---
+*Login System*
 
 > /api/login
+
 Case 1: Valid login credentials
 Request:
 ```json
@@ -275,7 +304,9 @@ Content-Type: application/json
   "error": "The password is incorrect."
 }
 ```
+
 > /api/logout
+
 Case 1: Successful logout
 Request:
 ```json
@@ -304,7 +335,9 @@ Content-Type: application/json
   "error": "Unauthorized, session is empty."
 }
 ```
+
 > /api/signup
+
 Case 1: Successful signup
 Request:
 ```json
@@ -397,8 +430,12 @@ Content-Type: application/json
   "error": "The password at least 8 characters"
 }
 ```
+---
+
+*Product*
 
 > GET /api/product
+
 Case 1: User is logged in and has a cart
 
 Request: 
@@ -422,7 +459,9 @@ Response:
   }
 ]
 ```
+
 > GET /api/product/id/:id
+
 Case 1: Product exists
 
 Request: 
@@ -438,7 +477,9 @@ Response:
   "price": 9.99
 }
 ```
+
 > POST /api/product
+
 Case 1: Create a new product
 Request:
 ```json
@@ -468,7 +509,9 @@ Content-Type: application/json
   "date": "2022-01-01T00:00:00.000Z"
 }
 ```
+
 > POST /api/product/id/:id
+
 Case 1: Update product information
 Request:
 ```json
@@ -497,7 +540,9 @@ Content-Type: application/json
   "date": "2022-01-01T00:00:00.000Z"
 }
 ```
+
 > DELETE /api/product/productId/:id
+
 Case 1: Delete a product
 Request:
 ```
@@ -512,8 +557,12 @@ Response:
   "price": 14.99
 }
 ```
+---
+
+*Cart*
 
 > GET /api/cart
+
 Case 1: User is logged in and has a cart
 Request: 
 ```
@@ -551,7 +600,9 @@ Response:
   "error": "Login Required"
 }
 ```
+
 > PUT /api/cart/productId/:id
+
 Case 1: Add a product to the cart
 Request:
 ```json
@@ -595,7 +646,9 @@ Content-Type: application/json
   }
 }
 ```
+
 > DELETE /api/cart/productId/:id
+
 Case 1: Remove a product from the cart
 Request: 
 ```
@@ -618,7 +671,12 @@ Response:
   }
 }
 ```
-GET /api/store
+---
+
+*Store*
+
+> GET /api/store
+
 Case: Retrieve store details
 Request: 
 ```
@@ -635,7 +693,9 @@ Response:
   "phoneNo": "123-456-7890"
 }
 ```
-POST /api/store/edit
+
+> POST /api/store/edit
+
 Case: Edit store information
 Request:
 ```json
@@ -657,8 +717,12 @@ Content-Type: application/json
   "message": "Edit store info successfully"
 }
 ```
+---
+
+*User*
 
 > GET /api/user
+
 Case: Retrieve all users
 Request: 
 ```
@@ -689,7 +753,9 @@ Response:
   }
 ]
 ```
+
 > GET /api/user/id/:id
+
 Case: Retrieve user by ID
 Request: 
 ```
@@ -708,7 +774,9 @@ Response:
   "phoneNo": "123-456-7890"
 }
 ```
+
 > POST /api/user/add
+
 Case: Add a new user
 Request:
 ```json
@@ -732,7 +800,9 @@ Content-Type: application/json
   "message": "success"
 }
 ```
+
 > POST /api/user/id/:id/edit
+
 Case: Edit user information
 Request:
 ```json
@@ -761,7 +831,9 @@ Content-Type: application/json
   "phoneNo": "987-654-3210"
 }
 ```
-DELETE /api/user/id/:id
+
+> DELETE /api/user/id/:id
+
 Case: Delete user
 Request: 
 ```

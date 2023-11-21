@@ -203,7 +203,9 @@ Admin :
 	- Alert "An error occurred while editing the store" if edit store is fail
 	- Move to home page if edit user is success
 ### Restful API Guides
-*only provide success case, for the permission Ref< Function.Function of Roles >
+*only provide success case, the error case please view the files of `/routes`
+*for the permission Ref< Function.Function of Roles >
+
 
 > /api/login
 Case 1: Valid login credentials

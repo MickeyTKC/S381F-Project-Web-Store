@@ -18,18 +18,6 @@ const isLogin = (req, res, next) => {
     }
     return next();
 };
-/*
-  const isLogin_Operator = (req, res, next) => {
-    const user = req.session.user || {role:"client"}
-    if (!user) {
-      next({ statusCode: 403, message: "Permission Required" });
-    }
-    if (user.role != "operator" || user.role != "admin" ) {
-      next({ statusCode: 403, message: "Admin/Operator Permission Required" });
-    }
-    next();
-  };
-*/
 // view store details
 router.get("/", async (req, res) => {
     const user = req.session.user || {};

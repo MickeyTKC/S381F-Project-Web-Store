@@ -6,8 +6,8 @@ const Cart = require("./Cart");
 const Product = require("./Product");
 const fs = require("fs");
 
-const dbName = "SSProject"
-const url = `mongodb+srv://serverSide_User:serrrrver_side1@cluster0.eknv0ni.mongodb.net/${dbName}`;
+const dbName = process.env.db_name;
+const url = process.env.db_url + dbName;
 
 mongoose.set("strictQuery", true)
 

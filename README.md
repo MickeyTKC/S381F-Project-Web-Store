@@ -2,6 +2,8 @@
 ## Group Info
 Tse Kai Chun (Mickey) 12755669, 
 Mak Ho Ying (Kiris) 12755670, 
+Tang Chung Ming (Ming) 13176370,
+LAI Hon San (Hanson) 13329470,
 
 ## Introduction
 The main purpose of web store prototype system is to provide a simplified demonstration of an e-commerce platform. It showcases essential features that include user authentication, product browsing, and favoriting functionality. The system allows users to log in to their accounts, browse through a catalog of products, view detailed information about each product, and add or remove products from their favorites list.

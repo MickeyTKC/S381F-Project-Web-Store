@@ -203,6 +203,8 @@ Admin :
 	- Alert "An error occurred while editing the store" if edit store is fail
 	- Move to home page if edit user is success
 ### Restful API Guides
+*only provide success case, for the permission Ref< Function.Function of Roles >
+
 > /api/login
 Case 1: Valid login credentials
 Request:
@@ -610,5 +612,167 @@ Response:
       }
     ]
   }
+}
+```
+GET /api/store
+Case: Retrieve store details
+Request: 
+```
+GET /api/store
+```
+Response:
+```json
+{
+  "storeId": "store1",
+  "name": "My Store",
+  "img": "/img/store_logo.jpg",
+  "info": "Welcome to My Store",
+  "address": "123 Main Street",
+  "phoneNo": "123-456-7890"
+}
+```
+POST /api/store/edit
+Case: Edit store information
+Request:
+```json
+POST /edit
+Content-Type: application/json
+
+{
+  "name": "New Store Name",
+  "img": "/img/new_logo.jpg",
+  "info": "Updated store information",
+  "address": "456 Elm Street",
+  "phoneNo": "987-654-3210"
+}
+```
+
+ - Response:
+```json
+{
+  "message": "Edit store info successfully"
+}
+```
+
+> GET /api/user
+Case: Retrieve all users
+Request: 
+```
+GET /api/user
+```
+Response:
+```json
+[
+  {
+    "userId": "user1",
+    "password": "********",
+    "role": "admin",
+    "name": "John Doe",
+    "info": "User information",
+    "address": "123 Main Street",
+    "email": "johndoe@example.com",
+    "phoneNo": "123-456-7890"
+  },
+  {
+    "userId": "user2",
+    "password": "********",
+    "role": "client",
+    "name": "Jane Smith",
+    "info": "",
+    "address": "456 Elm Street",
+    "email": "janesmith@example.com",
+    "phoneNo": "987-654-3210"
+  }
+]
+```
+> GET /api/user/id/:id
+Case: Retrieve user by ID
+Request: 
+```
+GET /api/user/id/user1
+```
+Response:
+```json
+{
+  "userId": "user1",
+  "password": "********",
+  "role": "admin",
+  "name": "John Doe",
+  "info": "User information",
+  "address": "123 Main Street",
+  "email": "johndoe@example.com",
+  "phoneNo": "123-456-7890"
+}
+```
+> POST /api/user/add
+Case: Add a new user
+Request:
+```json
+POST /api/user/add
+Content-Type: application/json
+
+{
+  "userId": "user3",
+  "password": "********",
+  "role": "client",
+  "name": "Sarah Johnson",
+  "info": "New user information",
+  "address": "789 Oak Street",
+  "email": "sarahjohnson@example.com",
+  "phoneNo": "555-123-4567"
+}
+```
+ - Response:
+```json
+{
+  "message": "success"
+}
+```
+> POST /api/user/id/:id/edit
+Case: Edit user information
+Request:
+```json
+POST /api/user/id/user2/edit
+Content-Type: application/json
+
+{
+  "password": "********",
+  "name": "Jane Smith",
+  "info": "Updated user information",
+  "address": "456 Elm Street",
+  "email": "janesmith@example.com",
+  "phoneNo": "987-654-3210"
+}
+```
+ - Response:
+```json
+{
+  "userId": "user2",
+  "password": "********",
+  "role": "client",
+  "name": "Jane Smith",
+  "info": "Updated user information",
+  "address": "456 Elm Street",
+  "email": "janesmith@example.com",
+  "phoneNo": "987-654-3210"
+}
+```
+DELETE /api/user/id/:id
+Case: Delete user
+Request: 
+```
+DELETE /api/user/id/user3
+```
+Response:
+```json
+{
+  "userId": "user3",
+  "password": "********",
+  "role": "client",
+  "name": "Sarah Johnson",
+  "info": "New user information",
+  "address": "789 Oak Street",
+  "email": "sarahjohnson@example.com",
+  "phoneNo": "555-123-4567"
 }
 ```
